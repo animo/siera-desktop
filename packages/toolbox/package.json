@@ -23,7 +23,9 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "executableName": "toolbox"
+      },
       "electronRebuildConfig": {},
       "makers": [
         {
