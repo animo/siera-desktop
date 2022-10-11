@@ -41,3 +41,4 @@ jobs:
         uses: ./.github/actions/test
         with:
           node-version: ${{ matrix.node-version }}
+          uses-libindy: true
