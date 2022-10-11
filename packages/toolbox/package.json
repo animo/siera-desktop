@@ -24,7 +24,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "name": "@animo/toolbox"
+        "executableName": "@animo/toolbox"
       },
       "electronRebuildConfig": {},
       "makers": [
