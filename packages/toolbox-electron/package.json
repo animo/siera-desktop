@@ -1,6 +1,6 @@
 {
-  "name": "@animo/toolbox",
-  "productName": "toolbox",
+  "name": "@animo/toolbox-electron",
+  "productName": "toolbox-electron",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
@@ -24,14 +24,15 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "executableName": "@animo/toolbox"
+        "name": "toolbox-electron",
+        "executableName": "toolbox-electron"
       },
       "electronRebuildConfig": {},
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "toolbox"
+            "name": "toolbox-electron"
           }
         },
         {
