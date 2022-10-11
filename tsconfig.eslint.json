@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.build.json",
+
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["packages", "./.eslintrc.js", "./jest.config.ts", "./jest.config.base.ts", "types", "tests", "scripts"],
+  "exclude": ["node_modules", "build"]
+}

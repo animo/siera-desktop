@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+  multiply-service:
+    # make sure this matches with the image name in the deploy.yml workflow
+    image: ghcr.io/animo/typescript-project-template/multiply-service:latest
+    deploy:
+      placement:
+        constraints:
+          - node.role == worker
+          # currently we have orca or community
+          - node.labels.type == community
+      labels:
+        traefik.enable: 'true'
+
+        # domain name
+        traefik.http.routers.multiply-service.rule: Host(`multiply-service.dev.animo.id`)
+        traefik.http.routers.multiply-service.entrypoints: web-secure
+        traefik.http.routers.multiply-service.tls.certresolver: zerossl
+        traefik.http.routers.multiply-service.service: multiply-service-service
+
+        # this make the service only accesible with animo google account
+        traefik.http.routers.core-orca.middlewares: chain-oauth@file
+        traefik.http.services.core-orca-service.loadbalancer.server.port: 8181
+
+    # environment variables, make sure to declare them in the deploy action
+    environment:
+      ADD_TO_SUM: ${ADD_TO_SUM}
+    networks:
+      - traefik
+    ports:
+      - '8181'
+
+networks:
+  traefik:
+    external: true
+    name: traefik

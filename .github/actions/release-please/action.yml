@@ -1,0 +1,53 @@
+name: Release packages using release please
+description: Release packages using release please
+author: 'Animo Solutions'
+
+inputs:
+  registry-url:
+    description: 'Url of the npm registry to use. Default to Github container registry'
+    required: false
+    default: 'https://npm.pkg.github.com/'
+  npm-token:
+    description: Token to access the registry. If using the github registry this should be the secrets.GITHUB_TOKEN variable.
+    required: true
+  github-token:
+    description: github token.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: google-github-actions/release-please-action@v3
+      id: release
+      with:
+        command: manifest
+        token: ${{ inputs.github-token }}
+        default-branch: main
+        monorepo-tags: true
+
+    - name: Setup Node
+      uses: actions/setup-node@v2
+      if: ${{ steps.release.outputs.releases_created }}
+      with:
+        node-version: 16
+        registry-url: ${{ inputs.registry-url }}
+
+    - name: Install dependencies
+      shell: bash
+      run: yarn install --frozen-lockfile
+      if: ${{ steps.release.outputs.releases_created }}
+
+    - name: Build Packages
+      if: ${{ steps.release.outputs.releases_created }}
+      shell: bash
+      run: yarn workspaces run build
+
+    # Release Please has already incremented versions and published tags, so we just
+    # need to publish all unpublished versions to NPM here
+    # See: https://github.com/lerna/lerna/tree/main/commands/publish#bump-from-package
+    - name: Publish to Registry
+      if: ${{ steps.release.outputs.releases_created }}
+      shell: bash
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
+      run: npx lerna publish from-package --no-push --no-private --yes --no-verify-access
