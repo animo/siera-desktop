@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/animo/toolbox/compare/template-multiply-v0.2.0...template-multiply-v0.2.1) (2022-10-12)
+
+
+### Features
+
+* Initialisation with the Animo TypeScript template ([#2](https://github.com/animo/toolbox/issues/2)) ([3161375](https://github.com/animo/toolbox/commit/3161375d8d87ccaa96f5e8b911c6c9fb53ce9fe2))
+
 ## [0.2.0](https://github.com/animo/typescript-project-template/compare/template-multiply-v0.1.2...template-multiply-v0.2.0) (2022-07-01)
 
 
