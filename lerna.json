@@ -1,0 +1,11 @@
+{
+  "packages": ["packages/*"],
+  "version": "independent",
+  "useWorkspaces": true,
+  "npmClient": "yarn",
+  "command": {
+    "version": {
+      "allowBranch": "main"
+    }
+  }
+}

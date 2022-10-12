@@ -4,5 +4,6 @@
     "baseUrl": ".",
     "types": ["jest", "node"]
   },
-  "exclude": ["node_modules", "build"]
+  "include": ["tests", "**/tests"],
+  "exclude": ["node_modules", "build", "**/build/**"]
 }
