@@ -46,7 +46,7 @@
 All packages are placed in the [`packages/`](./packages) directory.
 
 | Package                                           | Version | Description                             |
-|---------------------------------------------------|---------|-----------------------------------------|
+| ------------------------------------------------- | ------- | --------------------------------------- |
 | [`toolbox-electron`](./packages/toolbox-electron) | 0.0.1   | Electron app for controlling the agent. |
 | [`toolbox-ui`](./packages/toolbox-ui)             | 0.0.1   | UI components.                          |
 | [`toolbox-core`](./packages/toolbox-core)         | 0.0.1   | The core behind the application.        |
