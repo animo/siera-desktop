@@ -6,7 +6,7 @@
   </picture>
 </p>
 
-<h1 align="center" ><b>Animo TypeScript Template</b></h1>
+<h1 align="center" ><b>Animo Toolbox</b></h1>
 
 <h4 align="center">Powered by &nbsp; 
   <picture>
@@ -45,10 +45,11 @@
 
 All packages are placed in the [`packages/`](./packages) directory.
 
-| Package                                                             | Version | Description                        |
-| ------------------------------------------------------------------- | ------- | ---------------------------------- |
-| [`template-multiply`](./packages/template-multiply)                 | 0.1.1   | Sample multiply function           |
-| [`template-multiply-service`](./packages/template-multiply-service) | 0.1.1   | Services exposing multiply method. |
+| Package                                           | Version | Description                             |
+|---------------------------------------------------|---------|-----------------------------------------|
+| [`toolbox-electron`](./packages/toolbox-electron) | 0.0.1   | Electron app for controlling the agent. |
+| [`toolbox-ui`](./packages/toolbox-ui)             | 0.0.1   | UI components.                          |
+| [`toolbox-core`](./packages/toolbox-core)         | 0.0.1   | The core behind the application.        |
 
 ## Getting Started
 
