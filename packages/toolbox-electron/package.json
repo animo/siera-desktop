@@ -9,7 +9,6 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx .",
     "clean": "rimraf -rf ./out ./.webpack",
     "build": "yarn clean && yarn package"
   },
