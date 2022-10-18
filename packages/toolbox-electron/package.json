@@ -1,10 +1,11 @@
 {
   "name": "@animo/toolbox-electron",
   "productName": "toolbox-electron",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
+    "postinstall": "(cd ../.. && yarn postinstall)",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
@@ -19,6 +20,11 @@
     "url": "https://animo.id",
     "name": "Animo Solutions",
     "email": "contact@animo.id"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/animo/toolbox",
+    "directory": "packages/toolbox-electron"
   },
   "config": {
     "forge": "./forge.config.js"
@@ -39,6 +45,7 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "@vercel/webpack-asset-relocator-loader": "1.7.3",
+    "autoprefixer": "^10.4.12",
     "css-loader": "^6.0.0",
     "electron": "19.0.11",
     "eslint": "^8.0.1",
@@ -46,13 +53,18 @@
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "node-loader": "^2.0.0",
     "patch-package": "^6.4.7",
+    "postcss": "^8.4.18",
+    "postcss-loader": "^7.0.1",
     "react-refresh": "^0.14.0",
     "style-loader": "^3.0.0",
+    "tailwindcss": "^3.1.8",
     "ts-loader": "^9.2.2",
     "typescript": "~4.5.4"
   },
   "dependencies": {
-    "@aries-framework/core": "^0.2.4",
+    "@animo/toolbox-core": "^0.0.1",
+    "@animo/toolbox-ui": "^0.0.1",
+    "@aries-framework/core": "^0.2.5",
     "@aries-framework/node": "^0.2.3",
     "@aries-framework/react-hooks": "^0.3.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.8",

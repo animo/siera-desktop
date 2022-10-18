@@ -1,0 +1,27 @@
+{
+  "name": "@animo/toolbox-core",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "license": "Apache-2.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/animo/toolbox",
+    "directory": "packages/toolbox-core"
+  },
+  "author": {
+    "url": "https://animo.id",
+    "name": "Animo Solutions",
+    "email": "contact@animo.id"
+  },
+  "scripts": {
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf -rf ./build",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "yarn run build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@aries-framework/core": "^0.2.5"
+  }
+}
