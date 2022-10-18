@@ -1,0 +1,11 @@
+diff --git a/node_modules/indy-sdk/src/indy.cc b/node_modules/indy-sdk/src/indy.cc
+index c40688d..42ecfaa 100644
+--- a/node_modules/indy-sdk/src/indy.cc
++++ b/node_modules/indy-sdk/src/indy.cc
+@@ -3832,4 +3832,5 @@ NAN_MODULE_INIT(InitAll) {
+   Nan::Export(target, "setDefaultLogger", setDefaultLogger);
+   Nan::Export(target, "setLogger", setLogger);
+ }
+-NODE_MODULE(indynodejs, InitAll)
++
++NAN_MODULE_WORKER_ENABLED(indynodejs, InitAll);
