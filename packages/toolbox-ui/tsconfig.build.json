@@ -5,7 +5,7 @@
     "outDir": "./build",
     "jsx": "react",
     "types": [],
-    "lib": ["dom"]
+    "lib": ["dom", "ESNext"]
   },
   "include": ["src/**/*"]
 }
