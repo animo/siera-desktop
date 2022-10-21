@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import '../public/index.css'
 import { createRoot } from 'react-dom/client'
 
-import { agentInitializer } from './infrastructure/adapters'
+import { agentInitializer } from './adapters'
 import { App } from './ui/App'
 
 // Typings for the exposed indy and filesystem
@@ -26,7 +26,7 @@ export const AgentContext: React.FunctionComponent<PropsWithChildren> = ({ child
       setAgent(
         await agentInitializer({
           label: 'agent',
-          walletConfig: { id: 'id01', key: 'key01' },
+          walletConfig: { id: 'id01000000000000000000000000000', key: 'key01000000000000000000000000000' },
         })
       ))()
   }, [])

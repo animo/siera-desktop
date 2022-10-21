@@ -2,9 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "src",
-    "jsx": "react",
     "types": ["jest"],
-    "lib": ["dom"]
+    "lib": []
   },
   "exclude": ["node_modules"]
 }

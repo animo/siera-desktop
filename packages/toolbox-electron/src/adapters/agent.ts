@@ -9,7 +9,7 @@ export const agentInitializer = async (providedConfig: InitConfig): Promise<Agen
   const agentProvider = new AgentFactory(new ElectronAgentDependenciesProvider())
 
   const config: InitConfig = {
-    logger: new ConsoleLogger(LogLevel.test),
+    logger: new ConsoleLogger(LogLevel.warn),
     ...providedConfig,
   }
 
