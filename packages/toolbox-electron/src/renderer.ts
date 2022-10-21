@@ -1,2 +1,2 @@
-import './index.css'
+import '../public/index.css'
 import './init'

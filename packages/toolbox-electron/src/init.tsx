@@ -2,13 +2,13 @@ import type { Agent, FileSystem } from '@aries-framework/core'
 import type Indy from 'indy-sdk'
 import type { PropsWithChildren } from 'react'
 
-import './index.css'
 import AgentProvider from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
+import '../public/index.css'
 import { createRoot } from 'react-dom/client'
 
-import { App } from './App'
-import { agentInitializer } from './agent'
+import { agentInitializer } from './adapters'
+import { App } from './ui/App'
 
 // Typings for the exposed indy and filesystem
 declare global {
@@ -22,7 +22,13 @@ export const AgentContext: React.FunctionComponent<PropsWithChildren> = ({ child
   const [agent, setAgent] = useState<Agent>()
 
   useEffect(() => {
-    ;(async () => setAgent(await agentInitializer()))()
+    ;(async () =>
+      setAgent(
+        await agentInitializer({
+          label: 'agent',
+          walletConfig: { id: 'id01000000000000000000000000000', key: 'key01000000000000000000000000000' },
+        })
+      ))()
   }, [])
 
   return <AgentProvider agent={agent}>{children}</AgentProvider>
