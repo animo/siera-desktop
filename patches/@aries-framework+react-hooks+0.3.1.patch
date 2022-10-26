@@ -1,0 +1,13 @@
+diff --git a/node_modules/@aries-framework/react-hooks/build/ProofProvider.d.ts b/node_modules/@aries-framework/react-hooks/build/ProofProvider.d.ts
+index 3be0e12..16f870f 100644
+--- a/node_modules/@aries-framework/react-hooks/build/ProofProvider.d.ts
++++ b/node_modules/@aries-framework/react-hooks/build/ProofProvider.d.ts
+@@ -1,7 +1,7 @@
+ import type { RecordsState } from './recordUtils';
+ import type { Agent, ProofState } from '@aries-framework/core';
+ import type { PropsWithChildren } from 'react';
+-import { ProofRecord } from '@aries-framework/core';
++import { ProofExchangeRecord as ProofRecord } from '@aries-framework/core';
+ import * as React from 'react';
+ export declare const useProofs: () => RecordsState<ProofRecord>;
+ export declare const useProofById: (id: string) => ProofRecord | undefined;
