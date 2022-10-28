@@ -10,9 +10,12 @@ export interface IAgentFactory {
 export class AgentFactory implements IAgentFactory {
   public constructor(private readonly agentDependenciesProvider: IAgentDependenciesProvider) {}
 
-  public async createAgent(agentConfig: InitConfig): Promise<Agent> {
-    const agentDependencies = await this.agentDependenciesProvider.createAgentDependencies()
+  public async createAgent(config: InitConfig): Promise<Agent> {
+    const dependencies = await this.agentDependenciesProvider.createAgentDependencies()
 
-    return new Agent(agentConfig, agentDependencies)
+    return new Agent({
+      config,
+      dependencies,
+    })
   }
 }
