@@ -64,7 +64,7 @@
   "dependencies": {
     "@animo/toolbox-core": "^0.0.1",
     "@animo/toolbox-ui": "^0.0.1",
-    "@aries-framework/core": "0.3.0-alpha.4",
+    "@aries-framework/core": "0.3.0-alpha.8",
     "@aries-framework/node": "^0.2.3",
     "@aries-framework/react-hooks": "^0.3.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.8",

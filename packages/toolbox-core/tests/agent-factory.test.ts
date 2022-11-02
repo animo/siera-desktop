@@ -1,10 +1,12 @@
-import { AgentFactory } from '../src'
-import { Agent, AgentDependencies } from '@aries-framework/core'
+import type { AgentDependencies } from '@aries-framework/core'
+
+import { Agent } from '@aries-framework/core'
 import { agentDependencies } from '@aries-framework/node'
 
-describe('Agent factory', () => {
-  test('Create agent', async () => {
+import { AgentFactory } from '../src'
 
+describe('Agent factory', () => {
+  test('Create and initialize agent', async () => {
     const agentFactory = new AgentFactory({
       async createAgentDependencies(): Promise<AgentDependencies> {
         return agentDependencies
@@ -17,6 +19,7 @@ describe('Agent factory', () => {
     })
 
     expect(agent).toBeInstanceOf(Agent)
+    expect(agent.wallet.isInitialized).toBeFalsy()
 
     await agent.initialize()
 
