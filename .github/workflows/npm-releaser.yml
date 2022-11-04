@@ -1,8 +1,8 @@
 name: NPM Releaser
 on:
-#  push:
-#    branches:
-#      - main
+  push:
+    branches:
+      - main
 
 jobs:
   Release:
