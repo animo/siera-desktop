@@ -4,11 +4,11 @@ import type { PropsWithChildren } from 'react'
 
 import AgentProvider from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
-import '../public/index.css'
 import { createRoot } from 'react-dom/client'
 
 import { agentInitializer } from './adapters'
-import { App } from './ui/App'
+import { Base } from './ui/Base'
+import { MantineProvider } from "@mantine/core";
 
 // Typings for the exposed indy and filesystem
 declare global {
@@ -39,7 +39,9 @@ const root = createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <AgentContext>
-      <App />
+      <MantineProvider withGlobalStyles withNormalizeCSS>
+        <Base />
+      </MantineProvider>
     </AgentContext>
   </React.StrictMode>
 )
