@@ -19,7 +19,8 @@
     "emitDecoratorMetadata": true,
     "paths": {
       "@animo/*": ["./packages/*/src"]
-    }
+    },
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules",
