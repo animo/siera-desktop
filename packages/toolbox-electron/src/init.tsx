@@ -3,12 +3,12 @@ import type Indy from 'indy-sdk'
 import type { PropsWithChildren } from 'react'
 
 import AgentProvider from '@aries-framework/react-hooks'
+import { MantineProvider } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { agentInitializer } from './adapters'
 import { Base } from './ui/Base'
-import { MantineProvider } from "@mantine/core";
 
 // Typings for the exposed indy and filesystem
 declare global {
