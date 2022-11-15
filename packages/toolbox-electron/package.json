@@ -64,6 +64,8 @@
     "@aries-framework/core": "0.3.0-alpha.8",
     "@aries-framework/node": "^0.2.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.8",
+    "@tabler/icons": "^1.110.0",
+    "@tailwindcss/forms": "^0.5.3",
     "electron-squirrel-startup": "^1.0.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "indy-sdk": "^1.16.0-dev-1655",
