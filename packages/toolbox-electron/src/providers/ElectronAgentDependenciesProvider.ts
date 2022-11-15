@@ -8,6 +8,7 @@ import * as events from 'events'
 import { ElectronFileSystemAdapter } from '../adapters/ElectronFileSystemAdapter'
 
 export class ElectronAgentDependenciesProvider implements IAgentDependenciesProvider {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public wrapIndyCallWithErrorHandling(func: any) {
     return async (...args: unknown[]) => {
       try {

@@ -1,7 +1,9 @@
+import { routes } from '@animo/toolbox-ui/src/routes'
 import React from 'react'
-import { RouterProvider } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 
-import { router } from './Router'
+// Because Electron doesn't support url routing we use the routing in memory
+export const router = createMemoryRouter(routes)
 
 // This component is to fix the Hot reload feature.
 export const Base = () => {
