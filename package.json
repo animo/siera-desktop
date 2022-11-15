@@ -31,7 +31,7 @@
     "check-format": "yarn prettier --list-different",
     "lint": "eslint --ignore-path .gitignore .",
     "test": "jest",
-    "validate": "yarn lint && yarn check-types && yarn check-format",
+    "validate": "yarn lint && yarn check-types",
     "build": "yarn workspaces run build"
   },
   "devDependencies": {

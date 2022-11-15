@@ -23,6 +23,10 @@
   },
   "dependencies": {
     "@aries-framework/core": "0.3.0-alpha.8",
-    "@aries-framework/node": "0.3.0-alpha.8"
+    "@aries-framework/node": "0.3.0-alpha.8",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.4"
   }
 }
