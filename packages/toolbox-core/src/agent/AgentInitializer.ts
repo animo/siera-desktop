@@ -1,12 +1,15 @@
+import type { IAgentDependenciesProvider } from './IAgentDependenciesProvider'
 import type { Agent, InitConfig } from '@aries-framework/core'
 
-import { AgentFactory } from '@animo/toolbox-core'
 import { ConsoleLogger, LogLevel } from '@aries-framework/core'
 
-import { ElectronAgentDependenciesProvider } from '../providers/ElectronAgentDependenciesProvider'
+import { AgentFactory } from './AgentFactory'
 
-export const agentInitializer = async (providedConfig: InitConfig): Promise<Agent> => {
-  const agentProvider = new AgentFactory(new ElectronAgentDependenciesProvider())
+export const agentInitializer = async (
+  providedConfig: InitConfig,
+  dependenciesProvider: IAgentDependenciesProvider
+): Promise<Agent> => {
+  const agentProvider = new AgentFactory(dependenciesProvider)
 
   const config: InitConfig = {
     logger: new ConsoleLogger(LogLevel.warn),
