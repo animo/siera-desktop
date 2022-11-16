@@ -16,7 +16,7 @@ export const routes = [
       {
         index: true,
         element: (
-          <Layout title="Dashboard">
+          <Layout>
             <AgentHomeScreen />
           </Layout>
         ),

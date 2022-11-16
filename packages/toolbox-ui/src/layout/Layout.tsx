@@ -10,7 +10,6 @@ import { Loading } from '../components/Loading'
 import { LayoutNavBar } from './LayoutNavBar'
 
 interface LayoutProps {
-  title?: string
   children?: ReactNode
 }
 
