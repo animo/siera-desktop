@@ -4,6 +4,7 @@ import { useForm } from '@mantine/form'
 import React from 'react'
 
 import { Loading } from '../../../components/Loading'
+import { ConnectionsTable } from '../../../components/connections/ConnectionsTable'
 
 interface ConnectionInviteValues {
   url: string
@@ -27,7 +28,7 @@ export const ConnectionsScreen = () => {
           <Button type="submit">Receive invite</Button>
         </Flex>
       </form>
-      <div>{connectionLoading ? <Loading /> : JSON.stringify(connectionRecords)}</div>
+      <div>{connectionLoading ? <Loading /> : <ConnectionsTable records={connectionRecords} />}</div>
     </>
   )
 }
