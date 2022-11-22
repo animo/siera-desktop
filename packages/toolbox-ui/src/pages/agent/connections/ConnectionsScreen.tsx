@@ -12,14 +12,10 @@ interface ConnectionInviteValues {
 export const ConnectionsScreen = () => {
   const form = useForm<ConnectionInviteValues>()
   const { agent } = useAgent()
-  const { records: conRecords, loading: conLoading } = useConnections()
+  const { records: connectionRecords, loading: connectionLoading } = useConnections()
 
   const receiveInvite = async ({ url }: ConnectionInviteValues) => {
-    // eslint-disable-next-line no-console
-    const output = await agent?.oob.receiveInvitationFromUrl(url).catch(console.error)
-
-    // eslint-disable-next-line no-console
-    console.log(output)
+    await agent?.oob.receiveInvitationFromUrl(url)
   }
 
   return (
@@ -31,7 +27,7 @@ export const ConnectionsScreen = () => {
           <Button type="submit">Receive invite</Button>
         </Flex>
       </form>
-      <div>{conLoading ? <Loading /> : JSON.stringify(conRecords)}</div>
+      <div>{connectionLoading ? <Loading /> : JSON.stringify(connectionRecords)}</div>
     </>
   )
 }
