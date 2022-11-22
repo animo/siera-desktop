@@ -26,7 +26,9 @@ export const ConnectionsTable = ({ records }: ConnectionsTableProps) => {
             <tr key={record.id}>
               <td>
                 <Group spacing="sm">
-                  <Avatar size={30} src={record.imageUrl} radius={30} />
+                  <Avatar size={30} src={record.imageUrl} radius={30}>
+                    {record.theirLabel?.substr(0, 1)}
+                  </Avatar>
                   <Text size="sm" weight={500}>
                     {record.theirLabel}
                   </Text>
