@@ -28,7 +28,7 @@ export const ConnectionsScreen = () => {
           <Button type="submit">Receive invite</Button>
         </Flex>
       </form>
-      <div>{conLoading ? <Loading /> : <ConnectionsTable records={conRecords} />}</div>
+      <div>{connectionLoading ? <Loading /> : <ConnectionsTable records={connectionRecords} />}</div>
     </>
   )
 }
