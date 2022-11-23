@@ -1,7 +1,7 @@
 import type { IAgentDependenciesProvider } from './IAgentDependenciesProvider'
 import type { Agent, InitConfig } from '@aries-framework/core'
 
-import { ConsoleLogger, LogLevel } from '@aries-framework/core'
+import { ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@aries-framework/core'
 
 import { AgentFactory } from './AgentFactory'
 
@@ -17,6 +17,9 @@ export const agentInitializer = async (
   }
 
   const agent = await agentProvider.createAgent(config)
+
+  agent.registerOutboundTransport(new WsOutboundTransport())
+  agent.registerOutboundTransport(new HttpOutboundTransport())
 
   await agent.initialize()
 

@@ -1,13 +1,73 @@
 diff --git a/node_modules/@aries-framework/react-hooks/build/ProofProvider.d.ts b/node_modules/@aries-framework/react-hooks/build/ProofProvider.d.ts
-index 3be0e12..16f870f 100644
+index 3be0e12..a6396f7 100644
 --- a/node_modules/@aries-framework/react-hooks/build/ProofProvider.d.ts
 +++ b/node_modules/@aries-framework/react-hooks/build/ProofProvider.d.ts
-@@ -1,7 +1,7 @@
+@@ -1,12 +1,12 @@
  import type { RecordsState } from './recordUtils';
  import type { Agent, ProofState } from '@aries-framework/core';
  import type { PropsWithChildren } from 'react';
 -import { ProofRecord } from '@aries-framework/core';
-+import { ProofExchangeRecord as ProofRecord } from '@aries-framework/core';
++import { ProofExchangeRecord } from '@aries-framework/core';
  import * as React from 'react';
- export declare const useProofs: () => RecordsState<ProofRecord>;
- export declare const useProofById: (id: string) => ProofRecord | undefined;
+-export declare const useProofs: () => RecordsState<ProofRecord>;
+-export declare const useProofById: (id: string) => ProofRecord | undefined;
+-export declare const useProofByState: (state: ProofState | ProofState[]) => ProofRecord[];
+-export declare const useProofNotInState: (state: ProofState | ProofState[]) => ProofRecord[];
++export declare const useProofs: () => RecordsState<ProofExchangeRecord>;
++export declare const useProofById: (id: string) => ProofExchangeRecord | undefined;
++export declare const useProofByState: (state: ProofState | ProofState[]) => ProofExchangeRecord[];
++export declare const useProofNotInState: (state: ProofState | ProofState[]) => ProofExchangeRecord[];
+ interface Props {
+     agent: Agent | undefined;
+ }
+diff --git a/node_modules/@aries-framework/react-hooks/build/ProofProvider.js b/node_modules/@aries-framework/react-hooks/build/ProofProvider.js
+index e77bc02..aee869e 100644
+--- a/node_modules/@aries-framework/react-hooks/build/ProofProvider.js
++++ b/node_modules/@aries-framework/react-hooks/build/ProofProvider.js
+@@ -74,9 +74,9 @@ const ProofProvider = ({ agent, children }) => {
+     }, [agent]);
+     (0, react_1.useEffect)(() => {
+         if (!state.loading) {
+-            const proofAdded$ = (0, recordUtils_1.recordsAddedByType)(agent, core_1.ProofRecord).subscribe((record) => setState((0, recordUtils_1.addRecord)(record, state)));
+-            const proofUpdated$ = (0, recordUtils_1.recordsUpdatedByType)(agent, core_1.ProofRecord).subscribe((record) => setState((0, recordUtils_1.updateRecord)(record, state)));
+-            const proofRemoved$ = (0, recordUtils_1.recordsRemovedByType)(agent, core_1.ProofRecord).subscribe((record) => setState((0, recordUtils_1.removeRecord)(record, state)));
++            const proofAdded$ = (0, recordUtils_1.recordsAddedByType)(agent, core_1.ProofExchangeRecord).subscribe((record) => setState((0, recordUtils_1.addRecord)(record, state)));
++            const proofUpdated$ = (0, recordUtils_1.recordsUpdatedByType)(agent, core_1.ProofExchangeRecord).subscribe((record) => setState((0, recordUtils_1.updateRecord)(record, state)));
++            const proofRemoved$ = (0, recordUtils_1.recordsRemovedByType)(agent, core_1.ProofExchangeRecord).subscribe((record) => setState((0, recordUtils_1.removeRecord)(record, state)));
+             return () => {
+                 proofAdded$ === null || proofAdded$ === void 0 ? void 0 : proofAdded$.unsubscribe();
+                 proofUpdated$ === null || proofUpdated$ === void 0 ? void 0 : proofUpdated$.unsubscribe();
+diff --git a/node_modules/@aries-framework/react-hooks/build/recordUtils.js b/node_modules/@aries-framework/react-hooks/build/recordUtils.js
+index 555a541..ffd09c3 100644
+--- a/node_modules/@aries-framework/react-hooks/build/recordUtils.js
++++ b/node_modules/@aries-framework/react-hooks/build/recordUtils.js
+@@ -39,6 +39,9 @@ const recordsAddedByType = (agent, recordClass) => {
+     if (!agent) {
+         throw new Error('Agent is required to subscribe to events');
+     }
++    if (!recordClass) {
++        throw new Error("The recordClass can't be undefined")
++    }
+     return agent === null || agent === void 0 ? void 0 : agent.events.observable(core_1.RepositoryEventTypes.RecordSaved).pipe(filterByType(recordClass));
+ };
+ exports.recordsAddedByType = recordsAddedByType;
+@@ -46,6 +49,9 @@ const recordsUpdatedByType = (agent, recordClass) => {
+     if (!agent) {
+         throw new Error('Agent is required to subscribe to events');
+     }
++    if (!recordClass) {
++        throw new Error("The recordClass can't be undefined")
++    }
+     return agent === null || agent === void 0 ? void 0 : agent.events.observable(core_1.RepositoryEventTypes.RecordUpdated).pipe(filterByType(recordClass));
+ };
+ exports.recordsUpdatedByType = recordsUpdatedByType;
+@@ -53,6 +59,9 @@ const recordsRemovedByType = (agent, recordClass) => {
+     if (!agent) {
+         throw new Error('Agent is required to subscribe to events');
+     }
++    if (!recordClass) {
++        throw new Error("The recordClass can't be undefined")
++    }
+     return agent === null || agent === void 0 ? void 0 : agent.events.observable(core_1.RepositoryEventTypes.RecordDeleted).pipe(filterByType(recordClass));
+ };
+ exports.recordsRemovedByType = recordsRemovedByType;

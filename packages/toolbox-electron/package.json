@@ -59,14 +59,15 @@
     "typescript": "~4.5.4"
   },
   "dependencies": {
-    "@animo/toolbox-core": "^0.0.1",
-    "@animo/toolbox-ui": "^0.0.1",
-    "@aries-framework/core": "0.3.0-alpha.8",
+    "@animo/toolbox-core": "*",
+    "@animo/toolbox-ui": "*",
+    "@aries-framework/core": "0.3.0-alpha.18",
     "@aries-framework/node": "^0.2.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.8",
     "electron-squirrel-startup": "^1.0.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "indy-sdk": "^1.16.0-dev-1655",
+    "node-fetch": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3"
