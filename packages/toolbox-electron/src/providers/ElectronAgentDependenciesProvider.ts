@@ -1,6 +1,7 @@
 import type { IAgentDependenciesProvider } from '@animo/toolbox-core'
 import type { AgentDependencies } from '@aries-framework/core'
 import type Indy from 'indy-sdk'
+import type { RequestInit } from 'node-fetch'
 
 import { AriesFrameworkError, IndySdkError } from '@aries-framework/core'
 import * as events from 'events'
@@ -32,13 +33,29 @@ export class ElectronAgentDependenciesProvider implements IAgentDependenciesProv
     )
   }
 
+  public async emulateFetch(
+    endpoint: string,
+    request: RequestInit
+  ): Promise<Pick<Response, 'text' | 'json' | 'status'>> {
+    // TODO: Add support for the AbortController
+    delete request.signal
+
+    const { body, statusCode } = await window.nodeFetch(endpoint, request)
+
+    return {
+      status: statusCode,
+      text: async () => body,
+      json: async () => JSON.parse(body),
+    }
+  }
+
   public async createAgentDependencies(): Promise<AgentDependencies> {
     const indyWithErrorHandling = this.wrapIndyWithErrorHandling(window.indy)
 
     return {
       indy: indyWithErrorHandling as unknown as typeof Indy,
       FileSystem: ElectronFileSystemAdapter,
-      fetch: fetch as never,
+      fetch: this.emulateFetch as never,
       EventEmitterClass: events.EventEmitter,
       WebSocketClass: WebSocket as never,
     }

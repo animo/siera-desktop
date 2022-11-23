@@ -3,6 +3,7 @@
 const NodeFileSystem = require('@aries-framework/node/build/NodeFileSystem').NodeFileSystem
 const { contextBridge } = require('electron')
 const indy = require('indy-sdk')
+const { default: nodeFetch } = require('node-fetch')
 
 /* eslint-enable @typescript-eslint/no-var-requires */
 
@@ -17,4 +18,13 @@ contextBridge.exposeInMainWorld('fs', {
   read: fs.read,
   basePath: fs.basePath,
   exists: fs.exists,
+})
+
+contextBridge.exposeInMainWorld('nodeFetch', async (endpoint, request) => {
+  const response = await nodeFetch(endpoint, request)
+
+  return {
+    statusCode: response.statusCode,
+    body: await response.text(),
+  }
 })

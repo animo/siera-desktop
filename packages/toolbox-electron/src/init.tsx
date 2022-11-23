@@ -1,5 +1,6 @@
 import type { FileSystem } from '@aries-framework/core'
 import type Indy from 'indy-sdk'
+import type { RequestInfo, RequestInit } from 'node-fetch'
 
 import React from 'react'
 import { createRoot } from 'react-dom/client'
@@ -11,6 +12,13 @@ declare global {
   interface Window {
     indy: typeof Indy
     fs: FileSystem
+    nodeFetch: (
+      url: Omit<RequestInfo, 'signal'>,
+      init?: Omit<RequestInit, 'signal'>
+    ) => Promise<{
+      statusCode: number
+      body: string
+    }>
   }
 }
 
