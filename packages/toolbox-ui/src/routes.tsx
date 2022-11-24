@@ -7,6 +7,7 @@ import { AgentSelectionScreen } from './pages/AgentSelectionScreen'
 import { SetupScreen } from './pages/SetupScreen'
 import { AgentHomeScreen } from './pages/agent/AgentHomeScreen'
 import { ConnectionsScreen } from './pages/agent/connections/ConnectionsScreen'
+import { CredentialsScreen } from './pages/agent/credentials/CredentialsScreen'
 
 export const routes: RouteObject[] = [
   {
@@ -29,6 +30,14 @@ export const routes: RouteObject[] = [
         element: (
           <Layout>
             <ConnectionsScreen />
+          </Layout>
+        ),
+      },
+      {
+        path: 'credentials',
+        element: (
+          <Layout>
+            <CredentialsScreen />
           </Layout>
         ),
       },

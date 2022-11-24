@@ -1,15 +1,16 @@
-import type { ConnectionRecord } from '@aries-framework/core'
+import type { CredentialExchangeRecord } from '@aries-framework/core'
 
 import { ActionIcon, Avatar, Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
-import { IconPencil, IconTrash } from '@tabler/icons'
+import { IconCheck, IconTrash } from '@tabler/icons'
 import React from 'react'
 
-interface ConnectionsTableProps {
-  records: ConnectionRecord[]
-  onDelete: (connection: ConnectionRecord) => void
+interface CredentialsTableProps {
+  records: CredentialExchangeRecord[]
+  onDelete: (credential: CredentialExchangeRecord) => void
+  onAccept: (credential: CredentialExchangeRecord) => void
 }
 
-export const ConnectionsTable = ({ records, onDelete }: ConnectionsTableProps) => {
+export const CredentialsTable = ({ records, onDelete, onAccept }: CredentialsTableProps) => {
   const theme = useMantineTheme()
 
   return (
@@ -17,7 +18,7 @@ export const ConnectionsTable = ({ records, onDelete }: ConnectionsTableProps) =
       <Table verticalSpacing="sm">
         <thead>
           <tr>
-            <th>Connection</th>
+            <th>Credential</th>
             <th>State</th>
             <th />
           </tr>
@@ -27,11 +28,11 @@ export const ConnectionsTable = ({ records, onDelete }: ConnectionsTableProps) =
             <tr key={record.id}>
               <td>
                 <Group spacing="sm">
-                  <Avatar size={30} src={record.imageUrl} radius={30}>
-                    {record.theirLabel?.substr(0, 1)}
+                  <Avatar size={30} radius={30}>
+                    {record.id.substr(0, 1)}
                   </Avatar>
                   <Text size="sm" weight={500}>
-                    {record.theirLabel}
+                    {record.id}
                   </Text>
                 </Group>
               </td>
@@ -41,8 +42,8 @@ export const ConnectionsTable = ({ records, onDelete }: ConnectionsTableProps) =
               </td>
               <td>
                 <Group spacing={0} position="right">
-                  <ActionIcon>
-                    <IconPencil size={16} stroke={1.5} />
+                  <ActionIcon color="green">
+                    <IconCheck size={16} stroke={1.5} onClick={() => onAccept(record)} />
                   </ActionIcon>
                   <ActionIcon color="red" onClick={() => onDelete(record)}>
                     <IconTrash size={16} stroke={1.5} />

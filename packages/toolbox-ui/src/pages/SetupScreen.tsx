@@ -24,6 +24,7 @@ const useStyles = createStyles(() => ({
 
 interface CreateAgentForm {
   agentLabel: string
+  mediatorInviteUrl: string
 }
 
 export const SetupScreen = () => {
@@ -32,6 +33,7 @@ export const SetupScreen = () => {
   const form = useForm<CreateAgentForm>({
     initialValues: {
       agentLabel: '',
+      mediatorInviteUrl: '',
     },
   })
   const { setAgents } = useAgentManager()
@@ -48,6 +50,7 @@ export const SetupScreen = () => {
             id: uuid(),
             key: uuid(),
           },
+          mediatorConnectionsInvite: formData.mediatorInviteUrl === '' ? undefined : formData.mediatorInviteUrl,
         },
       },
     ])
@@ -67,6 +70,11 @@ export const SetupScreen = () => {
         <Paper withBorder shadow="md" p={30} mt={20} radius="md">
           <form onSubmit={form.onSubmit(createAgentConfig)}>
             <TextInput label="Agent label" placeholder="Agent label" required {...form.getInputProps('agentLabel')} />
+            <TextInput
+              label="Mediator invite url"
+              placeholder="Mediator url"
+              {...form.getInputProps('mediatorInviteUrl')}
+            />
 
             <Button type="submit" fullWidth mt="xl">
               Create
