@@ -11,7 +11,7 @@ interface ConnectionInviteValues {
 }
 
 export const ConnectionsScreen = () => {
-  const form = useForm<ConnectionInviteValues>()
+  const form = useForm<ConnectionInviteValues>({ initialValues: { url: '' } })
   const { agent } = useAgent()
   const { records: connectionRecords, loading: connectionLoading } = useConnections()
 
@@ -28,7 +28,16 @@ export const ConnectionsScreen = () => {
           <Button type="submit">Receive invite</Button>
         </Flex>
       </form>
-      <div>{connectionLoading ? <Loading /> : <ConnectionsTable records={connectionRecords} />}</div>
+      <div>
+        {connectionLoading ? (
+          <Loading />
+        ) : (
+          <ConnectionsTable
+            records={connectionRecords}
+            onDelete={(connection) => agent?.connections.deleteById(connection.id)}
+          />
+        )}
+      </div>
     </>
   )
 }

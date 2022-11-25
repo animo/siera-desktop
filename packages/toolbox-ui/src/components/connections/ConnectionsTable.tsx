@@ -6,9 +6,10 @@ import React from 'react'
 
 interface ConnectionsTableProps {
   records: ConnectionRecord[]
+  onDelete: (connection: ConnectionRecord) => void
 }
 
-export const ConnectionsTable = ({ records }: ConnectionsTableProps) => {
+export const ConnectionsTable = ({ records, onDelete }: ConnectionsTableProps) => {
   const theme = useMantineTheme()
 
   return (
@@ -17,6 +18,7 @@ export const ConnectionsTable = ({ records }: ConnectionsTableProps) => {
         <thead>
           <tr>
             <th>Connection</th>
+            <th>Connection Id</th>
             <th>State</th>
             <th />
           </tr>
@@ -34,7 +36,11 @@ export const ConnectionsTable = ({ records }: ConnectionsTableProps) => {
                   </Text>
                 </Group>
               </td>
-
+              <td>
+                <Text size="sm" weight={500}>
+                  {record.id}
+                </Text>
+              </td>
               <td>
                 <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>{record.state}</Badge>
               </td>
@@ -43,7 +49,7 @@ export const ConnectionsTable = ({ records }: ConnectionsTableProps) => {
                   <ActionIcon>
                     <IconPencil size={16} stroke={1.5} />
                   </ActionIcon>
-                  <ActionIcon color="red">
+                  <ActionIcon color="red" onClick={() => onDelete(record)}>
                     <IconTrash size={16} stroke={1.5} />
                   </ActionIcon>
                 </Group>
