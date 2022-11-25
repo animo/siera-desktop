@@ -1,6 +1,6 @@
 import type { CredentialExchangeRecord } from '@aries-framework/core'
 
-import { useAgent, useCredentials } from '@aries-framework/react-hooks'
+import { useAgent, useConnections, useCredentials } from '@aries-framework/react-hooks'
 import { Title } from '@mantine/core'
 import React from 'react'
 
@@ -8,7 +8,8 @@ import { Loading } from '../../../components/Loading'
 import { CredentialsTable } from '../../../components/credentials/CredentialsTable'
 
 export const CredentialsScreen = () => {
-  const { records: creRecords, loading: creLoading } = useCredentials()
+  const { records: credentialRecords, loading: credentialsLoading } = useCredentials()
+  const { records: connectionRecords, loading: connectionsLoading } = useConnections()
   const { agent } = useAgent()
 
   const acceptCredential = (credential: CredentialExchangeRecord) => {
@@ -23,11 +24,12 @@ export const CredentialsScreen = () => {
     <>
       <Title size="h2">Credentials</Title>
       <div>
-        {creLoading ? (
+        {credentialsLoading || connectionsLoading ? (
           <Loading />
         ) : (
           <CredentialsTable
-            records={creRecords}
+            records={credentialRecords}
+            connections={connectionRecords}
             onDelete={(credential) => agent?.credentials.deleteById(credential.id)}
             onAccept={(credential) => acceptCredential(credential)}
           />
