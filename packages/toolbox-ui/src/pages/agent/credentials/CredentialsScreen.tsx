@@ -18,6 +18,12 @@ export const CredentialsScreen = () => {
         credentialRecordId: credential.id,
       })
     }
+
+    if (credential.state === 'credential-received') {
+      agent?.credentials.acceptCredential({
+        credentialRecordId: credential.id,
+      })
+    }
   }
 
   return (

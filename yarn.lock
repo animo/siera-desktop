@@ -40,10 +40,10 @@
     varint "^6.0.0"
     web-did-resolver "^2.0.8"
 
-"@aries-framework/core@0.3.0-alpha.18", "@aries-framework/core@0.3.0-alpha.18+d82ad01":
-  version "0.3.0-alpha.18"
-  resolved "https://registry.yarnpkg.com/@aries-framework/core/-/core-0.3.0-alpha.18.tgz#9dca2f9e5f55a76888dc1564f55a933d0f898384"
-  integrity sha512-aj9G8BfOBLZkgn5jzV+JNs9kmCBqC5/mefu9vznkfxT9oOorNis60jyU04IcnxElQCaIw8AKVYJJfNcQFfwcrg==
+"@aries-framework/core@0.3.0-alpha.22", "@aries-framework/core@0.3.0-alpha.22+c4e9679":
+  version "0.3.0-alpha.22"
+  resolved "https://registry.yarnpkg.com/@aries-framework/core/-/core-0.3.0-alpha.22.tgz#01b218cf4989818dccf960744d6e2e5f79f891dc"
+  integrity sha512-b3UejEMXp37tRwIF3I7R5oaFgZIsiaaPqI50yN5Osdq1TIgK0mjluW8+J+nbc58/d1JtvQpSVPQc1m94DThkPA==
   dependencies:
     "@digitalcredentials/jsonld" "^5.2.1"
     "@digitalcredentials/jsonld-signatures" "^9.3.1"
@@ -74,12 +74,12 @@
     varint "^6.0.0"
     web-did-resolver "^2.0.8"
 
-"@aries-framework/node@0.3.0-alpha.18":
-  version "0.3.0-alpha.18"
-  resolved "https://registry.yarnpkg.com/@aries-framework/node/-/node-0.3.0-alpha.18.tgz#e2cc7f25b9de2578b1dd509afc0126db00cc88e0"
-  integrity sha512-oUrEK7WLNIdFujr7hYpLeYBsiswBTw/eZipKjX0bKUcKY93ed2BPn0NuSUEQhZG7jcwYMFeHh9hi0iGe4YhQdQ==
+"@aries-framework/node@0.3.0-alpha.22":
+  version "0.3.0-alpha.22"
+  resolved "https://registry.yarnpkg.com/@aries-framework/node/-/node-0.3.0-alpha.22.tgz#9428e3b680f699fad66315784dceb18d29793ee9"
+  integrity sha512-sedoUbyDqt6j9jj6U7ybRMPygx+l84ebeRcQod37sHhI91pQmkOmCq79d1xUkajtbjR+XiOGBhofBMeGxU+MOQ==
   dependencies:
-    "@aries-framework/core" "0.3.0-alpha.18+d82ad01"
+    "@aries-framework/core" "0.3.0-alpha.22+c4e9679"
     express "^4.17.1"
     ffi-napi "^4.0.3"
     indy-sdk "^1.16.0-dev-1636"
