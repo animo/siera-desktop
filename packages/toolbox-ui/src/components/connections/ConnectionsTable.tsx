@@ -18,6 +18,7 @@ export const ConnectionsTable = ({ records, onDelete }: ConnectionsTableProps) =
         <thead>
           <tr>
             <th>Connection</th>
+            <th>Connection Id</th>
             <th>State</th>
             <th />
           </tr>
@@ -35,7 +36,11 @@ export const ConnectionsTable = ({ records, onDelete }: ConnectionsTableProps) =
                   </Text>
                 </Group>
               </td>
-
+              <td>
+                <Text size="sm" weight={500}>
+                  {record.id}
+                </Text>
+              </td>
               <td>
                 <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>{record.state}</Badge>
               </td>
