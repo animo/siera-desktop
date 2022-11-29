@@ -2,10 +2,10 @@ import { uuid } from '@animo/toolbox-core/src/utils'
 import { createStyles, TextInput, Paper, Title, Button } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { BackButton } from '../components/BackButton'
 import { useAgentManager } from '../contexts/AgentManagerContext'
+import { useNavigation } from '../hooks/useNavigation'
 
 const useStyles = createStyles(() => ({
   backButton: {
@@ -28,7 +28,7 @@ interface CreateAgentForm {
 }
 
 export const SetupScreen = () => {
-  const navigate = useNavigate()
+  const navigation = useNavigation()
   const { classes } = useStyles()
   const form = useForm<CreateAgentForm>({
     initialValues: {
@@ -56,7 +56,7 @@ export const SetupScreen = () => {
       },
     ])
 
-    navigate('/')
+    navigation.navigate('/')
   }
 
   return (

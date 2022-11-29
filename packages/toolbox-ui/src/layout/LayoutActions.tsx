@@ -1,9 +1,9 @@
 import { createStyles } from '@mantine/core'
 import { IconLogout } from '@tabler/icons'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { useAgentManager } from '../contexts/AgentManagerContext'
+import { useNavigation } from '../hooks/useNavigation'
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon')
@@ -41,11 +41,11 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 export const LayoutActions = () => {
   const { classes } = useStyles()
-  const navigate = useNavigate()
+  const navigation = useNavigation()
   const { setCurrentAgentId } = useAgentManager()
 
   const signOut = () => {
-    navigate('/')
+    navigation.navigate('/')
 
     setCurrentAgentId(undefined)
   }

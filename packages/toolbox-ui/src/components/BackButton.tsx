@@ -1,13 +1,14 @@
 import { UnstyledButton } from '@mantine/core'
 import { IconChevronLeft } from '@tabler/icons'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+
+import { useNavigation } from '../hooks/useNavigation'
 
 export const BackButton = () => {
-  const navigate = useNavigate()
+  const navigation = useNavigation()
 
   return (
-    <UnstyledButton onClick={() => navigate(-1)}>
+    <UnstyledButton onClick={() => navigation.goBack()}>
       <IconChevronLeft size={32} />
     </UnstyledButton>
   )
