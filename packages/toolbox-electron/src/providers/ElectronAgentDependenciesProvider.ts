@@ -5,6 +5,7 @@ import type { RequestInit } from 'node-fetch'
 
 import { AriesFrameworkError, IndySdkError } from '@aries-framework/core'
 import * as events from 'events'
+import { AbortError } from 'fork-ts-checker-webpack-plugin/lib/utils/async/abort-error'
 
 import { ElectronFileSystemAdapter } from '../adapters/ElectronFileSystemAdapter'
 
@@ -37,10 +38,19 @@ export class ElectronAgentDependenciesProvider implements IAgentDependenciesProv
     endpoint: string,
     request: RequestInit
   ): Promise<Pick<Response, 'text' | 'json' | 'status'>> {
-    // TODO: Add support for the AbortController
+    const signal = request.signal
     delete request.signal
 
+    // A hacky way to emulate the abortController signal
+    const abort = () => {
+      throw new AbortError('The operation was aborted.')
+    }
+
+    signal?.addEventListener('abort', abort)
+
     const { body, statusCode } = await window.nodeFetch(endpoint, request)
+
+    signal?.removeEventListener('abort', abort)
 
     return {
       status: statusCode,

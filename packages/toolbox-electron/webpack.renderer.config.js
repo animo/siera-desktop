@@ -20,5 +20,8 @@ module.exports = {
     fallback: {
       https: false,
     },
+    alias: {
+      'abort-controller': require.resolve('native-abort-controller'),
+    },
   },
 }
