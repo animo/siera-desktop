@@ -1,4 +1,4 @@
-import type { ConnectionRecord, CredentialExchangeRecord } from '@aries-framework/core'
+import type { ConnectionRecord, ProofExchangeRecord } from '@aries-framework/core'
 
 import { ActionIcon, Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import { IconCheck, IconTrash } from '@tabler/icons'
@@ -6,14 +6,14 @@ import React from 'react'
 
 import { SmartAvatar } from '../SmartAvatar'
 
-interface CredentialsTableProps {
-  records: CredentialExchangeRecord[]
+interface ProofsTableProps {
+  records: ProofExchangeRecord[]
   connections: ConnectionRecord[]
-  onDelete: (credential: CredentialExchangeRecord) => void
-  onAccept: (credential: CredentialExchangeRecord) => void
+  onDelete: (proof: ProofExchangeRecord) => void
+  onAccept: (proof: ProofExchangeRecord) => void
 }
 
-export const CredentialsTable = ({ records, connections, onDelete, onAccept }: CredentialsTableProps) => {
+export const ProofsTable = ({ records, connections, onDelete, onAccept }: ProofsTableProps) => {
   const theme = useMantineTheme()
 
   return (
@@ -21,15 +21,15 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept }: C
       <Table verticalSpacing="sm">
         <thead>
           <tr>
-            <th>Issuer</th>
-            <th>Credential Id</th>
+            <th>Connection</th>
+            <th>Proof Id</th>
             <th>State</th>
             <th />
           </tr>
         </thead>
         <tbody>
           {records.map((record) => {
-            const connection = connections.find((connection) => connection.id == record.connectionId)
+            const connection = connections.find((connection) => connection.id === record.connectionId)
             return (
               <tr key={record.id}>
                 <td>
@@ -52,8 +52,8 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept }: C
                 </td>
                 <td>
                   <Group spacing={0} position="right">
-                    <ActionIcon color="green">
-                      <IconCheck size={16} stroke={1.5} onClick={() => onAccept(record)} />
+                    <ActionIcon color="green" onClick={() => onAccept(record)}>
+                      <IconCheck size={16} stroke={1.5} />
                     </ActionIcon>
                     <ActionIcon color="red" onClick={() => onDelete(record)}>
                       <IconTrash size={16} stroke={1.5} />
