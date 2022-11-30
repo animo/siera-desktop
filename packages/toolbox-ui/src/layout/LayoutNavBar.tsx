@@ -3,7 +3,8 @@ import type { TablerIcon } from '@tabler/icons'
 
 import { createStyles, Navbar } from '@mantine/core'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+
+import { useNavigation } from '../hooks/useNavigation'
 
 import { LayoutActions } from './LayoutActions'
 import { LayoutAvatar } from './LayoutAvatar'
@@ -78,7 +79,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) => {
   const { classes, cx } = useStyles()
-  const navigate = useNavigate()
+  const navigation = useNavigation()
   const [activeIndex, setActiveIndex] = useState(0)
 
   return (
@@ -95,7 +96,7 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
             key={item.name}
             onClick={(event) => {
               event.preventDefault()
-              navigate(item.href)
+              navigation.unSafeNavigate(item.href)
               setActiveIndex(index)
             }}
           >

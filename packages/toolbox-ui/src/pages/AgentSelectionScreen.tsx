@@ -1,17 +1,17 @@
 import { Card, Container, Flex, Group, Space, Text, Title, UnstyledButton } from '@mantine/core'
 import { IconPlus } from '@tabler/icons'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { useAgentManager } from '../contexts/AgentManagerContext'
+import { useNavigation } from '../hooks/useNavigation'
 
 export const AgentSelectionScreen = () => {
-  const navigate = useNavigate()
+  const navigation = useNavigation()
   const { agents, setCurrentAgentId } = useAgentManager()
 
   const switchToAgent = (agentId: string) => {
     setCurrentAgentId(agentId)
-    navigate('/agent')
+    navigation.navigate('/agent')
   }
 
   return (
@@ -26,7 +26,7 @@ export const AgentSelectionScreen = () => {
             </Card>
           </UnstyledButton>
         ))}
-        <UnstyledButton onClick={() => navigate('/setup')} h={80}>
+        <UnstyledButton onClick={() => navigation.navigate('/setup')} h={80}>
           <Group spacing="sm">
             <IconPlus />
             <Text span>Create new Agent</Text>
