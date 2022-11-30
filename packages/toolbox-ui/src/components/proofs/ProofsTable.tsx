@@ -1,4 +1,4 @@
-import type { CredentialExchangeRecord, ConnectionRecord, ProofExchangeRecord } from '@aries-framework/core'
+import type { ConnectionRecord, ProofExchangeRecord } from '@aries-framework/core'
 
 import { ActionIcon, Avatar, Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import { IconCheck, IconTrash } from '@tabler/icons'
@@ -6,7 +6,6 @@ import React from 'react'
 
 interface ProofsTableProps {
   records: ProofExchangeRecord[]
-  credentials: CredentialExchangeRecord[]
   connections: ConnectionRecord[]
   onDelete: (proof: ProofExchangeRecord) => void
   onAccept: (proof: ProofExchangeRecord) => void
@@ -28,7 +27,7 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept }: Proofs
         </thead>
         <tbody>
           {records.map((record) => {
-            const connection = connections.find((connection) => connection.id == record.connectionId)
+            const connection = connections.find((connection) => connection.id === record.connectionId)
             return (
               <tr key={record.id}>
                 <td>

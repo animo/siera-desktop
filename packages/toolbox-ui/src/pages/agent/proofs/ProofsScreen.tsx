@@ -10,7 +10,6 @@ import { ProofsTable } from '../../../components/proofs/ProofsTable'
 export const ProofsScreen = () => {
   const { agent } = useAgent()
   const { records: proofRecords, loading: proofsLoading } = useProofs()
-  const { records: credentialRecords, loading: credentialsLoading } = useCredentials()
   const { records: connectionRecords, loading: connectionsLoading } = useConnections()
 
   const acceptProofRequest = async (proof: ProofExchangeRecord) => {
@@ -28,18 +27,21 @@ export const ProofsScreen = () => {
     })
   }
 
+  const deleteProof = async (proof: ProofExchangeRecord) => {
+    await agent?.proofs.deleteById(proof.id)
+  }
+
   return (
     <>
       <Title size="h2">Proofs</Title>
-      {proofsLoading || credentialsLoading || connectionsLoading ? (
+      {proofsLoading || connectionsLoading ? (
         <Loading />
       ) : (
         <ProofsTable
           records={proofRecords}
-          credentials={credentialRecords}
           connections={connectionRecords}
-          onDelete={() => null}
-          onAccept={(proof: ProofExchangeRecord) => acceptProofRequest(proof)}
+          onDelete={deleteProof}
+          onAccept={acceptProofRequest}
         />
       )}
     </>

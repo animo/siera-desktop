@@ -1,5 +1,6 @@
 import type { CredentialExchangeRecord } from '@aries-framework/core'
 
+import { CredentialState } from '@aries-framework/core'
 import { useAgent, useConnections, useCredentials } from '@aries-framework/react-hooks'
 import { Title } from '@mantine/core'
 import React from 'react'
@@ -13,13 +14,13 @@ export const CredentialsScreen = () => {
   const { agent } = useAgent()
 
   const acceptCredential = (credential: CredentialExchangeRecord) => {
-    if (credential.state === 'offer-received') {
+    if (credential.state === CredentialState.OfferReceived) {
       agent?.credentials.acceptOffer({
         credentialRecordId: credential.id,
       })
     }
 
-    if (credential.state === 'credential-received') {
+    if (credential.state === CredentialState.CredentialReceived) {
       agent?.credentials.acceptCredential({
         credentialRecordId: credential.id,
       })
