@@ -96,7 +96,7 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
             key={item.name}
             onClick={(event) => {
               event.preventDefault()
-              navigation.navigate(item.href)
+              navigation.unSafeNavigate(item.href)
               setActiveIndex(index)
             }}
           >

@@ -9,6 +9,8 @@ import { AgentHomeScreen } from './pages/agent/AgentHomeScreen'
 import { ConnectionsScreen } from './pages/agent/connections/ConnectionsScreen'
 import { CredentialsScreen } from './pages/agent/credentials/CredentialsScreen'
 
+export const routeUrls = ['/', '/setup', '/agent', '/agent/connections', '/agent/credentials', '/agent/proofs'] as const
+
 export const routes: RouteObject[] = [
   {
     path: '/',
