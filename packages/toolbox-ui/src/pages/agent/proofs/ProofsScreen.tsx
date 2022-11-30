@@ -1,6 +1,6 @@
 import type { ProofExchangeRecord } from '@aries-framework/core'
 
-import { useAgent, useConnections, useCredentials, useProofs } from '@aries-framework/react-hooks'
+import { useAgent, useConnections, useProofs } from '@aries-framework/react-hooks'
 import { Title } from '@mantine/core'
 import React from 'react'
 

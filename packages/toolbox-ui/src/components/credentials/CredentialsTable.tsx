@@ -1,8 +1,10 @@
-import type { CredentialExchangeRecord, ConnectionRecord } from '@aries-framework/core'
+import type { ConnectionRecord, CredentialExchangeRecord } from '@aries-framework/core'
 
-import { ActionIcon, Avatar, Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import { IconCheck, IconTrash } from '@tabler/icons'
 import React from 'react'
+
+import { SmartAvatar } from '../SmartAvatar'
 
 interface CredentialsTableProps {
   records: CredentialExchangeRecord[]
@@ -32,9 +34,9 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept }: C
               <tr key={record.id}>
                 <td>
                   <Group spacing="sm">
-                    <Avatar size={30} radius={30} src={connection?.imageUrl}>
-                      {connection?.theirLabel?.substr(0, 1)}
-                    </Avatar>
+                    <SmartAvatar size={30} radius={30} src={connection?.imageUrl}>
+                      {connection?.theirLabel}
+                    </SmartAvatar>
                     <Text size="sm" weight={500}>
                       {connection?.theirLabel}
                     </Text>
