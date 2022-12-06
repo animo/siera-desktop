@@ -14,7 +14,7 @@ interface ToolboxAppProps {
 export const ToolboxApp = ({ router }: ToolboxAppProps) => {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <NotificationsProvider position={'top-right'}>
+      <NotificationsProvider position="top-right">
         <GlobalErrorHandler>
           <RouterProvider router={router} />
         </GlobalErrorHandler>
