@@ -25,7 +25,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const { agent, loading } = useAgent()
 
   if (loading) {
-    return <Loading description={'Loading Agent'} />
+    return <Loading description="Loading Agent" />
   }
 
   if (!agent) {

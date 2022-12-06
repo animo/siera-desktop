@@ -15,5 +15,5 @@ export const SmartAvatar = ({ children, ...props }: SmartAvatarProps) => {
         .join('')
     : undefined
 
-  return <Avatar {...props} children={label}></Avatar>
+  return <Avatar {...props}>{label}</Avatar>
 }

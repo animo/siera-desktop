@@ -16,10 +16,10 @@ export const Loading = ({ description }: LoadingProps) => {
 
   return (
     <Center className={classes.spinnerCentering}>
-      <Flex direction={'column'} align={'center'} gap={'sm'}>
-        <Loader size={'xl'} />
+      <Flex direction="column" align="center" gap="sm">
+        <Loader size="xl" />
         {description && (
-          <Text align={'center'} c={'dimmed'}>
+          <Text align="center" c="dimmed">
             {description}
           </Text>
         )}
