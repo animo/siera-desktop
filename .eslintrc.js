@@ -29,6 +29,7 @@ module.exports = {
   },
   rules: {
     'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
+    'react/jsx-no-useless-fragment': 'error',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: true }],
