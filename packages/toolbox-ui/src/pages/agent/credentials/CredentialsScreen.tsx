@@ -39,6 +39,7 @@ export const CredentialsScreen = () => {
             connections={connectionRecords}
             onDelete={(credential) => agent?.credentials.deleteById(credential.id)}
             onAccept={(credential) => acceptCredential(credential)}
+            onDecline={(credential) => agent?.credentials.declineOffer(credential.id)}
           />
         )}
       </div>

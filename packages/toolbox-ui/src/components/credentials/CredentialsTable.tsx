@@ -1,19 +1,21 @@
 import type { ConnectionRecord, CredentialExchangeRecord } from '@aries-framework/core'
 
-import { ActionIcon, Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
-import { IconCheck, IconTrash } from '@tabler/icons'
+import { CredentialState } from '@aries-framework/core'
+import { Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
 
+import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
 
 interface CredentialsTableProps {
   records: CredentialExchangeRecord[]
   connections: ConnectionRecord[]
   onDelete: (credential: CredentialExchangeRecord) => void
+  onDecline: (credential: CredentialExchangeRecord) => void
   onAccept: (credential: CredentialExchangeRecord) => void
 }
 
-export const CredentialsTable = ({ records, connections, onDelete, onAccept }: CredentialsTableProps) => {
+export const CredentialsTable = ({ records, connections, onDelete, onAccept, onDecline }: CredentialsTableProps) => {
   const theme = useMantineTheme()
 
   return (
@@ -30,6 +32,16 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept }: C
         <tbody>
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id == record.connectionId)
+
+            const recordState = record.state
+
+            const isLoading = recordState === CredentialState.RequestSent || recordState === CredentialState.OfferSent
+
+            const isDeclineable = recordState === CredentialState.OfferReceived
+
+            const isAcceptable =
+              recordState === CredentialState.OfferReceived || recordState === CredentialState.CredentialReceived
+
             return (
               <tr key={record.id}>
                 <td>
@@ -51,14 +63,14 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept }: C
                   <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>{record.state}</Badge>
                 </td>
                 <td>
-                  <Group spacing={0} position="right">
-                    <ActionIcon color="green">
-                      <IconCheck size={16} stroke={1.5} onClick={() => onAccept(record)} />
-                    </ActionIcon>
-                    <ActionIcon color="red" onClick={() => onDelete(record)}>
-                      <IconTrash size={16} stroke={1.5} />
-                    </ActionIcon>
-                  </Group>
+                  <RecordActions
+                    onDecline={() => onDecline(record)}
+                    onAccept={() => onAccept(record)}
+                    onDelete={() => onDelete(record)}
+                    isAcceptable={isAcceptable}
+                    isDeclineable={isDeclineable}
+                    isLoading={isLoading}
+                  />
                 </td>
               </tr>
             )
