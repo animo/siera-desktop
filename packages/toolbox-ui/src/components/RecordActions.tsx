@@ -1,5 +1,5 @@
-import { ActionIcon, Group, Loader } from '@mantine/core'
-import { IconCheck, IconTrash, IconX } from '@tabler/icons'
+import { ActionIcon, Button, Group, Loader } from '@mantine/core'
+import { IconTrash } from '@tabler/icons'
 import React from 'react'
 
 interface RecordActionsProps {
