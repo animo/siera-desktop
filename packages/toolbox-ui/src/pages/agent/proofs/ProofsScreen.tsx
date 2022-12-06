@@ -31,6 +31,10 @@ export const ProofsScreen = () => {
     await agent?.proofs.deleteById(proof.id)
   }
 
+  const declineProofRequest = async (proof: ProofExchangeRecord) => {
+    await agent?.proofs.declineRequest(proof.id)
+  }
+
   return (
     <>
       <Title size="h2">Proofs</Title>
@@ -42,6 +46,7 @@ export const ProofsScreen = () => {
           connections={connectionRecords}
           onDelete={deleteProof}
           onAccept={acceptProofRequest}
+          onDecline={declineProofRequest}
         />
       )}
     </>

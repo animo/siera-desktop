@@ -19,6 +19,10 @@ export const ConnectionsScreen = () => {
     await agent?.oob.receiveInvitationFromUrl(url)
   }
 
+  const acceptRequest = async (connectionId: string) => {
+    await agent?.connections.acceptRequest(connectionId)
+  }
+
   return (
     <>
       <Title size="h2">Connections</Title>
@@ -35,6 +39,7 @@ export const ConnectionsScreen = () => {
           <ConnectionsTable
             records={connectionRecords}
             onDelete={(connection) => agent?.connections.deleteById(connection.id)}
+            onAccept={(connection) => acceptRequest(connection.id)}
           />
         )}
       </div>
