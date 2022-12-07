@@ -32,7 +32,7 @@ export const RecordActions = ({ onAccept, onDecline, onDelete, isLoading }: Reco
 
   return (
     <Group spacing={0} position="right">
-      {isLoading ? <Loader size={20} /> : <>{actions}</>}
+      {isLoading ? <Loader size={20} /> : actions}
     </Group>
   )
 }
