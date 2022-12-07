@@ -1,7 +1,6 @@
 import type { ConnectionRecord, ProofExchangeRecord } from '@aries-framework/core'
 
-import { ProofUtil } from '@animo/toolbox-core/src/utils/records/ProofUtil'
-import { ProofState } from '@aries-framework/core'
+import { ProofsUtil } from '@animo/toolbox-core/src/utils/records/ProofsUtil'
 import { Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
 
@@ -33,8 +32,9 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
         <tbody>
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id === record.connectionId)
-            const isLoading = ProofUtil.isProofWaitingForResponse(record)
-            const { isDeclineable, isAcceptable } = ProofUtil.isProofWaitingForInput(record)
+            const isLoading = ProofsUtil.isProofWaitingForResponse(record)
+            const isWaitingForAccept = ProofsUtil.isProofWaitingForAcceptInput(record)
+            const isWaitingForDecline = ProofsUtil.isProofWaitingForDeclineInput(record)
 
             return (
               <tr key={record.id}>
@@ -59,8 +59,8 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
                 <td>
                   <Group spacing={0} position="right">
                     <RecordActions
-                      onAccept={isAcceptable ? () => onAccept(record) : undefined}
-                      onDecline={isDeclineable ? () => onDecline(record) : undefined}
+                      onAccept={isWaitingForAccept ? () => onAccept(record) : undefined}
+                      onDecline={isWaitingForDecline ? () => onDecline(record) : undefined}
                       onDelete={() => onDelete(record)}
                       isLoading={isLoading}
                     />
