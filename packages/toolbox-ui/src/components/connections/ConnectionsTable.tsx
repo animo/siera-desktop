@@ -1,6 +1,6 @@
 import type { ConnectionRecord } from '@aries-framework/core'
 
-import { ConnectionUtil } from '@animo/toolbox-core/src/utils/records/ConnectionUtil'
+import { ConnectionsUtil } from '@animo/toolbox-core/src/utils/records/ConnectionsUtil'
 import { Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
 
@@ -29,8 +29,8 @@ export const ConnectionsTable = ({ records, onDelete, onAccept }: ConnectionsTab
         </thead>
         <tbody>
           {records.map((record: ConnectionRecord) => {
-            const isLoading = ConnectionUtil.isConnectionWaitingForResponse(record)
-            const { isAcceptable } = ConnectionUtil.isConnectionWaitingForInput(record)
+            const isLoading = ConnectionsUtil.isConnectionWaitingForResponse(record)
+            const isWaitingForAccept = ConnectionsUtil.isConnectionWaitingForAcceptInput(record)
 
             return (
               <tr key={record.id}>
@@ -54,7 +54,7 @@ export const ConnectionsTable = ({ records, onDelete, onAccept }: ConnectionsTab
                 </td>
                 <td>
                   <RecordActions
-                    onAccept={isAcceptable ? () => onAccept(record) : undefined}
+                    onAccept={isWaitingForAccept ? () => onAccept(record) : undefined}
                     onDelete={() => onDelete(record)}
                     isLoading={isLoading}
                   />

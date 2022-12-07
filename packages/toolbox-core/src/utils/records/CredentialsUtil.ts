@@ -2,12 +2,7 @@ import type { CredentialExchangeRecord } from '@aries-framework/core'
 
 import { CredentialState } from '@aries-framework/core'
 
-interface CredentialActions {
-  isAcceptable: boolean
-  isDeclineable: boolean
-}
-
-export class CredentialUtil {
+export class CredentialsUtil {
   private static loadingStates: CredentialState[] = [CredentialState.RequestSent, CredentialState.OfferSent]
 
   private static acceptStates: CredentialState[] = [CredentialState.OfferReceived, CredentialState.CredentialReceived]
@@ -15,13 +10,14 @@ export class CredentialUtil {
   private static declineStates: CredentialState[] = [CredentialState.OfferReceived]
 
   public static isCredentialWaitingForResponse(credential: CredentialExchangeRecord): boolean {
-    return CredentialUtil.loadingStates.includes(credential.state)
+    return CredentialsUtil.loadingStates.includes(credential.state)
   }
 
-  public static isCredentialWaitingForInput(credential: CredentialExchangeRecord): CredentialActions {
-    return {
-      isAcceptable: CredentialUtil.acceptStates.includes(credential.state),
-      isDeclineable: CredentialUtil.declineStates.includes(credential.state),
-    }
+  public static isCredentialWaitingForAcceptInput(credential: CredentialExchangeRecord): boolean {
+    return CredentialsUtil.acceptStates.includes(credential.state)
+  }
+
+  public static isCredentialWaitingForDeclineInput(credential: CredentialExchangeRecord): boolean {
+    return CredentialsUtil.declineStates.includes(credential.state)
   }
 }
