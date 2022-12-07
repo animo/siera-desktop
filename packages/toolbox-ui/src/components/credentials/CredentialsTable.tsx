@@ -1,6 +1,6 @@
 import type { ConnectionRecord, CredentialExchangeRecord } from '@aries-framework/core'
 
-import { CredentialState } from '@aries-framework/core'
+import { CredentialUtil } from '@animo/toolbox-core/src/utils/records/CredentialUtil'
 import { Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
 
@@ -32,15 +32,8 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
         <tbody>
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id == record.connectionId)
-
-            const recordState = record.state
-
-            const isLoading = recordState === CredentialState.RequestSent || recordState === CredentialState.OfferSent
-
-            const isDeclineable = recordState === CredentialState.OfferReceived
-
-            const isAcceptable =
-              recordState === CredentialState.OfferReceived || recordState === CredentialState.CredentialReceived
+            const isLoading = CredentialUtil.isCredentialWaitingForResponse(record)
+            const { isDeclineable, isAcceptable } = CredentialUtil.isCredentialWaitingForInput(record)
 
             return (
               <tr key={record.id}>
@@ -64,11 +57,9 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
                 </td>
                 <td>
                   <RecordActions
-                    onDecline={() => onDecline(record)}
-                    onAccept={() => onAccept(record)}
+                    onAccept={isAcceptable ? () => onAccept(record) : undefined}
+                    onDecline={isDeclineable ? () => onDecline(record) : undefined}
                     onDelete={() => onDelete(record)}
-                    isAcceptable={isAcceptable}
-                    isDeclineable={isDeclineable}
                     isLoading={isLoading}
                   />
                 </td>
