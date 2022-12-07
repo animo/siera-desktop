@@ -6,37 +6,29 @@ interface RecordActionsProps {
   onDelete?: () => void
   onDecline?: () => void
   onAccept?: () => void
-
-  isDeclineable?: boolean
-  isAcceptable?: boolean
   isLoading?: boolean
 }
 
-export const RecordActions = ({
-  isAcceptable,
-  onAccept,
-  onDecline,
-  isDeclineable,
-  onDelete,
-  isLoading,
-}: RecordActionsProps) => {
+export const RecordActions = ({ onAccept, onDecline, onDelete, isLoading }: RecordActionsProps) => {
   const actions = [
-    isAcceptable ? (
-      <ActionIcon key="accept" color="green">
-        <IconCheck size={16} stroke={1.5} onClick={onAccept} />
+    onAccept && (
+      <ActionIcon key="accept" color="green" onClick={onAccept}>
+        <IconCheck size={16} stroke={1.5} />
       </ActionIcon>
-    ) : null,
+    ),
 
-    isDeclineable ? (
+    onDecline && (
       <ActionIcon key="reject" color="red" onClick={onDecline}>
         <IconX size={16} stroke={1.5} />
       </ActionIcon>
-    ) : null,
+    ),
 
-    <ActionIcon key="delete" color="red" onClick={onDelete}>
-      <IconTrash size={16} stroke={1.5} />
-    </ActionIcon>,
-  ]
+    onDelete && (
+      <ActionIcon key="delete" color="red" onClick={onDelete}>
+        <IconTrash size={16} stroke={1.5} />
+      </ActionIcon>
+    ),
+  ].filter(Boolean)
 
   return (
     <Group spacing={0} position="right">
