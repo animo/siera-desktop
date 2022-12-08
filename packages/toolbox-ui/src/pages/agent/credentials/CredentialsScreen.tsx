@@ -29,7 +29,9 @@ export const CredentialsScreen = () => {
 
   return (
     <>
-      <Title size="h2">Credentials</Title>
+      <Title size="h2" mb={20}>
+        Credentials
+      </Title>
       <div>
         {credentialsLoading || connectionsLoading ? (
           <Loading />

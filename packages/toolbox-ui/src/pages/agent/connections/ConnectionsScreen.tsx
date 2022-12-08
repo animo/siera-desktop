@@ -25,10 +25,12 @@ export const ConnectionsScreen = () => {
 
   return (
     <>
-      <Title size="h2">Connections</Title>
+      <Title size="h2" mb={20}>
+        Connections
+      </Title>
       <form onSubmit={form.onSubmit(receiveInvite)}>
-        <Flex>
-          <TextInput {...form.getInputProps('url')} />
+        <Flex gap={10} mb={20}>
+          <TextInput placeholder="Invite url" {...form.getInputProps('url')} />
           <Button type="submit">Receive invite</Button>
         </Flex>
       </form>

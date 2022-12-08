@@ -37,7 +37,9 @@ export const ProofsScreen = () => {
 
   return (
     <>
-      <Title size="h2">Proofs</Title>
+      <Title size="h2" mb={20}>
+        Proofs
+      </Title>
       {proofsLoading || connectionsLoading ? (
         <Loading />
       ) : (
