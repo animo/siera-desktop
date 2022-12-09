@@ -27,7 +27,6 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
         <thead>
           <tr>
             <th>Credential</th>
-            <th>Credential Id</th>
             <th>State</th>
             <th />
           </tr>
@@ -51,11 +50,6 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
                       {formatSchemaName(formattedCredential?.offer?.indy?.schema_id)}
                     </Text>
                   </Group>
-                </td>
-                <td>
-                  <Text size="sm" weight={500}>
-                    {record.id}
-                  </Text>
                 </td>
                 <td>
                   <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>{record.state}</Badge>
