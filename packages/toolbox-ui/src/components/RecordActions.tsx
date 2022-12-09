@@ -1,6 +1,8 @@
 import { ActionIcon, Group, Loader } from '@mantine/core'
-import { IconCheck, IconTrash, IconX } from '@tabler/icons'
+import { IconTrash } from '@tabler/icons'
 import React from 'react'
+
+import { DangerButton, PrimaryButton } from './generic'
 
 interface RecordActionsProps {
   onDelete?: () => void
@@ -12,15 +14,15 @@ interface RecordActionsProps {
 export const RecordActions = ({ onAccept, onDecline, onDelete, isLoading }: RecordActionsProps) => {
   const actions = [
     onAccept && (
-      <ActionIcon key="accept" color="green" onClick={onAccept}>
-        <IconCheck size={16} stroke={1.5} />
-      </ActionIcon>
+      <PrimaryButton key="accept" size="xs" onClick={onAccept}>
+        Accept
+      </PrimaryButton>
     ),
 
     onDecline && (
-      <ActionIcon key="reject" color="red" onClick={onDecline}>
-        <IconX size={16} stroke={1.5} />
-      </ActionIcon>
+      <DangerButton key="reject" size="xs" onClick={onDecline}>
+        Decline
+      </DangerButton>
     ),
 
     onDelete && (
