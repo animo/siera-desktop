@@ -2,6 +2,7 @@ import { Card, Container, Flex, Group, Space, Text, Title, UnstyledButton } from
 import { IconPlus } from '@tabler/icons'
 import React from 'react'
 
+import { SmartAvatar } from '../components/SmartAvatar'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
 
@@ -17,16 +18,28 @@ export const AgentSelectionScreen = () => {
   return (
     <Container mt={20}>
       <Title size="h3">Agents</Title>
-      <Space h="xs" />
+      <Space h="md" />
       <Flex gap="md" wrap="wrap">
         {agents.map((agent) => (
           <UnstyledButton key={agent.id} onClick={() => switchToAgent(agent.id)}>
-            <Card shadow="xs" withBorder h={80} w={170}>
-              <Text weight="bold">{agent.name}</Text>
+            <Card h={100} w={220}>
+              <Group noWrap>
+                <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={64} radius="md">
+                  {agent.agentConfig.label}
+                </SmartAvatar>
+                <div>
+                  <Text size="xs" sx={{ textTransform: 'uppercase' }} weight={700} color="dimmed">
+                    Native (AFJ)
+                  </Text>
+                  <Text size="md" weight={600}>
+                    {agent.agentConfig.label}
+                  </Text>
+                </div>
+              </Group>
             </Card>
           </UnstyledButton>
         ))}
-        <UnstyledButton onClick={() => navigation.navigate('/setup')} h={80}>
+        <UnstyledButton onClick={() => navigation.navigate('/setup')} h={100}>
           <Group spacing="sm">
             <IconPlus />
             <Text span>Create new Agent</Text>

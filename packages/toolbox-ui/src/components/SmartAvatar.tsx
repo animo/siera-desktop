@@ -13,6 +13,7 @@ export const SmartAvatar = ({ children, ...props }: SmartAvatarProps) => {
         .slice(0, 2)
         .map((word) => word.substring(0, 1))
         .join('')
+        .toUpperCase()
     : undefined
 
   return <Avatar {...props}>{label}</Avatar>

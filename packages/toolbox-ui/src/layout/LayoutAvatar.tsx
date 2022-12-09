@@ -1,36 +1,39 @@
 import type { Agent } from '@aries-framework/core'
 
-import { Avatar, createStyles, Group, Text } from '@mantine/core'
+import { Group, Text } from '@mantine/core'
+import { useNetwork } from '@mantine/hooks'
+import { IconWifi } from '@tabler/icons'
 import React from 'react'
 
-const useStyles = createStyles((theme) => ({
-  agentGroup: {
-    width: '100%',
-    paddingTop: theme.spacing.sm,
-  },
-  textContainer: {
-    flex: 1,
-  },
-}))
+import { SmartAvatar } from '../components/SmartAvatar'
 
 interface LayoutAvatarProps {
   agent: Agent
 }
 
 export const LayoutAvatar = ({ agent }: LayoutAvatarProps) => {
-  const { classes } = useStyles()
-
+  const { online } = useNetwork()
   const avatarLabel = agent.config.label
-  const avatarLabelShort = avatarLabel.substr(0, 1).toUpperCase()
 
   return (
-    <Group className={classes.agentGroup}>
-      <Avatar radius="xl">{avatarLabelShort}</Avatar>
-
-      <div className={classes.textContainer}>
-        <Text size="sm" weight={500}>
+    <Group noWrap>
+      <SmartAvatar src={agent.config.connectionImageUrl} size={64} radius="md">
+        {avatarLabel}
+      </SmartAvatar>
+      <div>
+        <Text size="xs" sx={{ textTransform: 'uppercase' }} weight={700} color="dimmed">
+          Native (AFJ)
+        </Text>
+        <Text size="md" weight={600}>
           {avatarLabel}
         </Text>
+
+        <Group noWrap spacing={10} mt={3}>
+          <Text size="xs" color="dimmed">
+            {online ? 'Connected' : 'Offline'}
+          </Text>
+          <IconWifi size={20} stroke={1.5} color={online ? 'green' : 'red'} />
+        </Group>
       </div>
     </Group>
   )
