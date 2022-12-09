@@ -1,9 +1,11 @@
 import type { ConnectionRecord, CredentialExchangeRecord } from '@aries-framework/core'
 
+import { formatSchemaName } from '@animo/toolbox-core/src/utils'
 import { CredentialsUtil } from '@animo/toolbox-core/src/utils/records/CredentialsUtil'
 import { Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
 
+import { useCredentialsFormatData } from '../../contexts/CredentialFormatDataProvider'
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
 
@@ -17,13 +19,14 @@ interface CredentialsTableProps {
 
 export const CredentialsTable = ({ records, connections, onDelete, onAccept, onDecline }: CredentialsTableProps) => {
   const theme = useMantineTheme()
+  const { formattedData } = useCredentialsFormatData()
 
   return (
     <ScrollArea>
       <Table verticalSpacing="sm">
         <thead>
           <tr>
-            <th>Issuer</th>
+            <th>Credential</th>
             <th>Credential Id</th>
             <th>State</th>
             <th />
@@ -32,6 +35,7 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
         <tbody>
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id == record.connectionId)
+            const formattedCredential = formattedData.find((data) => data.id === record.id)
             const isLoading = CredentialsUtil.isCredentialWaitingForResponse(record)
             const isWaitingForAccept = CredentialsUtil.isCredentialWaitingForAcceptInput(record)
             const isWaitingForDecline = CredentialsUtil.isCredentialWaitingForDeclineInput(record)
@@ -44,7 +48,7 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
                       {connection?.theirLabel}
                     </SmartAvatar>
                     <Text size="sm" weight={500}>
-                      {connection?.theirLabel}
+                      {formatSchemaName(formattedCredential?.offer?.indy?.schema_id)}
                     </Text>
                   </Group>
                 </td>
