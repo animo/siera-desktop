@@ -7,6 +7,8 @@ import { agentInitializer } from '@animo/toolbox-core/src/agent/AgentInitializer
 import AgentProvider from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 
+import CredentialFormatDataProvider from './CredentialFormatDataProvider'
+
 interface AgentContextProps {
   agentRecord?: IAgentRecord
   agentDependenciesProvider: IAgentDependenciesProvider
@@ -42,7 +44,7 @@ export const AgentContext: React.FunctionComponent<PropsWithChildren & AgentCont
 
   return (
     <AgentProvider key={activeAgent?.id} agent={activeAgent?.agent}>
-      {children}
+      <CredentialFormatDataProvider agent={activeAgent?.agent}>{children}</CredentialFormatDataProvider>
     </AgentProvider>
   )
 }
