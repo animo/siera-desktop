@@ -32,7 +32,7 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
           </tr>
         </thead>
         <tbody>
-          {records.map((record: CredentialExchangeRecord) => {
+          {records.map((record) => {
             const connection = connections.find((connection) => connection.id == record.connectionId)
             const formattedCredential = formattedData.find((data) => data.id === record.id)
             const isLoading = CredentialsUtil.isCredentialWaitingForResponse(record)
