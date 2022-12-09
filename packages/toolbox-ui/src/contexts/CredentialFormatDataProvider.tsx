@@ -93,14 +93,14 @@ const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agen
   }, [agent])
 
   useEffect(() => {
-    if (!state.loading) {
+    if (!state.loading && agent) {
       const credentialAdded$ = recordsAddedByType(agent, CredentialExchangeRecord).subscribe(async (record) => {
-        const formatData = await agent!.credentials.getFormatData(record.id)
+        const formatData = await agent.credentials.getFormatData(record.id)
         setState(addRecord({ ...formatData, id: record.id }, state))
       })
 
       const credentialUpdate$ = recordsUpdatedByType(agent, CredentialExchangeRecord).subscribe(async (record) => {
-        const formatData = await agent!.credentials.getFormatData(record.id)
+        const formatData = await agent.credentials.getFormatData(record.id)
         setState(updateRecord({ ...formatData, id: record.id }, state))
       })
 
