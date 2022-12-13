@@ -4,6 +4,7 @@ import { ProofsUtil } from '@animo/toolbox-core/src/utils/records/ProofsUtil'
 import { Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
 
+import { useProofsFormatData } from '../../contexts/ProofsFormatDataProvider'
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
 
@@ -17,6 +18,7 @@ interface ProofsTableProps {
 
 export const ProofsTable = ({ records, connections, onDelete, onAccept, onDecline }: ProofsTableProps) => {
   const theme = useMantineTheme()
+  const { formattedData } = useProofsFormatData()
 
   return (
     <ScrollArea>
@@ -32,19 +34,22 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
         <tbody>
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id === record.connectionId)
+            const formattedProof = formattedData.find((proof) => proof.id === record.id)
             const isLoading = ProofsUtil.isProofWaitingForResponse(record)
             const isWaitingForAccept = ProofsUtil.isProofWaitingForAcceptInput(record)
             const isWaitingForDecline = ProofsUtil.isProofWaitingForDeclineInput(record)
+
+            const proofName = formattedProof?.request?.indy?.name
 
             return (
               <tr key={record.id}>
                 <td>
                   <Group spacing="sm">
                     <SmartAvatar size={30} radius={30} src={connection?.imageUrl}>
-                      {connection?.theirLabel}
+                      {proofName}
                     </SmartAvatar>
                     <Text size="sm" weight={500}>
-                      {connection?.theirLabel}
+                      {proofName}
                     </Text>
                   </Group>
                 </td>
