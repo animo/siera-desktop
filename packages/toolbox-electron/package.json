@@ -61,7 +61,7 @@
   "dependencies": {
     "@animo/toolbox-core": "*",
     "@animo/toolbox-ui": "*",
-    "@aries-framework/core": "0.3.0-alpha.22",
+    "@aries-framework/core": "0.3.0-alpha.32",
     "@aries-framework/node": "^0.2.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.8",
     "electron-squirrel-startup": "^1.0.0",

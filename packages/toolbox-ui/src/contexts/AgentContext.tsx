@@ -8,6 +8,7 @@ import AgentProvider from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 
 import CredentialFormatDataProvider from './CredentialFormatDataProvider'
+import ProofFormatDataProvider from './ProofsFormatDataProvider'
 
 interface AgentContextProps {
   agentRecord?: IAgentRecord
@@ -44,7 +45,9 @@ export const AgentContext: React.FunctionComponent<PropsWithChildren & AgentCont
 
   return (
     <AgentProvider key={activeAgent?.id} agent={activeAgent?.agent}>
-      <CredentialFormatDataProvider agent={activeAgent?.agent}>{children}</CredentialFormatDataProvider>
+      <ProofFormatDataProvider agent={activeAgent?.agent}>
+        <CredentialFormatDataProvider agent={activeAgent?.agent}>{children}</CredentialFormatDataProvider>
+      </ProofFormatDataProvider>
     </AgentProvider>
   )
 }
