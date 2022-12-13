@@ -17,11 +17,19 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        options: {
+          bin: 'toolbox-electron',
+        },
+      },
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {
+        options: {
+          bin: 'toolbox-electron',
+        },
+      },
     },
   ],
   plugins: [
