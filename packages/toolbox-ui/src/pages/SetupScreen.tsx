@@ -27,6 +27,19 @@ interface CreateAgentForm {
   mediatorInviteUrl: string
 }
 
+const robotImages = [
+  'https://cdn.discordapp.com/attachments/1050772574222688346/1050772614920032306/robot1.webp',
+  'https://cdn.discordapp.com/attachments/1050772574222688346/1050772615591100426/robot3.jpeg',
+  'https://cdn.discordapp.com/attachments/1050772574222688346/1050772615838572565/robot4.jpeg',
+  'https://cdn.discordapp.com/attachments/1050772574222688346/1050772616136359936/robot5.jpg',
+  'https://cdn.discordapp.com/attachments/1050772574222688346/1050772616601927700/robot7.webp',
+  'https://cdn.discordapp.com/attachments/1050772574222688346/1050772616882966569/robot8.webp',
+]
+
+const getRandomRobotImage = () => {
+  return robotImages[Math.floor(Math.random() * robotImages.length)]
+}
+
 export const SetupScreen = () => {
   const navigation = useNavigation()
   const { classes } = useStyles()
@@ -47,6 +60,7 @@ export const SetupScreen = () => {
         name: formData.agentLabel,
         agentConfig: {
           label: formData.agentLabel,
+          connectionImageUrl: getRandomRobotImage(),
           walletConfig: {
             id: uuid(),
             key: uuid(),

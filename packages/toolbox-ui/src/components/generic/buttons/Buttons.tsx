@@ -1,6 +1,6 @@
 import type { ButtonProps } from '@mantine/core'
 
-import { Button, useMantineTheme } from '@mantine/core'
+import { Button } from '@mantine/core'
 import React from 'react'
 
 interface ClickAble {
