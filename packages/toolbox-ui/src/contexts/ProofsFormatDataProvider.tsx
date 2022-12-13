@@ -2,7 +2,7 @@ import type { IndyProofFormat, Agent } from '@aries-framework/core'
 import type { GetFormatDataReturn } from '@aries-framework/core/build/modules/proofs/models/ProofServiceOptions'
 import type { PropsWithChildren } from 'react'
 
-import { CredentialExchangeRecord, ProofExchangeRecord } from '@aries-framework/core'
+import { ProofExchangeRecord } from '@aries-framework/core'
 import {
   recordsAddedByType,
   recordsRemovedByType,
