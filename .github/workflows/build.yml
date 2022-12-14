@@ -29,51 +29,25 @@ jobs:
 #          name: toolbox-electron
 #          path: ./packages/toolbox-electron/out/make/**/*.*
 
-  build-macos:
-    name: Build for MacOS and Provide artifacts
-    runs-on: macos-10.15
-
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v2
-
-        - name: Setup Libindy
-          run: |
-            ln -s /usr/local/opt/openssl/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
-            ln -s /usr/local/opt/openssl/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
-            
-            brew install libsodium
-            ln -s /usr/local/opt/libsodium/lib/libsodium.23.dylib /usr/local/opt/libsodium/lib/libsodium.18.dylib
-            
-            brew install zeromq
-            
-            brew install blu3beri/libindy/libindy
-
-        - name: Test libindy
-          run: npx -p @aries-framework/node is-indy-installed
-
-        - name: Install dependencies
-          run: yarn install --frozen-lockfile
-
-        - name: Build for all platforms
-          run: yarn --cwd packages/toolbox-electron make -p darwin
-
-        - name: Upload artifacts
-          uses: actions/upload-artifact@v2
-          with:
-            name: toolbox-electron
-            path: ./packages/toolbox-electron/out/make/**/*.*
-#
-#  build-windows:
-#    name: Build for Windows and Provide artifacts
-#    runs-on: windows-2019
+#  build-macos:
+#    name: Build for MacOS and Provide artifacts
+#    runs-on: macos-10.15
 #
 #    steps:
 #        - name: Checkout Repository
 #          uses: actions/checkout@v2
 #
 #        - name: Setup Libindy
-#          run:  https://repo.sovrin.org/windows/libindy/master/1.16.0-1636/libindy_1.16.0.zip
+#          run: |
+#            ln -s /usr/local/opt/openssl/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
+#            ln -s /usr/local/opt/openssl/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
+#
+#            brew install libsodium
+#            ln -s /usr/local/opt/libsodium/lib/libsodium.23.dylib /usr/local/opt/libsodium/lib/libsodium.18.dylib
+#
+#            brew install zeromq
+#
+#            brew install blu3beri/libindy/libindy
 #
 #        - name: Install dependencies
 #          run: yarn install --frozen-lockfile
@@ -86,3 +60,38 @@ jobs:
 #          with:
 #            name: toolbox-electron
 #            path: ./packages/toolbox-electron/out/make/**/*.*
+
+  build-windows:
+    name: Build for Windows and Provide artifacts
+    runs-on: windows-2019
+
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+
+        - name: Setup Libindy
+          run: |
+            yarn global add --production windows-build-tools
+            yarn config set msvs_version 2019
+            yarn global add node-gyp-install
+            yarn global add node-gyp
+
+            curl.exe --output libindy.zip https://repo.sovrin.org/windows/libindy/master/1.16.0-1636/libindy_1.16.0.zip
+            7z x libindy.zip -oC:\libindy\
+            $env:LD_LIBRARY_PATH = 'C:\libindy\lib'
+            $env:Path += ';C:\libindy\lib'
+
+            node -e "console.log(process.env.LD_LIBRARY_PATH)"
+            node -e "console.log(process.env.PATH)"
+
+        - name: Install dependencies
+          run: yarn install --frozen-lockfile
+
+        - name: Build for all platforms
+          run: yarn --cwd packages/toolbox-electron make -p win32
+
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: toolbox-electron
+            path: ./packages/toolbox-electron/out/make/**/*.*
