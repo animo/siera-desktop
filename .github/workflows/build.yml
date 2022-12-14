@@ -6,54 +6,83 @@ on:
       - feature/TBX-60
 
 jobs:
-  build:
-    name: Build and Provide artifacts
-    runs-on: ubuntu-20.04
+#  build-linux:
+#    name: Build for Linux and Provide artifacts
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout Repository
+#        uses: actions/checkout@v2
+#
+#      - name: Setup Libindy
+#        uses: ./.github/actions/setup-libindy
+#
+#      - name: Install dependencies
+#        run: yarn install --frozen-lockfile
+#
+#      - name: Build for all platforms
+#        run: yarn --cwd packages/toolbox-electron make -p linux
+#
+#      - name: Upload artifacts
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: toolbox-electron
+#          path: ./packages/toolbox-electron/out/make/**/*.*
+
+  build-macos:
+    name: Build for MacOS and Provide artifacts
+    runs-on: macos-10.15
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+        - name: Checkout Repository
+          uses: actions/checkout@v2
 
-      - name: Remove existing dependencies
-        run: |
-          sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
-          sudo apt-get update -qq
-          sudo apt-get install -yqq --allow-downgrades libgd3/focal libpcre2-8-0/focal libpcre2-16-0/focal libpcre2-32-0/focal libpcre2-posix2/focal
-          sudo apt-get purge -yqq libmono* moby* mono* php* libgdiplus libpcre2-posix3 libzip4
+        - name: Setup Libindy
+          run: |
+            ln -s /usr/local/opt/openssl/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
+            ln -s /usr/local/opt/openssl/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
+            
+            brew install libsodium
+            ln -s /usr/local/opt/libsodium/lib/libsodium.23.dylib /usr/local/opt/libsodium/lib/libsodium.18.dylib
+            
+            brew install zeromq
+            
+            brew install blu3beri/libindy/libindy
 
-      - name: Install wine
-        run: |
-          sudo apt install -y software-properties-common
-          sudo dpkg --add-architecture i386
-          sudo wget -nc https://dl.winehq.org/wine-builds/winehq.key
-          sudo apt-key add winehq.key
-          sudo add-apt-repository 'deb https://dl.winehq.org/wine-builds/debian/ buster main'
-          sudo apt update
-          sudo apt -y install --install-recommends winehq-stable
+        - name: Test libindy
+          run: npx -p @aries-framework/node is-indy-installed
 
-      - name: Install mono
-        run: |
-          sudo apt install gnupg ca-certificates
-          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-          echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
-          sudo apt update
+        - name: Install dependencies
+          run: yarn install --frozen-lockfile
 
-          sudo apt install -y mono-devel
+        - name: Build for all platforms
+          run: yarn --cwd packages/toolbox-electron make -p darwin
 
-      - name: Setup Libindy
-        uses: ./.github/actions/setup-libindy
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build for all platforms
-        run: |
-          yarn --cwd packages/toolbox-electron make -p win32
-          yarn --cwd packages/toolbox-electron make -p darwin
-          yarn --cwd packages/toolbox-electron make -p linux
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: toolbox-electron
-          path: ./packages/toolbox-electron/out/make/**/*.*
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: toolbox-electron
+            path: ./packages/toolbox-electron/out/make/**/*.*
+#
+#  build-windows:
+#    name: Build for Windows and Provide artifacts
+#    runs-on: windows-2019
+#
+#    steps:
+#        - name: Checkout Repository
+#          uses: actions/checkout@v2
+#
+#        - name: Setup Libindy
+#          run:  https://repo.sovrin.org/windows/libindy/master/1.16.0-1636/libindy_1.16.0.zip
+#
+#        - name: Install dependencies
+#          run: yarn install --frozen-lockfile
+#
+#        - name: Build for all platforms
+#          run: yarn --cwd packages/toolbox-electron make -p darwin
+#
+#        - name: Upload artifacts
+#          uses: actions/upload-artifact@v2
+#          with:
+#            name: toolbox-electron
+#            path: ./packages/toolbox-electron/out/make/**/*.*
