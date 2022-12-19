@@ -83,14 +83,12 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
                   <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>{record.state}</Badge>
                 </td>
                 <td className={classes.actionsSize}>
-                  <Group spacing={0} position="right" noWrap>
-                    <RecordActions
-                      onAccept={isWaitingForAccept ? () => onAccept(record) : undefined}
-                      onDecline={isWaitingForDecline ? () => onDecline(record) : undefined}
-                      onDelete={() => onDelete(record)}
-                      isLoading={isLoading}
-                    />
-                  </Group>
+                  <RecordActions
+                    onAccept={isWaitingForAccept ? () => onAccept(record) : undefined}
+                    onDecline={isWaitingForDecline ? () => onDecline(record) : undefined}
+                    onDelete={() => onDelete(record)}
+                    isLoading={isLoading}
+                  />
                 </td>
               </tr>
             )
