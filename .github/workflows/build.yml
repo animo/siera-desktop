@@ -6,60 +6,60 @@ on:
       - feature/TBX-60
 
 jobs:
-#  build-linux:
-#    name: Build for Linux and Provide artifacts
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout Repository
-#        uses: actions/checkout@v2
-#
-#      - name: Setup Libindy
-#        uses: ./.github/actions/setup-libindy
-#
-#      - name: Install dependencies
-#        run: yarn install --frozen-lockfile
-#
-#      - name: Build for all platforms
-#        run: yarn --cwd packages/toolbox-electron make -p linux
-#
-#      - name: Upload artifacts
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: toolbox-electron
-#          path: ./packages/toolbox-electron/out/make/**/*.*
+  build-linux:
+    name: Build for Linux and Provide artifacts
+    runs-on: ubuntu-latest
 
-#  build-macos:
-#    name: Build for MacOS and Provide artifacts
-#    runs-on: macos-10.15
-#
-#    steps:
-#        - name: Checkout Repository
-#          uses: actions/checkout@v2
-#
-#        - name: Setup Libindy
-#          run: |
-#            ln -s /usr/local/opt/openssl/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
-#            ln -s /usr/local/opt/openssl/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
-#
-#            brew install libsodium
-#            ln -s /usr/local/opt/libsodium/lib/libsodium.23.dylib /usr/local/opt/libsodium/lib/libsodium.18.dylib
-#
-#            brew install zeromq
-#
-#            brew install blu3beri/libindy/libindy
-#
-#        - name: Install dependencies
-#          run: yarn install --frozen-lockfile
-#
-#        - name: Build for all platforms
-#          run: yarn --cwd packages/toolbox-electron make -p darwin
-#
-#        - name: Upload artifacts
-#          uses: actions/upload-artifact@v2
-#          with:
-#            name: toolbox-electron
-#            path: ./packages/toolbox-electron/out/make/**/*.*
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Libindy
+        uses: ./.github/actions/setup-libindy
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build for all platforms
+        run: yarn --cwd packages/toolbox-electron make -p linux
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: toolbox-electron
+          path: ./packages/toolbox-electron/out/make/**/*.*
+
+  build-macos:
+    name: Build for MacOS and Provide artifacts
+    runs-on: macos-10.15
+
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+
+        - name: Setup Libindy
+          run: |
+            ln -s /usr/local/opt/openssl/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
+            ln -s /usr/local/opt/openssl/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
+
+            brew install libsodium
+            ln -s /usr/local/opt/libsodium/lib/libsodium.23.dylib /usr/local/opt/libsodium/lib/libsodium.18.dylib
+
+            brew install zeromq
+
+            brew install blu3beri/libindy/libindy
+
+        - name: Install dependencies
+          run: yarn install --frozen-lockfile
+
+        - name: Build for all platforms
+          run: yarn --cwd packages/toolbox-electron make -p darwin
+
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: toolbox-electron
+            path: ./packages/toolbox-electron/out/make/**/*.*
 
   build-windows:
     name: Build for Windows and Provide artifacts
