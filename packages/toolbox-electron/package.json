@@ -5,7 +5,6 @@
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
-    "postinstall": "yarn --cwd=../.. postinstall",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
