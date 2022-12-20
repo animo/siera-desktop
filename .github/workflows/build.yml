@@ -68,13 +68,13 @@ jobs:
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v2
-      #            yarn global add node-gyp-install
-      #            yarn global add node-gyp
+
         - name: Setup Libindy
           run: |
             yarn global add --production windows-build-tools
             yarn config set msvs_version 2022
-
+            yarn global add node-gyp-install
+            yarn global add node-gyp
 
             curl.exe --output libindy.zip https://repo.sovrin.org/windows/libindy/master/1.16.0-1636/libindy_1.16.0.zip
             7z x libindy.zip -oC:\libindy\
