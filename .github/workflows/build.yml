@@ -82,9 +82,8 @@ jobs:
             $env:Path += ';C:\libindy\lib'
             
             npx -p @aries-framework/node is-indy-installed
-
-        - name: Install dependencies
-          run: yarn install --frozen-lockfile
+            
+            yarn install --frozen-lockfile
 
         - name: Build for all platforms
           run: yarn --cwd packages/toolbox-electron make -p win32
