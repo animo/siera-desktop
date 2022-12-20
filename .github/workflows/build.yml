@@ -63,7 +63,10 @@ jobs:
 
   build-windows:
     name: Build for Windows and Provide artifacts
-    runs-on: windows-2022
+    runs-on: windows-2019
+
+    env:
+      LD_LIBRARY_PATH: C:\libindy\lib
 
     steps:
         - name: Checkout Repository
@@ -72,7 +75,7 @@ jobs:
         - name: Setup Libindy
           run: |
             yarn global add --production windows-build-tools
-            yarn config set msvs_version 2022
+            yarn config set msvs_version 2019
             yarn global add node-gyp-install
             yarn global add node-gyp
 
@@ -80,10 +83,12 @@ jobs:
             7z x libindy.zip -oC:\libindy\
             $env:LD_LIBRARY_PATH = 'C:\libindy\lib'
             $env:Path += ';C:\libindy\lib'
-            
-            npx -p @aries-framework/node is-indy-installed
-            
-            yarn install
+
+        - name: Test libindy installation
+          run: npx -p @aries-framework/node is-indy-installed
+
+        - name: Install depedencies
+          run: yarn install --frozen-lockfile
 
         - name: Build for all platforms
           run: yarn --cwd packages/toolbox-electron make -p win32
