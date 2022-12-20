@@ -11,6 +11,11 @@ import { App } from './ui/App'
 declare global {
   interface Window {
     indy: typeof Indy
+    configInformation: {
+      platform: string
+      homeDir: string
+      appdataDir: string
+    }
     fs: FileSystem
     nodeFetch: (
       url: Omit<RequestInfo, 'signal'>,

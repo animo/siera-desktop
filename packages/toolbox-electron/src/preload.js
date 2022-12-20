@@ -28,3 +28,9 @@ contextBridge.exposeInMainWorld('nodeFetch', async (endpoint, request) => {
     body: await response.text(),
   }
 })
+
+contextBridge.exposeInMainWorld('configInformation', {
+  homeDir: process.env.HOME,
+  platform: process.platform,
+  appData: process.env.APPDATA,
+})
