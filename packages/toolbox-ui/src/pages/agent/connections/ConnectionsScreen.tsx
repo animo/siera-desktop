@@ -1,5 +1,5 @@
 import { useAgent, useConnections } from '@aries-framework/react-hooks'
-import { Button, Flex, TextInput, Title } from '@mantine/core'
+import { Flex, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { openContextModal } from '@mantine/modals'
 import { showNotification } from '@mantine/notifications'
@@ -61,7 +61,7 @@ export const ConnectionsScreen = () => {
       <form onSubmit={form.onSubmit(receiveInvite)}>
         <Flex gap={10} mb={20}>
           <TextInput placeholder="Invite url" {...form.getInputProps('url')} />
-          <Button type="submit">Receive invite</Button>
+          <PrimaryButton type="submit">Receive invite</PrimaryButton>
           <PrimaryButton onClick={() => createInvite()}>Create Invite</PrimaryButton>
         </Flex>
       </form>

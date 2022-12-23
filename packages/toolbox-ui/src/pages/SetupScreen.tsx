@@ -1,9 +1,10 @@
 import { uuid } from '@animo/toolbox-core/src/utils'
-import { createStyles, TextInput, Paper, Title, Button } from '@mantine/core'
+import { createStyles, TextInput, Paper, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import React from 'react'
 
 import { BackButton } from '../components/BackButton'
+import { PrimaryButton } from '../components/generic'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
 
@@ -88,9 +89,9 @@ export const SetupScreen = () => {
               {...form.getInputProps('mediatorInviteUrl')}
             />
 
-            <Button type="submit" fullWidth mt="xl">
+            <PrimaryButton type="submit" fullWidth mt="xl">
               Create
-            </Button>
+            </PrimaryButton>
           </form>
         </Paper>
       </div>

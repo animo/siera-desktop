@@ -14,13 +14,13 @@ interface RecordActionsProps {
 export const RecordActions = ({ onAccept, onDecline, onDelete, isLoading }: RecordActionsProps) => {
   const actions = [
     onAccept && (
-      <PrimaryButton key="accept" size="xs" onClick={onAccept}>
+      <PrimaryButton key="accept" size="xs" variant="light" onClick={onAccept}>
         Accept
       </PrimaryButton>
     ),
 
     onDecline && (
-      <DangerButton key="reject" size="xs" onClick={onDecline}>
+      <DangerButton key="reject" size="xs" variant="light" onClick={onDecline}>
         Decline
       </DangerButton>
     ),

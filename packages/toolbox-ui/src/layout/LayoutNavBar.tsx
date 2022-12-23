@@ -28,24 +28,19 @@ const useStyles = createStyles((theme, _params, getRef) => {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     },
 
-    title: {
-      textTransform: 'uppercase',
-      letterSpacing: -0.25,
-    },
-
     link: {
       ...theme.fn.focusStyles(),
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',
       fontSize: theme.fontSizes.sm,
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.animoWhite[4] : theme.colors.animoBlack[2],
       padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
 
       '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.animoBlack[0] : theme.colors.animoLightgrey[0],
         color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
         [`& .${icon}`]: {
@@ -62,10 +57,10 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     linkActive: {
       '&, &:hover': {
-        backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
-        color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.white : theme.black,
+        color: theme.colorScheme === 'dark' ? theme.black : theme.white,
         [`& .${icon}`]: {
-          color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
+          color: theme.colorScheme === 'dark' ? theme.black : theme.white,
         },
       },
     },

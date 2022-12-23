@@ -73,7 +73,9 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
                   </Text>
                 </td>
                 <td className={classes.stateSize}>
-                  <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>{record.state}</Badge>
+                  <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'} color="blue">
+                    {record.state}
+                  </Badge>
                 </td>
                 <td className={classes.actionsSize}>
                   <RecordActions
