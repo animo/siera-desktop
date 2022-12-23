@@ -10,7 +10,8 @@ export interface IAgentContext {
   currentAgentId?: string
   setCurrentAgentId: (id: string | undefined) => void
   addAgent: (agent: AgentConfigRecord) => Promise<void>
-  loading: boolean
+  loading: boolean,
+  logout: () => void
 }
 
 const AgentManagerContext = createContext<IAgentContext>({} as IAgentContext)
@@ -35,6 +36,10 @@ export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) =>
   const { config, addAgent, loading } = useConfig()
   const [currentAgentId, setCurrentAgentId] = useState<string>()
 
+  const logout = () => {
+    setCurrentAgentId(undefined)
+  }
+
   return (
     <AgentManagerContext.Provider
       value={{
@@ -43,6 +48,7 @@ export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) =>
         agents: config?.agents || [],
         addAgent,
         loading,
+        logout,
       }}
     >
       {children}
