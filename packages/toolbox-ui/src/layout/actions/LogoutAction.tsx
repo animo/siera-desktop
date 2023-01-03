@@ -45,8 +45,8 @@ export const LogoutAction = () => {
   const { logout } = useAgentManager()
 
   const signOut = () => {
-    navigation.navigate('/')
     logout()
+    navigation.navigate('/')
   }
 
   return (
