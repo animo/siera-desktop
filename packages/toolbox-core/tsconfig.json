@@ -2,7 +2,6 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "src",
-    "rootDir": "src",
     "types": ["jest"],
     "lib": []
   },

@@ -1,40 +1,24 @@
-import type { IConfigFileRepository, IToolboxConfig } from '@animo/toolbox-core'
+import type { ConfigFileRepository, ToolboxConfig } from '@animo/toolbox-core'
 
 import { DefaultConfiguration } from '@animo/toolbox-core'
 
-export class ElectronConfigFileRepository implements IConfigFileRepository {
-  public async readConfiguration(): Promise<IToolboxConfig> {
-    const filePath = await this.getFilePath()
+export class ElectronConfigFileRepository implements ConfigFileRepository {
+  public constructor(public readonly configPath: string) {}
 
-    const exists = await window.fs.exists(filePath)
-    if (!exists) {
-      return DefaultConfiguration
-    }
+  public async readConfiguration(): Promise<ToolboxConfig> {
+    const exists = await window.fs.exists(this.configPath)
+    if (!exists) return DefaultConfiguration
 
     // TODO: think about how to handle new config options
-    const configString = await window.fs.read(filePath)
-    return JSON.parse(configString) as IToolboxConfig
+    const configString = await window.fs.read(this.configPath)
+    return JSON.parse(configString) as ToolboxConfig
   }
 
-  public async writeConfiguration(config: IToolboxConfig): Promise<void> {
-    const filePath = await this.getFilePath()
+  public async writeConfiguration(config: ToolboxConfig): Promise<void> {
+    const filePath = this.configPath
 
     const configString = JSON.stringify(config)
 
     await window.fs.write(filePath, configString)
-  }
-
-  protected async getFilePath(): Promise<string> {
-    const { homeDir, appdataDir, platform } = window.configInformation
-
-    switch (platform) {
-      case 'darwin':
-      case 'linux':
-        return `${homeDir}/.config/siera/ui/config.json`
-      case 'win32':
-        return `${appdataDir}/siera/ui/config.json`
-    }
-
-    throw new Error('Platform not implemented.')
   }
 }

@@ -1,12 +1,12 @@
-import type { IAgentConfigRecord, IConfigFileRepository, IToolboxConfig } from '@animo/toolbox-core'
+import type { AgentConfigRecord, ConfigFileRepository, ToolboxConfig } from '@animo/toolbox-core'
 import type { ReactNode } from 'react'
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
 type ConfigContext = {
-  config?: IToolboxConfig
+  config?: ToolboxConfig
   loading: boolean
-  addAgent: (agent: IAgentConfigRecord) => Promise<void>
+  addAgent: (agent: AgentConfigRecord) => Promise<void>
 }
 
 const configContext = createContext<ConfigContext>({ loading: true } as ConfigContext)
@@ -17,14 +17,14 @@ export const useConfig = (): ConfigContext => {
 
 interface ConfigProviderProps {
   children: ReactNode
-  configRepository: IConfigFileRepository
+  configRepository: ConfigFileRepository
 }
 
 export const ConfigProvider = ({ children, configRepository }: ConfigProviderProps) => {
   const [loading, setLoading] = useState(true)
-  const [config, setConfig] = useState<IToolboxConfig>()
+  const [config, setConfig] = useState<ToolboxConfig>()
 
-  const saveConfig = async (config: IToolboxConfig) => {
+  const saveConfig = async (config: ToolboxConfig) => {
     await configRepository.writeConfiguration(config)
   }
 
@@ -43,10 +43,11 @@ export const ConfigProvider = ({ children, configRepository }: ConfigProviderPro
     }
   }, [])
 
-  const addAgent = async (agent: IAgentConfigRecord) => {
+  const addAgent = async (agent: AgentConfigRecord) => {
     if (!config) {
       return
     }
+
     const updatedConfig = { ...config, agents: [agent, ...config.agents] }
     await saveConfig(updatedConfig)
     setConfig(updatedConfig)

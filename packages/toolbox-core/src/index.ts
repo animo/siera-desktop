@@ -1,3 +1,3 @@
 export * from './agent/AgentFactory'
-export * from './agent/IAgentDependenciesProvider'
+export * from './agent/AgentDependenciesProvider'
 export * from './agent/config'

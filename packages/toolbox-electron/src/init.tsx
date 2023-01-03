@@ -13,8 +13,8 @@ declare global {
     indy: typeof Indy
     configInformation: {
       platform: string
-      homeDir: string
-      appdataDir: string
+      configDir?: string
+      unSupportedPlatform: boolean
     }
     fs: FileSystem
     nodeFetch: (

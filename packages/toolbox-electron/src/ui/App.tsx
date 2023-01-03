@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { InMemoryConfigRepository } from '@animo/toolbox-core'
 import { ToolboxApp } from '@animo/toolbox-ui/src/ToolboxApp'
 import { AgentContext } from '@animo/toolbox-ui/src/contexts/AgentContext'
 import { AgentManagerProvider, useCurrentAgentRecord } from '@animo/toolbox-ui/src/contexts/AgentManagerContext'
@@ -26,7 +27,13 @@ const AgentContextWrapper = ({ children }: { children?: ReactNode }) => {
 // Because Electron doesn't support url routing we use the routing in memory
 export const router = createMemoryRouter(routes)
 
-const configRepository = new ElectronConfigFileRepository()
+const configRepository = (function () {
+  if (window.configInformation.unSupportedPlatform) {
+    return new InMemoryConfigRepository()
+  }
+
+  return new ElectronConfigFileRepository(window.configInformation.configDir!)
+})()
 
 export const App = () => {
   return (

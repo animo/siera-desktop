@@ -1,15 +1,15 @@
-import type { IAgentConfigRecord } from '@animo/toolbox-core'
+import type { AgentConfigRecord } from '@animo/toolbox-core'
 import type { ReactNode } from 'react'
 
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useMemo, useState } from 'react'
 
 import { useConfig } from './ConfigProvider'
 
 export interface IAgentContext {
-  agents: IAgentConfigRecord[]
+  agents: AgentConfigRecord[]
   currentAgentId?: string
   setCurrentAgentId: (id: string | undefined) => void
-  addAgent: (agent: IAgentConfigRecord) => Promise<void>
+  addAgent: (agent: AgentConfigRecord) => Promise<void>
   loading: boolean
 }
 
@@ -19,10 +19,12 @@ export const useAgentManager = (): IAgentContext => {
   return useContext(AgentManagerContext)
 }
 
-export const useCurrentAgentRecord = (): IAgentConfigRecord | undefined => {
+export const useCurrentAgentRecord = (): AgentConfigRecord | undefined => {
   const { currentAgentId, agents } = useAgentManager()
 
-  return agents.find((agent) => agent.id === currentAgentId)
+  return useMemo(() => {
+    return agents.find((agent) => agent.id === currentAgentId)
+  }, [agents, currentAgentId])
 }
 
 interface AgentManagerProviderProps {

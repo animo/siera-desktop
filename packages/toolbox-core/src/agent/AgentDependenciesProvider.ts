@@ -1,5 +1,5 @@
 import type { AgentDependencies } from '@aries-framework/core'
 
-export interface IAgentDependenciesProvider {
+export interface AgentDependenciesProvider {
   createAgentDependencies(): Promise<AgentDependencies>
 }
