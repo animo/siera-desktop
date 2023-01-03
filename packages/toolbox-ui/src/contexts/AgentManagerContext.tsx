@@ -10,7 +10,7 @@ export interface IAgentContext {
   currentAgentId?: string
   setCurrentAgentId: (id: string | undefined) => void
   addAgent: (agent: AgentConfigRecord) => Promise<void>
-  loading: boolean,
+  loading: boolean
   logout: () => void
 }
 

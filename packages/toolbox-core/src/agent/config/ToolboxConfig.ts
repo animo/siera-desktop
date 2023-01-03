@@ -1,12 +1,22 @@
 import type { AgentConfigRecord } from './AgentConfigRecord'
 
+import { z } from 'zod'
 export interface ToolboxConfig {
+  colorScheme: 'dark' | 'light'
   agents: AgentConfigRecord[]
 }
-export const validateToolboxConfig = (config: ToolboxConfig) => {
-  if (!Array.isArray(config.agents)) throw new Error('agents must be an array')
-  config.agents.forEach((agentConfig) => {
-    if (typeof agentConfig.id !== 'string') throw new Error('agent name must be a string')
-    if (typeof agentConfig.name !== 'string') throw new Error('agent url must be a string')
-  })
+
+const AgentConfigRecordSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  agentConfig: z.any(),
+})
+
+const ToolboxConfigSchema = z.object({
+  colorScheme: z.enum(['dark', 'light']).default('light'),
+  agents: z.array(AgentConfigRecordSchema).default([]),
+})
+
+export const validateAndParseToolboxConfig = (config: unknown): ToolboxConfig => {
+  return ToolboxConfigSchema.parse(config) as ToolboxConfig
 }
