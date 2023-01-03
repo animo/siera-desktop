@@ -1,4 +1,4 @@
-import type { IAgentDependenciesProvider } from './IAgentDependenciesProvider'
+import type { AgentDependenciesProvider } from './AgentDependenciesProvider'
 import type { Agent, InitConfig } from '@aries-framework/core'
 
 import { ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@aries-framework/core'
@@ -8,7 +8,7 @@ import { sampleTransactions } from './SampleTransactions'
 
 export const agentInitializer = async (
   providedConfig: InitConfig,
-  dependenciesProvider: IAgentDependenciesProvider
+  dependenciesProvider: AgentDependenciesProvider
 ): Promise<Agent> => {
   const agentProvider = new AgentFactory(dependenciesProvider)
 

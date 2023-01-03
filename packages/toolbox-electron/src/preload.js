@@ -28,3 +28,36 @@ contextBridge.exposeInMainWorld('nodeFetch', async (endpoint, request) => {
     body: await response.text(),
   }
 })
+
+const getConfigDirForPlatform = (platform, homeDir, appDataDir) => {
+  switch (platform) {
+    case 'linux' || 'darwin':
+      return `${homeDir}/.config/siera/ui/config.json`
+    case 'win32':
+      return `${appDataDir}\\siera\\ui\\config.json`
+  }
+
+  throw new Error(`Unsupported platform: ${platform}`)
+}
+
+contextBridge.exposeInMainWorld(
+  'configInformation',
+  (function () {
+    const homeDir = process.env.HOME
+    const platform = process.platform
+    const appDataDir = process.env.APPDATA
+
+    let configDir
+    try {
+      configDir = getConfigDirForPlatform(platform, homeDir, appDataDir)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('Unsupported platform for config persistence', error)
+    }
+
+    return {
+      platform: process.platform,
+      configDir,
+    }
+  })()
+)

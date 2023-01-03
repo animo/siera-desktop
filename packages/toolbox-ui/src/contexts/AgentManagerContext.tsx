@@ -1,19 +1,16 @@
-import type { InitConfig } from '@aries-framework/core'
-import type { Dispatch, ReactNode, SetStateAction } from 'react'
+import type { AgentConfigRecord } from '@animo/toolbox-core'
+import type { ReactNode } from 'react'
 
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useMemo, useState } from 'react'
 
-export interface IAgentRecord {
-  id: string
-  name: string
-  agentConfig: InitConfig
-}
+import { useConfig } from './ConfigProvider'
 
 export interface IAgentContext {
-  agents: IAgentRecord[]
+  agents: AgentConfigRecord[]
   currentAgentId?: string
   setCurrentAgentId: (id: string | undefined) => void
-  setAgents: Dispatch<SetStateAction<IAgentContext['agents']>>
+  addAgent: (agent: AgentConfigRecord) => Promise<void>
+  loading: boolean
 }
 
 const AgentManagerContext = createContext<IAgentContext>({} as IAgentContext)
@@ -22,23 +19,30 @@ export const useAgentManager = (): IAgentContext => {
   return useContext(AgentManagerContext)
 }
 
-export const useCurrentAgentRecord = (): IAgentRecord | undefined => {
+export const useCurrentAgentRecord = (): AgentConfigRecord | undefined => {
   const { currentAgentId, agents } = useAgentManager()
 
-  return agents.find((agent) => agent.id === currentAgentId)
+  return useMemo(() => {
+    return agents.find((agent) => agent.id === currentAgentId)
+  }, [agents, currentAgentId])
 }
 
-export const AgentManagerProvider = ({ children }: { children?: ReactNode }) => {
+interface AgentManagerProviderProps {
+  children?: ReactNode
+}
+
+export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) => {
+  const { config, addAgent, loading } = useConfig()
   const [currentAgentId, setCurrentAgentId] = useState<string>()
-  const [agents, setAgents] = useState<IAgentRecord[]>([])
 
   return (
     <AgentManagerContext.Provider
       value={{
         setCurrentAgentId,
         currentAgentId,
-        agents,
-        setAgents,
+        agents: config?.agents || [],
+        addAgent,
+        loading,
       }}
     >
       {children}

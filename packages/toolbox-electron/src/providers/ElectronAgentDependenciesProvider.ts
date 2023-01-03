@@ -1,4 +1,4 @@
-import type { IAgentDependenciesProvider } from '@animo/toolbox-core'
+import type { AgentDependenciesProvider } from '@animo/toolbox-core'
 import type { AgentDependencies } from '@aries-framework/core'
 import type Indy from 'indy-sdk'
 import type { RequestInit } from 'node-fetch'
@@ -9,7 +9,7 @@ import { AbortError } from 'fork-ts-checker-webpack-plugin/lib/utils/async/abort
 
 import { ElectronFileSystemAdapter } from '../adapters/ElectronFileSystemAdapter'
 
-export class ElectronAgentDependenciesProvider implements IAgentDependenciesProvider {
+export class ElectronAgentDependenciesProvider implements AgentDependenciesProvider {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public wrapIndyCallWithErrorHandling(func: any) {
     return async (...args: unknown[]) => {

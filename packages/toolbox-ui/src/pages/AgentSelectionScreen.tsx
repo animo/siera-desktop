@@ -2,17 +2,22 @@ import { Card, Container, Flex, Group, Space, Text, Title, UnstyledButton } from
 import { IconPlus } from '@tabler/icons'
 import React from 'react'
 
+import { Loading } from '../components/Loading'
 import { SmartAvatar } from '../components/SmartAvatar'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
 
 export const AgentSelectionScreen = () => {
   const navigation = useNavigation()
-  const { agents, setCurrentAgentId } = useAgentManager()
+  const { agents, setCurrentAgentId, loading } = useAgentManager()
 
   const switchToAgent = (agentId: string) => {
     setCurrentAgentId(agentId)
     navigation.navigate('/agent')
+  }
+
+  if (loading) {
+    return <Loading description="Loading configuration" />
   }
 
   return (
