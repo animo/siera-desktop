@@ -3,10 +3,11 @@ import type { RouterProviderProps } from 'react-router-dom'
 
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import { NotificationsProvider } from '@mantine/notifications'
-import React, { useState } from 'react'
+import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 
 import { GlobalErrorHandler } from './components/GlobalErrorHandler'
+import { useConfig } from './contexts/ConfigProvider'
 
 interface ToolboxAppProps {
   router: RouterProviderProps['router']
@@ -30,7 +31,9 @@ const toolboxTheme = (colorScheme: ColorScheme): MantineThemeOverride => ({
 })
 
 export const ToolboxApp = ({ router }: ToolboxAppProps) => {
-  const [colorScheme, setColorScheme] = useState<'dark' | 'light'>('dark')
+  const { config, setColorScheme, loading } = useConfig()
+
+  const colorScheme = loading ? 'light' : config.colorScheme
   const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value || colorScheme === 'dark' ? 'light' : 'dark')
 
   return (
