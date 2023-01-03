@@ -44,9 +44,7 @@ export const ConfigProvider = ({ children, configRepository }: ConfigProviderPro
   }, [])
 
   const addAgent = async (agent: AgentConfigRecord) => {
-    if (!config) {
-      return
-    }
+    if (!config) return
 
     const updatedConfig = { ...config, agents: [agent, ...config.agents] }
     await saveConfig(updatedConfig)

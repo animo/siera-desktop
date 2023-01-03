@@ -34,7 +34,7 @@ const getConfigDirForPlatform = (platform, homeDir, appDataDir) => {
     case 'linux' || 'darwin':
       return `${homeDir}/.config/siera/ui/config.json`
     case 'win32':
-      return `${appDataDir}/siera/ui/config.json`
+      return `${appDataDir}\\siera\\ui\\config.json`
   }
 
   throw new Error(`Unsupported platform: ${platform}`)
@@ -47,20 +47,17 @@ contextBridge.exposeInMainWorld(
     const platform = process.platform
     const appDataDir = process.env.APPDATA
 
-    let unSupportedPlatform = false
     let configDir
     try {
       configDir = getConfigDirForPlatform(platform, homeDir, appDataDir)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn('Unsupported platform for config persistence', error)
-      unSupportedPlatform = true
     }
 
     return {
       platform: process.platform,
       configDir,
-      unSupportedPlatform,
     }
   })()
 )

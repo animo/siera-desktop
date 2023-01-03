@@ -12,9 +12,7 @@ declare global {
   interface Window {
     indy: typeof Indy
     configInformation: {
-      platform: string
       configDir?: string
-      unSupportedPlatform: boolean
     }
     fs: FileSystem
     nodeFetch: (

@@ -28,11 +28,11 @@ const AgentContextWrapper = ({ children }: { children?: ReactNode }) => {
 export const router = createMemoryRouter(routes)
 
 const configRepository = (function () {
-  if (window.configInformation.unSupportedPlatform) {
+  if (!window.configInformation.configDir) {
     return new InMemoryConfigRepository()
   }
 
-  return new ElectronConfigFileRepository(window.configInformation.configDir!)
+  return new ElectronConfigFileRepository(window.configInformation.configDir)
 })()
 
 export const App = () => {
