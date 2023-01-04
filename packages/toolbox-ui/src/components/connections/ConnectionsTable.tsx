@@ -1,11 +1,12 @@
 import type { ConnectionRecord } from '@aries-framework/core'
 
 import { ConnectionsUtil } from '@animo/toolbox-core/src/utils/records/ConnectionsUtil'
-import { Badge, createStyles, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
+import { createStyles, Group, ScrollArea, Table, Text } from '@mantine/core'
 import React from 'react'
 
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
+import { StatusBadge } from '../generic/table/StatusBadge'
 
 interface ConnectionsTableProps {
   records: ConnectionRecord[]
@@ -36,7 +37,6 @@ const useStyles = createStyles(() => ({
 
 export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: ConnectionsTableProps) => {
   const { classes } = useStyles()
-  const theme = useMantineTheme()
 
   return (
     <ScrollArea>
@@ -73,9 +73,7 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
                   </Text>
                 </td>
                 <td className={classes.stateSize}>
-                  <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'} color="blue">
-                    {record.state}
-                  </Badge>
+                  <StatusBadge>{record.state}</StatusBadge>
                 </td>
                 <td className={classes.actionsSize}>
                   <RecordActions

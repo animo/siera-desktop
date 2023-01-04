@@ -1,4 +1,4 @@
-import { Card, Container, Flex, Group, Space, Text, Title, UnstyledButton } from '@mantine/core'
+import { Card, Container, createStyles, Flex, Group, Space, Text, Title, UnstyledButton } from '@mantine/core'
 import { IconPlus } from '@tabler/icons'
 import React from 'react'
 
@@ -7,7 +7,20 @@ import { SmartAvatar } from '../components/SmartAvatar'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
 
+const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    boxShadow: theme.shadows.xs,
+    transition: 'background-color 0.2s ease',
+
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+    },
+  },
+}))
+
 export const AgentSelectionScreen = () => {
+  const { classes } = useStyles()
   const navigation = useNavigation()
   const { agents, setCurrentAgentId, loading } = useAgentManager()
 
@@ -22,12 +35,12 @@ export const AgentSelectionScreen = () => {
 
   return (
     <Container mt={20}>
-      <Title size="h3">Agents</Title>
+      <Title size="h2">Agents</Title>
       <Space h="md" />
       <Flex gap="md" wrap="wrap">
         {agents.map((agent) => (
           <UnstyledButton key={agent.id} onClick={() => switchToAgent(agent.id)}>
-            <Card h={100} w={220}>
+            <Card h={100} w={220} className={classes.card}>
               <Group noWrap>
                 <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={64} radius="md">
                   {agent.agentConfig.label}

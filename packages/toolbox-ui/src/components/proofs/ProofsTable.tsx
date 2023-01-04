@@ -1,12 +1,13 @@
 import type { ConnectionRecord, ProofExchangeRecord } from '@aries-framework/core'
 
 import { ProofsUtil } from '@animo/toolbox-core/src/utils/records/ProofsUtil'
-import { Badge, createStyles, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
+import { createStyles, Group, ScrollArea, Table, Text } from '@mantine/core'
 import React from 'react'
 
 import { useProofsFormatData } from '../../contexts/ProofsFormatDataProvider'
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
+import { StatusBadge } from '../generic/table/StatusBadge'
 
 interface ProofsTableProps {
   records: ProofExchangeRecord[]
@@ -38,7 +39,6 @@ const useStyles = createStyles(() => ({
 
 export const ProofsTable = ({ records, connections, onDelete, onAccept, onDecline }: ProofsTableProps) => {
   const { classes } = useStyles()
-  const theme = useMantineTheme()
   const { formattedData } = useProofsFormatData()
 
   return (
@@ -80,7 +80,7 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
                   </Text>
                 </td>
                 <td className={classes.stateSize}>
-                  <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>{record.state}</Badge>
+                  <StatusBadge>{record.state}</StatusBadge>
                 </td>
                 <td className={classes.actionsSize}>
                   <RecordActions

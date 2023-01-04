@@ -20,6 +20,10 @@ const useStyles = createStyles((theme) => ({
   secondary: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.animoBlack[0] : theme.colors.animoWhite[0],
     color: theme.colorScheme === 'dark' ? theme.colors.animoWhite[0] : theme.colors.animoBlack[0],
+
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.animoBlack[1] : theme.colors.animoWhite[1],
+    },
   },
 }))
 

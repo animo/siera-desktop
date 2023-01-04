@@ -2,7 +2,7 @@ import { ActionIcon, Group, Loader } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
 import React from 'react'
 
-import { DangerButton, PrimaryButton } from './generic'
+import { PrimaryButton, SecondaryButton } from './generic'
 
 interface RecordActionsProps {
   onDelete?: () => void
@@ -20,9 +20,9 @@ export const RecordActions = ({ onAccept, onDecline, onDelete, isLoading }: Reco
     ),
 
     onDecline && (
-      <DangerButton key="reject" size="xs" variant="light" onClick={onDecline}>
+      <SecondaryButton key="reject" size="xs" onClick={onDecline}>
         Decline
-      </DangerButton>
+      </SecondaryButton>
     ),
 
     onDelete && (
