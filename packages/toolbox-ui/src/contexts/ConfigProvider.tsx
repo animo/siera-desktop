@@ -14,10 +14,11 @@ const configContext = createContext<ConfigContext>({ loading: true } as ConfigCo
 
 export const useConfig = () => {
   const configCtx = useContext(configContext)
+  if (!configCtx.config) throw new Error('Config not loaded yet')
 
   return {
     ...configCtx,
-    config: configCtx.config!,
+    config: configCtx.config,
   }
 }
 
