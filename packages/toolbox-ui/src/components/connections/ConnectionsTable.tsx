@@ -11,6 +11,7 @@ interface ConnectionsTableProps {
   records: ConnectionRecord[]
   onDelete: (connection: ConnectionRecord) => void
   onAccept: (connection: ConnectionRecord) => void
+  onDecline: (connection: ConnectionRecord) => void
 }
 
 const useStyles = createStyles(() => ({
@@ -33,7 +34,7 @@ const useStyles = createStyles(() => ({
   },
 }))
 
-export const ConnectionsTable = ({ records, onDelete, onAccept }: ConnectionsTableProps) => {
+export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: ConnectionsTableProps) => {
   const { classes } = useStyles()
   const theme = useMantineTheme()
 
@@ -52,6 +53,7 @@ export const ConnectionsTable = ({ records, onDelete, onAccept }: ConnectionsTab
           {records.map((record: ConnectionRecord) => {
             const isLoading = ConnectionsUtil.isConnectionWaitingForResponse(record)
             const isWaitingForAccept = ConnectionsUtil.isConnectionWaitingForAcceptInput(record)
+            const isWaitingForDecline = ConnectionsUtil.isConnectionWaitingForDeclineInput(record)
 
             return (
               <tr key={record.id}>
@@ -76,6 +78,7 @@ export const ConnectionsTable = ({ records, onDelete, onAccept }: ConnectionsTab
                 <td className={classes.actionsSize}>
                   <RecordActions
                     onAccept={isWaitingForAccept ? () => onAccept(record) : undefined}
+                    onDecline={isWaitingForDecline ? () => onDecline(record) : undefined}
                     onDelete={() => onDelete(record)}
                     isLoading={isLoading}
                   />
