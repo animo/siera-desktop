@@ -7,7 +7,7 @@ import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 
 import { GlobalErrorHandler } from './components/GlobalErrorHandler'
-import { useConfig, useConfigUnsafe } from './contexts/ConfigProvider'
+import { useConfigUnsafe } from './contexts/ConfigProvider'
 
 interface ToolboxAppProps {
   router: RouterProviderProps['router']

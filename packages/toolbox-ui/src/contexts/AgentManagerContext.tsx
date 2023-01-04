@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 
 import React, { createContext, useContext, useMemo, useState } from 'react'
 
-import { useConfig, useConfigUnsafe } from './ConfigProvider'
+import { useConfigUnsafe } from './ConfigProvider'
 
 export interface IAgentContext {
   agents: AgentConfigRecord[]
