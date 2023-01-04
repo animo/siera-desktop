@@ -7,7 +7,7 @@ import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 
 import { GlobalErrorHandler } from './components/GlobalErrorHandler'
-import { useConfig } from './contexts/ConfigProvider'
+import { useConfig, useConfigUnsafe } from './contexts/ConfigProvider'
 
 interface ToolboxAppProps {
   router: RouterProviderProps['router']
@@ -31,9 +31,9 @@ const toolboxTheme = (colorScheme: ColorScheme): MantineThemeOverride => ({
 })
 
 export const ToolboxApp = ({ router }: ToolboxAppProps) => {
-  const { config, setColorScheme, loading } = useConfig()
+  const { config, setColorScheme } = useConfigUnsafe()
 
-  const colorScheme = loading ? 'light' : config.colorScheme
+  const colorScheme = config?.colorScheme ?? 'light'
   const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value || colorScheme === 'dark' ? 'light' : 'dark')
 
   return (

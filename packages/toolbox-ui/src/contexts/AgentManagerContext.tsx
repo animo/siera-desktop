@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 
 import React, { createContext, useContext, useMemo, useState } from 'react'
 
-import { useConfig } from './ConfigProvider'
+import { useConfig, useConfigUnsafe } from './ConfigProvider'
 
 export interface IAgentContext {
   agents: AgentConfigRecord[]
@@ -33,7 +33,7 @@ interface AgentManagerProviderProps {
 }
 
 export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) => {
-  const { config, addAgent, loading } = useConfig()
+  const { config, addAgent, loading } = useConfigUnsafe()
   const [currentAgentId, setCurrentAgentId] = useState<string>()
 
   const logout = () => {

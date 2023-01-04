@@ -22,6 +22,10 @@ export const useConfig = () => {
   }
 }
 
+export const useConfigUnsafe = () => {
+  return useContext(configContext)
+}
+
 interface ConfigProviderProps {
   children: ReactNode
   configRepository: ConfigFileRepository
