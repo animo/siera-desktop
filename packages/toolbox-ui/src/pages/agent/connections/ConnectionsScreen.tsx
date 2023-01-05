@@ -42,7 +42,7 @@ export const ConnectionsScreen = () => {
       return
     }
 
-    const url = (await invite).invitation.toUrl({ domain: 'https://example.com' })
+    const url = invite.invitation.toUrl({ domain: 'https://example.com' })
 
     openContextModal({
       modal: 'presentInvite',

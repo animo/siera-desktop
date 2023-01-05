@@ -24,7 +24,7 @@ export const PresentInviteModal = ({ innerProps }: ContextModalProps<{ inviteUrl
 
     showNotification({
       title: 'Invitation copied to clipboard',
-      message: 'You can now use how you like',
+      message: 'You can now use it how you like',
     })
   }
 
