@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 
 import React, { createContext, useContext, useMemo, useState } from 'react'
 
-import { useConfig } from './ConfigProvider'
+import { useConfigUnsafe } from './ConfigProvider'
 
 export interface IAgentContext {
   agents: AgentConfigRecord[]
@@ -11,6 +11,7 @@ export interface IAgentContext {
   setCurrentAgentId: (id: string | undefined) => void
   addAgent: (agent: AgentConfigRecord) => Promise<void>
   loading: boolean
+  logout: () => void
 }
 
 const AgentManagerContext = createContext<IAgentContext>({} as IAgentContext)
@@ -32,8 +33,12 @@ interface AgentManagerProviderProps {
 }
 
 export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) => {
-  const { config, addAgent, loading } = useConfig()
+  const { config, addAgent, loading } = useConfigUnsafe()
   const [currentAgentId, setCurrentAgentId] = useState<string>()
+
+  const logout = () => {
+    setCurrentAgentId(undefined)
+  }
 
   return (
     <AgentManagerContext.Provider
@@ -43,6 +48,7 @@ export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) =>
         agents: config?.agents || [],
         addAgent,
         loading,
+        logout,
       }}
     >
       {children}
