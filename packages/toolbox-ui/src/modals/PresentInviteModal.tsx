@@ -20,7 +20,7 @@ export const PresentInviteModal = ({ innerProps }: ContextModalProps<{ inviteUrl
   const { inviteUrl } = innerProps
 
   const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(inviteUrl)
+    await window.navigator.clipboard.writeText(inviteUrl)
 
     showNotification({
       title: 'Invitation copied to clipboard',
