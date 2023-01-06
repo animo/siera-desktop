@@ -7,11 +7,22 @@ type ConfigContext = {
   config?: ToolboxConfig
   loading: boolean
   addAgent: (agent: AgentConfigRecord) => Promise<void>
+  setColorScheme: (colorScheme: 'dark' | 'light') => Promise<void>
 }
 
 const configContext = createContext<ConfigContext>({ loading: true } as ConfigContext)
 
-export const useConfig = (): ConfigContext => {
+export const useConfig = () => {
+  const configCtx = useContext(configContext)
+  if (!configCtx.config) throw new Error('Config not loaded yet')
+
+  return {
+    ...configCtx,
+    config: configCtx.config,
+  }
+}
+
+export const useConfigUnsafe = () => {
   return useContext(configContext)
 }
 
@@ -51,12 +62,21 @@ export const ConfigProvider = ({ children, configRepository }: ConfigProviderPro
     setConfig(updatedConfig)
   }
 
+  const setColorScheme = async (colorScheme: 'dark' | 'light') => {
+    if (!config) return
+
+    const updatedConfig = { ...config, colorScheme }
+    await saveConfig(updatedConfig)
+    setConfig(updatedConfig)
+  }
+
   return (
     <configContext.Provider
       value={{
         config,
         loading,
         addAgent,
+        setColorScheme,
       }}
     >
       {children}

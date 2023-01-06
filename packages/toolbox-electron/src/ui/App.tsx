@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { InMemoryConfigRepository } from '@animo/toolbox-core'
+import { DefaultConfiguration, InMemoryConfigRepository } from '@animo/toolbox-core'
 import { ToolboxApp } from '@animo/toolbox-ui/src/ToolboxApp'
 import { AgentContext } from '@animo/toolbox-ui/src/contexts/AgentContext'
 import { AgentManagerProvider, useCurrentAgentRecord } from '@animo/toolbox-ui/src/contexts/AgentManagerContext'
@@ -29,7 +29,7 @@ export const router = createMemoryRouter(routes)
 
 const configRepository = (function () {
   if (!window.configInformation.configDir) {
-    return new InMemoryConfigRepository()
+    return new InMemoryConfigRepository(DefaultConfiguration)
   }
 
   return new ElectronConfigFileRepository(window.configInformation.configDir)

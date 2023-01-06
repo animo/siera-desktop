@@ -1,6 +1,6 @@
 import type { ConfigFileRepository, ToolboxConfig } from '@animo/toolbox-core'
 
-import { DefaultConfiguration, validateToolboxConfig } from '@animo/toolbox-core'
+import { DefaultConfiguration, validateAndParseToolboxConfig } from '@animo/toolbox-core'
 
 export class ElectronConfigFileRepository implements ConfigFileRepository {
   public constructor(public readonly configPath: string) {}
@@ -12,21 +12,17 @@ export class ElectronConfigFileRepository implements ConfigFileRepository {
     // TODO: think about how to handle new config options
     const configString = await window.fs.read(this.configPath)
 
-    const config = JSON.parse(configString) as ToolboxConfig
+    const config = JSON.parse(configString)
 
-    validateToolboxConfig(config)
-
-    return config
-  }
-
-  private validateToolboxConfig(config: ToolboxConfig) {
-    validateToolboxConfig(config)
+    return validateAndParseToolboxConfig(config)
   }
 
   public async writeConfiguration(config: ToolboxConfig): Promise<void> {
     const filePath = this.configPath
 
-    const configString = JSON.stringify(config)
+    const validatedConfig = validateAndParseToolboxConfig(config)
+
+    const configString = JSON.stringify(validatedConfig)
 
     await window.fs.write(filePath, configString)
   }
