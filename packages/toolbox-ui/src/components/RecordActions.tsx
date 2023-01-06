@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Loader } from '@mantine/core'
+import { ActionIcon, createStyles, Group, Loader } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
 import React from 'react'
 
@@ -11,7 +11,15 @@ interface RecordActionsProps {
   isLoading?: boolean
 }
 
+const useStyles = createStyles((theme) => ({
+  trashIcon: {
+    color: theme.colors.danger[6],
+  },
+}))
+
 export const RecordActions = ({ onAccept, onDecline, onDelete, isLoading }: RecordActionsProps) => {
+  const { classes } = useStyles()
+
   const actions = [
     onAccept && (
       <PrimaryButton key="accept" size="xs" variant="light" onClick={onAccept}>
@@ -26,14 +34,14 @@ export const RecordActions = ({ onAccept, onDecline, onDelete, isLoading }: Reco
     ),
 
     onDelete && (
-      <ActionIcon key="delete" color="red" onClick={onDelete}>
-        <IconTrash size={16} stroke={1.5} />
+      <ActionIcon key="delete" onClick={onDelete} variant="transparent">
+        <IconTrash size={16} stroke={1.5} className={classes.trashIcon} />
       </ActionIcon>
     ),
   ].filter(Boolean)
 
   return (
-    <Group spacing={0} position="right">
+    <Group spacing={4} position="right">
       {isLoading ? <Loader size={20} /> : actions}
     </Group>
   )

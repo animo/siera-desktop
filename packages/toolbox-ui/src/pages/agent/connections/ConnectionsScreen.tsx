@@ -1,5 +1,5 @@
 import { useAgent, useConnections } from '@aries-framework/react-hooks'
-import { Flex, TextInput, Title } from '@mantine/core'
+import { Box, Flex, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { openContextModal } from '@mantine/modals'
 import { showNotification } from '@mantine/notifications'
@@ -37,7 +37,7 @@ export const ConnectionsScreen = () => {
       showNotification({
         title: 'Error',
         message: 'Could not create invitation',
-        color: 'red',
+        color: 'error',
       })
       return
     }
@@ -55,17 +55,17 @@ export const ConnectionsScreen = () => {
 
   return (
     <>
-      <Title size="h2" mb={20}>
+      <Title size="h2" mb="xs">
         Connections
       </Title>
       <form onSubmit={form.onSubmit(receiveInvite)}>
-        <Flex gap={10} mb={20}>
-          <TextInput placeholder="Invite url" {...form.getInputProps('url')} />
+        <Flex gap="xs" mb="xs">
+          <TextInput placeholder="Invite url" {...form.getInputProps('url')} required />
           <PrimaryButton type="submit">Receive invite</PrimaryButton>
           <PrimaryButton onClick={() => createInvite()}>Create Invite</PrimaryButton>
         </Flex>
       </form>
-      <div>
+      <Box>
         {connectionLoading ? (
           <Loading />
         ) : (
@@ -76,7 +76,7 @@ export const ConnectionsScreen = () => {
             onDecline={(connection) => declineRequest(connection.id)}
           />
         )}
-      </div>
+      </Box>
     </>
   )
 }

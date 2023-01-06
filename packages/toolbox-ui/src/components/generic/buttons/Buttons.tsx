@@ -9,20 +9,22 @@ interface ClickAble {
 
 const useStyles = createStyles((theme) => ({
   primary: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.animoWhite[0] : theme.colors.animoBlack[0],
-    color: theme.colorScheme === 'dark' ? theme.colors.animoBlack[0] : theme.colors.animoWhite[0],
+    backgroundColor: theme.colors.primaryOne[7],
+    color: theme.colors.textTwo[7],
+    transition: 'background-color 0.2s ease',
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.animoWhite[0] : theme.colors.animoBlack[0],
+      backgroundColor: theme.colors.primaryOne[6],
     },
   },
 
   secondary: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.animoBlack[0] : theme.colors.animoWhite[0],
-    color: theme.colorScheme === 'dark' ? theme.colors.animoWhite[0] : theme.colors.animoBlack[0],
+    backgroundColor: theme.colors.secondaryOne[7],
+    color: theme.colors.textTwo[0],
+    transition: 'background-color 0.2s ease',
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.animoBlack[1] : theme.colors.animoWhite[1],
+      backgroundColor: theme.colors.secondaryOne[6],
     },
   },
 }))
@@ -30,15 +32,15 @@ const useStyles = createStyles((theme) => ({
 export const PrimaryButton = (props: ButtonProps & ClickAble) => {
   const { classes, cx } = useStyles()
 
-  return <Button color="primary" {...props} className={cx(classes.primary, props.className)} />
+  return <Button {...props} className={cx(classes.primary, props.className)} />
 }
 
 export const SecondaryButton = (props: ButtonProps & ClickAble) => {
   const { classes, cx } = useStyles()
 
-  return <Button color="secondary" {...props} className={cx(classes.secondary, props.className)} />
+  return <Button {...props} className={cx(classes.secondary, props.className)} />
 }
 
 export const DangerButton = (props: ButtonProps & ClickAble) => {
-  return <Button color="red" variant="subtle" {...props} />
+  return <Button color="danger" variant="subtle" {...props} />
 }

@@ -77,7 +77,7 @@ export const SetupScreen = () => {
         <BackButton />
       </div>
       <div className={classes.screen}>
-        <Title align="center" size="h3" sx={() => ({ fontWeight: 900 })}>
+        <Title align="center" size="h3" weight={900}>
           Create a new Agent
         </Title>
         <Paper withBorder shadow="md" p={30} mt={20} radius="md">

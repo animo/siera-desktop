@@ -10,7 +10,7 @@ import { PrimaryButton } from '../components/generic'
 const useStyles = createStyles((theme) => ({
   qrCode: {
     borderRadius: theme.radius.sm,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.gray[0] : theme.white,
+    backgroundColor: theme.colors.primaryOne[7],
     padding: theme.spacing.xs,
   },
 }))

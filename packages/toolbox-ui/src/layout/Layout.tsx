@@ -2,7 +2,7 @@ import type { NavigationItem } from './LayoutNavBar'
 import type { ReactNode } from 'react'
 
 import { useAgent } from '@aries-framework/react-hooks'
-import { AppShell, createStyles } from '@mantine/core'
+import { AppShell } from '@mantine/core'
 import { IconHome, IconId, IconKey, IconPlugConnected } from '@tabler/icons'
 import React from 'react'
 
@@ -21,14 +21,7 @@ const navigationItems: NavigationItem[] = [
   { name: 'Proofs', href: '/agent/proofs', icon: IconId },
 ]
 
-const useStyles = createStyles((theme) => ({
-  appshell: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
-  },
-}))
-
 export const Layout = ({ children }: LayoutProps) => {
-  const { classes } = useStyles()
   const { agent, loading } = useAgent()
 
   if (loading) {
@@ -40,11 +33,7 @@ export const Layout = ({ children }: LayoutProps) => {
   }
 
   return (
-    <AppShell
-      padding="md"
-      className={classes.appshell}
-      navbar={<LayoutNavBar navigationItems={navigationItems} agent={agent} />}
-    >
+    <AppShell padding="md" navbar={<LayoutNavBar navigationItems={navigationItems} agent={agent} />}>
       {children}
     </AppShell>
   )

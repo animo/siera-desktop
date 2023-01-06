@@ -1,4 +1,4 @@
-import { Card, Container, createStyles, Flex, Group, Space, Text, Title, UnstyledButton } from '@mantine/core'
+import { Box, Card, Container, createStyles, Flex, Group, Text, Title, UnstyledButton } from '@mantine/core'
 import { IconPlus } from '@tabler/icons'
 import React from 'react'
 
@@ -9,13 +9,24 @@ import { useNavigation } from '../hooks/useNavigation'
 
 const useStyles = createStyles((theme) => ({
   card: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    backgroundColor: theme.colors.secondaryOne[5],
     boxShadow: theme.shadows.xs,
     transition: 'background-color 0.2s ease',
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+      backgroundColor: theme.colors.secondaryOne[4],
     },
+  },
+  variantLabel: {
+    color: theme.colors.textOne[7],
+    textTransform: 'uppercase',
+    fontWeight: 700,
+    fontSize: theme.fontSizes.xs,
+  },
+  avatarLabel: {
+    color: theme.colors.textOne[7],
+    fontWeight: 600,
+    fontSize: theme.fontSizes.md,
   },
 }))
 
@@ -35,8 +46,9 @@ export const AgentSelectionScreen = () => {
 
   return (
     <Container mt={20}>
-      <Title size="h2">Agents</Title>
-      <Space h="md" />
+      <Title size="h2" mb="md">
+        Agents
+      </Title>
       <Flex gap="md" wrap="wrap">
         {agents.map((agent) => (
           <UnstyledButton key={agent.id} onClick={() => switchToAgent(agent.id)}>
@@ -45,14 +57,10 @@ export const AgentSelectionScreen = () => {
                 <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={64} radius="md">
                   {agent.agentConfig.label}
                 </SmartAvatar>
-                <div>
-                  <Text size="xs" sx={{ textTransform: 'uppercase' }} weight={700} color="dimmed">
-                    Native (AFJ)
-                  </Text>
-                  <Text size="md" weight={600}>
-                    {agent.agentConfig.label}
-                  </Text>
-                </div>
+                <Box>
+                  <Text className={classes.variantLabel}>Native (AFJ)</Text>
+                  <Text className={classes.avatarLabel}>{agent.agentConfig.label}</Text>
+                </Box>
               </Group>
             </Card>
           </UnstyledButton>

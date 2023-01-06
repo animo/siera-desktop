@@ -25,7 +25,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
   return {
     navbar: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      backgroundColor: theme.colors.backgroundOne[7],
     },
 
     link: {
@@ -34,39 +34,39 @@ const useStyles = createStyles((theme, _params, getRef) => {
       alignItems: 'center',
       textDecoration: 'none',
       fontSize: theme.fontSizes.sm,
-      color: theme.colorScheme === 'dark' ? theme.colors.animoWhite[4] : theme.colors.animoBlack[2],
+      color: theme.colors.textOne[7],
       padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
 
       '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.animoBlack[0] : theme.colors.animoLightgrey[0],
-        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+        backgroundColor: theme.fn.rgba(theme.colors.primaryOne[7], 0.1),
+        color: theme.colors.textOne[7],
 
         [`& .${icon}`]: {
-          color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+          color: theme.colors.textOne[7],
         },
       },
     },
 
     linkIcon: {
       ref: icon,
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+      color: theme.colors.textOne[7],
       marginRight: theme.spacing.sm,
     },
 
     linkActive: {
       '&, &:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.white : theme.black,
-        color: theme.colorScheme === 'dark' ? theme.black : theme.white,
+        backgroundColor: theme.colors.primaryOne[7],
+        color: theme.colors.textTwo[7],
         [`& .${icon}`]: {
-          color: theme.colorScheme === 'dark' ? theme.black : theme.white,
+          color: theme.colors.textTwo[7],
         },
       },
     },
 
     footer: {
-      borderTop: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]}`,
+      borderTop: `1px solid ${theme.colors.backgroundOne[3]}`,
       paddingTop: theme.spacing.md,
     },
   }
