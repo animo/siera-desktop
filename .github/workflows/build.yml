@@ -6,36 +6,69 @@ on:
       - feature/TBX-60
 
 jobs:
-  build-linux:
-    name: Build for Linux and Provide artifacts
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Setup Libindy
-        uses: ./.github/actions/setup-libindy
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build for all platforms
-        run: yarn --cwd packages/toolbox-electron make -p linux
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: toolbox-electron
-          path: ./packages/toolbox-electron/out/make/**/*.*
+#  build-linux:
+#    name: Build for Linux and Provide artifacts
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout Repository
+#        uses: actions/checkout@v2
+#
+#      - name: Setup Libindy
+#        uses: ./.github/actions/setup-libindy
+#
+#      - name: Install dependencies
+#        run: yarn install --frozen-lockfile
+#
+#      - name: Build for all platforms
+#        run: yarn --cwd packages/toolbox-electron make -p linux
+#
+#      - name: Upload artifacts
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: toolbox-electron
+#          path: ./packages/toolbox-electron/out/make/**/*.*
+#          retention-days: 7
 
   build-macos:
     name: Build for MacOS and Provide artifacts
-    runs-on: macos-10.15
+    runs-on: macos-12
 
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v2
+
+        - name: Install the Apple certificate and provisioning profile
+          env:
+            MACOS_BUILD_CERTIFICATE_BASE64: ${{ secrets.SIERA_MACOS_BUILD_CERTIFICATE_BASE64 }}
+            MACOS_P12_PASSWORD: ${{ secrets.SIERA_MACOS_P12_PASSWORD }}
+            MACOS_BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.SIERA_MACOS_BUILD_PROVISION_PROFILE_BASE64 }}
+            MACOS_KEYCHAIN_PASSWORD: ${{ secrets.SIERA_MACOS_KEYCHAIN_PASSWORD }}
+          run: |
+            # create variables
+            CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+            PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+            KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+            # import certificate and provisioning profile from secrets
+            echo -n "$MACOS_BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+            echo -n "$MACOS_BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+
+            # create temporary keychain
+            security create-keychain -p "$MACOS_KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+            security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+            security unlock-keychain -p "$MACOS_KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+            # import certificate to keychain
+            security import $CERTIFICATE_PATH -P "$MACOS_P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+            security list-keychain -d user -s $KEYCHAIN_PATH
+
+            # apply provisioning profile
+            mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+            cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+        - name: Check code signing setup
+          run: security find-identity -p codesigning -v
 
         - name: Setup Libindy
           run: |
@@ -46,51 +79,64 @@ jobs:
             ln -s /usr/local/opt/libsodium/lib/libsodium.23.dylib /usr/local/opt/libsodium/lib/libsodium.18.dylib
 
             brew install zeromq
-
-            brew install blu3beri/libindy/libindy
+      
+            mv ./libs/libindy.dylib /usr/local/lib
 
         - name: Install dependencies
           run: yarn install --frozen-lockfile
 
-        - name: Build for all platforms
-          run: yarn --cwd packages/toolbox-electron make -p darwin
-
-        - name: Upload artifacts
-          uses: actions/upload-artifact@v2
-          with:
-            name: toolbox-electron
-            path: ./packages/toolbox-electron/out/make/**/*.*
-
-  build-windows:
-    name: Build for Windows and Provide artifacts
-    runs-on: windows-2019
-
-    steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v2
-
-        - name: Setup Libindy and install dependencies
+        - name: Build for MacOS platform
+          env:
+            SIERA_APPLE_API_KEY_BASE64: ${{ secrets.SIERA_APPLE_API_KEY_BASE64 }}
+            SIERA_APPLE_API_KEY_ID: ${{ secrets.SIERA_APPLE_API_KEY_ID }}
+            SIERA_APPLE_API_ISSUER: ${{ secrets.SIERA_APPLE_API_ISSUER }}
           run: |
-            curl.exe --output libindy.zip https://repo.sovrin.org/windows/libindy/master/1.16.0-1636/libindy_1.16.0.zip
-            7z x libindy.zip -oC:\libindy\
-            $env:LD_LIBRARY_PATH = 'C:\libindy\lib'
-            $env:Path += ';C:\libindy\lib'
+            export SIERA_APPLE_API_KEY_PATH=$RUNNER_TEMP/siera-apple-api-key.p8
 
-            yarn global add --production windows-build-tools
-            yarn config set msvs_version 2019
-            yarn global add node-gyp-install
-            yarn global add node-gyp
+            echo -n "$SIERA_APPLE_API_KEY_BASE64" | base64 --decode --output $SIERA_APPLE_API_KEY_PATH
             
-            yarn install --frozen-lockfile
+            sudo spctl --master-disable
 
-        - name: Build for all platforms
-          run: |
-            $env:Path += ';C:\libindy\lib'
-            $env:LD_LIBRARY_PATH = 'C:\libindy\lib'
-            yarn --cwd packages/toolbox-electron make -p win32
+            yarn --cwd packages/toolbox-electron make -p darwin --arch x64,arm64
 
         - name: Upload artifacts
-          uses: actions/upload-artifact@v2
+          uses: actions/upload-artifact@v3
           with:
             name: toolbox-electron
             path: ./packages/toolbox-electron/out/make/**/*.*
+            retention-days: 7
+
+#  build-windows:
+#    name: Build for Windows and Provide artifacts
+#    runs-on: windows-2019
+#
+#    steps:
+#        - name: Checkout Repository
+#          uses: actions/checkout@v2
+#
+#        - name: Setup Libindy and install dependencies
+#          run: |
+#            curl.exe --output libindy.zip https://repo.sovrin.org/windows/libindy/master/1.16.0-1636/libindy_1.16.0.zip
+#            7z x libindy.zip -oC:\libindy\
+#            $env:LD_LIBRARY_PATH = 'C:\libindy\lib'
+#            $env:Path += ';C:\libindy\lib'
+#
+#            yarn global add --production windows-build-tools
+#            yarn config set msvs_version 2019
+#            yarn global add node-gyp-install
+#            yarn global add node-gyp
+#
+#            yarn install --frozen-lockfile
+#
+#        - name: Build for all platforms
+#          run: |
+#            $env:Path += ';C:\libindy\lib'
+#            $env:LD_LIBRARY_PATH = 'C:\libindy\lib'
+#            yarn --cwd packages/toolbox-electron make -p win32
+#
+#        - name: Upload artifacts
+#          uses: actions/upload-artifact@v3
+#          with:
+#            name: toolbox-electron
+#            path: ./packages/toolbox-electron/out/make/**/*.*
+#            retention-days: 7

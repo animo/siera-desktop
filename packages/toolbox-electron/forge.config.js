@@ -2,6 +2,21 @@ module.exports = {
   packagerConfig: {
     name: 'toolbox-electron',
     executableName: 'toolbox-electron',
+    appBundleId: 'id.animo.siera.ui',
+    osxSign: {
+      identity: 'Developer ID Application: Animo Solutions (G9667JTP83)',
+      hardenedRuntime: true,
+      entitlements: 'entitlements.mac.plist',
+      entitlementsInherit: 'entitlements.mac.plist',
+      gatekeeperAssess: false,
+    },
+    osxNotarize: {
+      appBundleId: 'id.animo.siera.ui',
+      tool: 'notarytool',
+      appleApiKey: process.env.SIERA_APPLE_API_KEY_PATH,
+      appleApiKeyId: process.env.SIERA_APPLE_API_KEY_ID,
+      appleApiIssuer: process.env.SIERA_APPLE_API_ISSUER,
+    },
   },
   electronRebuildConfig: {},
   makers: [
