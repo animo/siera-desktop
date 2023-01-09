@@ -2,7 +2,7 @@ import type { ConnectionRecord, CredentialExchangeRecord } from '@aries-framewor
 
 import { formatSchemaName } from '@animo/toolbox-core/src/utils'
 import { CredentialsUtil } from '@animo/toolbox-core/src/utils/records/CredentialsUtil'
-import { Badge, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
+import { Badge, createStyles, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
 
 import { useCredentialsFormatData } from '../../contexts/CredentialFormatDataProvider'
@@ -17,18 +17,36 @@ interface CredentialsTableProps {
   onAccept: (credential: CredentialExchangeRecord) => void
 }
 
+const useStyles = createStyles(() => ({
+  table: {
+    width: '100%',
+    minWidth: 490,
+    tableLayout: 'fixed',
+  },
+  labelSize: {
+    width: 150,
+  },
+  stateSize: {
+    width: 100,
+  },
+  actionsSize: {
+    width: 160,
+  },
+}))
+
 export const CredentialsTable = ({ records, connections, onDelete, onAccept, onDecline }: CredentialsTableProps) => {
+  const { classes } = useStyles()
   const theme = useMantineTheme()
   const { formattedData } = useCredentialsFormatData()
 
   return (
     <ScrollArea>
-      <Table verticalSpacing="sm">
+      <Table verticalSpacing="sm" className={classes.table}>
         <thead>
           <tr>
-            <th>Credential</th>
-            <th>State</th>
-            <th />
+            <th className={classes.labelSize}>Credential</th>
+            <th className={classes.stateSize}>State</th>
+            <th className={classes.actionsSize} />
           </tr>
         </thead>
         <tbody>
@@ -41,8 +59,8 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
 
             return (
               <tr key={record.id}>
-                <td>
-                  <Group spacing="sm">
+                <td className={classes.labelSize}>
+                  <Group spacing="sm" noWrap>
                     <SmartAvatar size={30} radius={30} src={connection?.imageUrl}>
                       {connection?.theirLabel}
                     </SmartAvatar>
@@ -51,10 +69,10 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
                     </Text>
                   </Group>
                 </td>
-                <td>
+                <td className={classes.stateSize}>
                   <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>{record.state}</Badge>
                 </td>
-                <td>
+                <td className={classes.actionsSize}>
                   <RecordActions
                     onAccept={isWaitingForAccept ? () => onAccept(record) : undefined}
                     onDecline={isWaitingForDecline ? () => onDecline(record) : undefined}

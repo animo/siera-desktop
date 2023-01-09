@@ -1,5 +1,4 @@
-import type { IAgentRecord } from './AgentManagerContext'
-import type { IAgentDependenciesProvider } from '@animo/toolbox-core'
+import type { AgentConfigRecord, AgentDependenciesProvider } from '@animo/toolbox-core'
 import type { Agent } from '@aries-framework/core'
 import type { PropsWithChildren } from 'react'
 
@@ -11,8 +10,8 @@ import CredentialFormatDataProvider from './CredentialFormatDataProvider'
 import ProofFormatDataProvider from './ProofsFormatDataProvider'
 
 interface AgentContextProps {
-  agentRecord?: IAgentRecord
-  agentDependenciesProvider: IAgentDependenciesProvider
+  agentRecord?: AgentConfigRecord
+  agentDependenciesProvider: AgentDependenciesProvider
 }
 
 interface ActiveAgent {

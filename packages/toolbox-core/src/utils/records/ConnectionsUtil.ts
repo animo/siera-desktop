@@ -9,7 +9,12 @@ export class ConnectionsUtil {
     DidExchangeState.InvitationSent,
   ]
 
-  public static acceptStates: DidExchangeState[] = [DidExchangeState.InvitationReceived]
+  public static acceptStates: DidExchangeState[] = [
+    DidExchangeState.InvitationReceived,
+    DidExchangeState.RequestReceived,
+  ]
+
+  public static declineStates: DidExchangeState[] = [DidExchangeState.RequestReceived]
 
   public static isConnectionWaitingForResponse(connection: ConnectionRecord): boolean {
     return ConnectionsUtil.loadingStates.includes(connection.state)
@@ -17,5 +22,9 @@ export class ConnectionsUtil {
 
   public static isConnectionWaitingForAcceptInput(connection: ConnectionRecord): boolean {
     return ConnectionsUtil.acceptStates.includes(connection.state)
+  }
+
+  public static isConnectionWaitingForDeclineInput(connection: ConnectionRecord): boolean {
+    return ConnectionsUtil.declineStates.includes(connection.state)
   }
 }
