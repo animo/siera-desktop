@@ -19,19 +19,19 @@ const useStyles = createStyles((theme) => ({
     fontSize: theme.fontSizes.xs,
   },
   avatarLabel: {
-    color: theme.colors.textOne[0],
+    color: theme.colors.textOne[7],
     fontWeight: 600,
     fontSize: theme.fontSizes.md,
   },
   attributeLabel: {
-    color: theme.colors.textOne[3],
+    color: theme.colors.textOne[7],
     fontSize: theme.fontSizes.xs,
   },
   connectedStatusConnected: {
-    color: theme.colors.success[0],
+    color: theme.colors.success[7],
   },
   connectedStatusDisconnected: {
-    color: theme.colors.error[0],
+    color: theme.colors.error[7],
   },
 }))
 

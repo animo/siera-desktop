@@ -9,24 +9,28 @@ import { useNavigation } from '../hooks/useNavigation'
 
 const useStyles = createStyles((theme) => ({
   card: {
-    backgroundColor: theme.colors.secondaryOne[5],
+    backgroundColor: theme.colors.secondaryOne[6],
     boxShadow: theme.shadows.xs,
     transition: 'background-color 0.2s ease',
 
     '&:hover': {
-      backgroundColor: theme.colors.secondaryOne[4],
+      backgroundColor: theme.colors.secondaryOne[5],
     },
   },
   variantLabel: {
     color: theme.colors.textOne[7],
     textTransform: 'uppercase',
-    fontWeight: 700,
+    fontWeight: 500,
     fontSize: theme.fontSizes.xs,
   },
   avatarLabel: {
     color: theme.colors.textOne[7],
     fontWeight: 600,
     fontSize: theme.fontSizes.md,
+  },
+  createAgentButton: {
+    color: theme.colors.textOne[7],
+    height: 80,
   },
 }))
 
@@ -52,20 +56,22 @@ export const AgentSelectionScreen = () => {
       <Flex gap="md" wrap="wrap">
         {agents.map((agent) => (
           <UnstyledButton key={agent.id} onClick={() => switchToAgent(agent.id)}>
-            <Card h={100} w={220} className={classes.card}>
-              <Group noWrap>
-                <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={64} radius="md">
-                  {agent.agentConfig.label}
-                </SmartAvatar>
-                <Box>
-                  <Text className={classes.variantLabel}>Native (AFJ)</Text>
-                  <Text className={classes.avatarLabel}>{agent.agentConfig.label}</Text>
-                </Box>
-              </Group>
+            <Card h={80} w={220} className={classes.card} radius="lg">
+              <Flex align="center" h="100%">
+                <Group noWrap>
+                  <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={48} radius="xl">
+                    {agent.agentConfig.label}
+                  </SmartAvatar>
+                  <Box>
+                    <Text className={classes.avatarLabel}>{agent.agentConfig.label}</Text>
+                    <Text className={classes.variantLabel}>Native (AFJ)</Text>
+                  </Box>
+                </Group>
+              </Flex>
             </Card>
           </UnstyledButton>
         ))}
-        <UnstyledButton onClick={() => navigation.navigate('/setup')} h={100}>
+        <UnstyledButton className={classes.createAgentButton} onClick={() => navigation.navigate('/setup')}>
           <Group spacing="sm">
             <IconPlus />
             <Text span>Create new Agent</Text>
