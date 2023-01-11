@@ -6,12 +6,12 @@ import { Loading } from '../components/Loading'
 import { SmartAvatar } from '../components/SmartAvatar'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
+import { ColorSchemeSwitch } from '../layout/actions/ColorSchemeSwitch'
 
 const useStyles = createStyles((theme) => ({
   card: {
     backgroundColor: theme.colors.secondaryOne[6],
     boxShadow: theme.shadows.xs,
-    transition: 'background-color 0.2s ease',
 
     '&:hover': {
       backgroundColor: theme.colors.secondaryOne[5],
@@ -50,16 +50,19 @@ export const AgentSelectionScreen = () => {
 
   return (
     <Container mt={20}>
-      <Title size="h2" mb="md">
-        Agents
-      </Title>
+      <Flex justify="space-between">
+        <Title size="h2" mb="md">
+          Agents
+        </Title>
+        <ColorSchemeSwitch />
+      </Flex>
       <Flex gap="md" wrap="wrap">
         {agents.map((agent) => (
           <UnstyledButton key={agent.id} onClick={() => switchToAgent(agent.id)}>
-            <Card h={80} w={220} className={classes.card} radius="lg">
+            <Card h={80} w={220} className={classes.card} radius="md">
               <Flex align="center" h="100%">
                 <Group noWrap>
-                  <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={48} radius="xl">
+                  <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={48} radius="md">
                     {agent.agentConfig.label}
                   </SmartAvatar>
                   <Box>

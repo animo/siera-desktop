@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react'
 import { Center, createStyles, Flex, Loader, Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
 
@@ -22,7 +21,7 @@ export const Loading = ({ description }: LoadingProps) => {
   return (
     <Center className={classes.spinnerCentering}>
       <Flex direction="column" align="center" gap="sm">
-        <Loader size="xl" stroke={colors.primaryOne[0]} />
+        <Loader size="xl" stroke={colors.primaryTwo[0]} />
         {description && <Text align="center">{description}</Text>}
       </Flex>
     </Center>

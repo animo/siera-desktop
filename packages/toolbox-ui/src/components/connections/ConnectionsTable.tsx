@@ -1,11 +1,13 @@
 import type { ConnectionRecord } from '@aries-framework/core'
 
 import { ConnectionsUtil } from '@animo/toolbox-core/src/utils/records/ConnectionsUtil'
-import { createStyles, Group, ScrollArea, Table, Text } from '@mantine/core'
+import { Box, createStyles, Flex, Group, ScrollArea, Table, Text } from '@mantine/core'
+import { IconDatabaseOff } from '@tabler/icons'
 import React from 'react'
 
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
+import { EmptyState } from '../generic/table/EmptyState'
 import { StatusBadge } from '../generic/table/StatusBadge'
 
 interface ConnectionsTableProps {
@@ -44,12 +46,19 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
         <thead>
           <tr>
             <th className={classes.labelSize}>Connection</th>
-            <th className={classes.idSize}>Connection Id</th>
+            <th className={classes.idSize}>Connection</th>
             <th className={classes.stateSize}>State</th>
             <th className={classes.actionsSize} />
           </tr>
         </thead>
         <tbody>
+          {records.length === 0 ? (
+            <tr>
+              <td colSpan={4}>
+                <EmptyState message="No connections found" />
+              </td>
+            </tr>
+          ) : null}
           {records.map((record: ConnectionRecord) => {
             const isLoading = ConnectionsUtil.isConnectionWaitingForResponse(record)
             const isWaitingForAccept = ConnectionsUtil.isConnectionWaitingForAcceptInput(record)

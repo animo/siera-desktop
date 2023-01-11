@@ -5,6 +5,7 @@ export type ColorShade = Tuple<string, 8>
 export type AnimoVariantTheme = {
   primaryOne: ColorShade
   primaryTwo: ColorShade
+  primaryThree: ColorShade
   secondaryOne: ColorShade
   secondaryTwo: ColorShade
   backgroundOne: ColorShade

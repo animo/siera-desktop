@@ -1,8 +1,9 @@
 import { useAgent, useConnections } from '@aries-framework/react-hooks'
-import { Box, Flex, TextInput, Title } from '@mantine/core'
+import { Box, createStyles, Flex, TextInput, Title, Tooltip } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { openContextModal } from '@mantine/modals'
 import { showNotification } from '@mantine/notifications'
+import { IconPlus } from '@tabler/icons'
 import React from 'react'
 
 import { Loading } from '../../../components/Loading'

@@ -4,7 +4,8 @@ import { animoColors } from './AnimoColorShades'
 
 export const animoLightTheme: AnimoVariantTheme = {
   primaryOne: animoColors.animoBlack,
-  primaryTwo: animoColors.animoBlack, // TODO: Add a second primary color
+  primaryTwo: animoColors.animoCoral,
+  primaryThree: animoColors.animoBlue,
   secondaryOne: animoColors.animoWhite,
   secondaryTwo: animoColors.animoWhite, // TODO: Add a second secondary color
 

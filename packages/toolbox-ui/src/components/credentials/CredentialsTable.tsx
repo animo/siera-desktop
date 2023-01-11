@@ -8,6 +8,7 @@ import React from 'react'
 import { useCredentialsFormatData } from '../../contexts/CredentialFormatDataProvider'
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
+import { EmptyState } from '../generic/table/EmptyState'
 import { StatusBadge } from '../generic/table/StatusBadge'
 
 interface CredentialsTableProps {
@@ -50,6 +51,13 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
           </tr>
         </thead>
         <tbody>
+          {records.length === 0 ? (
+            <tr>
+              <td colSpan={3}>
+                <EmptyState message="No credentials found" />
+              </td>
+            </tr>
+          ) : null}
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id == record.connectionId)
             const formattedCredential = formattedData.find((data) => data.id === record.id)

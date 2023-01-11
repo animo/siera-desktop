@@ -1,13 +1,14 @@
 import type { Agent } from '@aries-framework/core'
 import type { TablerIcon } from '@tabler/icons'
 
-import { createStyles, Navbar } from '@mantine/core'
+import { createStyles, Group, Navbar } from "@mantine/core";
 import React, { useState } from 'react'
 
 import { useNavigation } from '../hooks/useNavigation'
 
-import { LayoutActions } from './LayoutActions'
 import { LayoutAvatar } from './LayoutAvatar'
+import { LogoutAction } from "./actions/LogoutAction";
+import { ColorSchemeSwitch } from "./actions/ColorSchemeSwitch";
 
 export interface NavigationItem {
   name: string
@@ -36,12 +37,14 @@ const useStyles = createStyles((theme, _params, getRef) => {
       fontSize: theme.fontSizes.sm,
       color: theme.colors.textOne[7],
       padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
-      borderRadius: theme.radius.sm,
+      // borderRadius: theme.radius.sm,
       fontWeight: 500,
 
+      borderLeft: '4px solid transparent',
+
       '&:hover': {
-        backgroundColor: theme.fn.rgba(theme.colors.primaryOne[7], 0.1),
-        color: theme.colors.textOne[7],
+        backgroundColor: theme.fn.rgba(theme.colors.primaryTwo[7], 0.05),
+        borderLeft: `4px solid ${theme.fn.rgba(theme.colors.primaryTwo[7], 0.7)}`,
 
         [`& .${icon}`]: {
           color: theme.colors.textOne[7],
@@ -57,16 +60,16 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     linkActive: {
       '&, &:hover': {
-        backgroundColor: theme.colors.primaryOne[7],
-        color: theme.colors.textTwo[7],
-        [`& .${icon}`]: {
-          color: theme.colors.textTwo[7],
-        },
+        backgroundColor: theme.fn.rgba(theme.colors.primaryTwo[7], 0.1),
+        borderLeft: `4px solid ${theme.colors.primaryTwo[7]}`,
       },
     },
 
+    layoutAvatar: {
+      paddingBottom: theme.spacing.xl,
+    },
+
     footer: {
-      borderTop: `1px solid ${theme.colors.backgroundOne[3]}`,
       paddingTop: theme.spacing.md,
     },
   }
@@ -78,12 +81,12 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
   const [activeIndex, setActiveIndex] = useState(0)
 
   return (
-    <Navbar p="md" width={{ sm: 300 }} className={classes.navbar}>
-      <Navbar.Section>
+    <Navbar py="md" width={{ sm: 300 }} className={classes.navbar}>
+      <Navbar.Section mx="md" className={classes.layoutAvatar}>
         <LayoutAvatar agent={agent} />
       </Navbar.Section>
 
-      <Navbar.Section grow mt="xl">
+      <Navbar.Section grow mt="xs">
         {navigationItems.map((item, index) => (
           <a
             className={cx(classes.link, { [classes.linkActive]: index === activeIndex })}
@@ -101,8 +104,11 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
         ))}
       </Navbar.Section>
 
-      <Navbar.Section className={classes.footer}>
-        <LayoutActions />
+      <Navbar.Section className={classes.footer} mx="md">
+        <Group position="apart">
+          <LogoutAction />
+          <ColorSchemeSwitch />
+        </Group>
       </Navbar.Section>
     </Navbar>
   )

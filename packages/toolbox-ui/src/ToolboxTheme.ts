@@ -24,6 +24,14 @@ export const toolboxTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
         },
       }),
     },
+
+    Modal: {
+      styles: () => ({
+        title: {
+          fontWeight: 700,
+        },
+      }),
+    },
   },
 })
 

@@ -7,6 +7,7 @@ import React from 'react'
 import { useProofsFormatData } from '../../contexts/ProofsFormatDataProvider'
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
+import { EmptyState } from '../generic/table/EmptyState'
 import { StatusBadge } from '../generic/table/StatusBadge'
 
 interface ProofsTableProps {
@@ -47,12 +48,19 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
         <thead>
           <tr>
             <th className={classes.labelSize}>Connection</th>
-            <th className={classes.idSize}>Proof Id</th>
+            <th className={classes.idSize}>Proof</th>
             <th className={classes.stateSize}>State</th>
             <th className={classes.actionsSize} />
           </tr>
         </thead>
         <tbody>
+          {records.length === 0 ? (
+            <tr>
+              <td colSpan={4}>
+                <EmptyState message="No proofs found" />
+              </td>
+            </tr>
+          ) : null}
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id === record.connectionId)
             const formattedProof = formattedData.find((proof) => proof.id === record.id)
