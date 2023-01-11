@@ -54,13 +54,13 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
           </tr>
         </thead>
         <tbody>
-          {records.length === 0 ? (
+          {records.length === 0 && (
             <tr>
               <td colSpan={4}>
                 <EmptyState message="No proofs found" />
               </td>
             </tr>
-          ) : null}
+          )}
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id === record.connectionId)
             const formattedProof = formattedData.find((proof) => proof.id === record.id)

@@ -51,13 +51,13 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
           </tr>
         </thead>
         <tbody>
-          {records.length === 0 ? (
+          {records.length === 0 && (
             <tr>
               <td colSpan={3}>
                 <EmptyState message="No credentials found" />
               </td>
             </tr>
-          ) : null}
+          )}
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id == record.connectionId)
             const formattedCredential = formattedData.find((data) => data.id === record.id)

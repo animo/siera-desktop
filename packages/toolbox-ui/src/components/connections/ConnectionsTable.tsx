@@ -51,13 +51,13 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
           </tr>
         </thead>
         <tbody>
-          {records.length === 0 ? (
+          {records.length === 0 && (
             <tr>
               <td colSpan={4}>
                 <EmptyState message="No connections found" />
               </td>
             </tr>
-          ) : null}
+          )}
           {records.map((record: ConnectionRecord) => {
             const isLoading = ConnectionsUtil.isConnectionWaitingForResponse(record)
             const isWaitingForAccept = ConnectionsUtil.isConnectionWaitingForAcceptInput(record)
