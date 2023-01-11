@@ -1,9 +1,10 @@
 import { uuid } from '@animo/toolbox-core/src/utils'
-import { createStyles, TextInput, Paper, Title, Button } from '@mantine/core'
+import { createStyles, TextInput, Paper, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import React from 'react'
 
 import { BackButton } from '../components/BackButton'
+import { PrimaryButton } from '../components/generic'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
 
@@ -43,6 +44,7 @@ const getRandomRobotImage = () => {
 export const SetupScreen = () => {
   const navigation = useNavigation()
   const { classes } = useStyles()
+  const agentManager = useAgentManager()
   const form = useForm<CreateAgentForm>({
     initialValues: {
       agentLabel: '',
@@ -70,27 +72,29 @@ export const SetupScreen = () => {
     navigation.navigate('/')
   }
 
+  const agentLabel = agentManager.agents.length === 0 ? 'First agent' : 'My agent'
+
   return (
     <>
       <div className={classes.backButton}>
         <BackButton />
       </div>
       <div className={classes.screen}>
-        <Title align="center" size="h3" sx={() => ({ fontWeight: 900 })}>
-          Create a new Agent
-        </Title>
         <Paper withBorder shadow="md" p={30} mt={20} radius="md">
+          <Title align="center" size="h3" weight={900} mb="xs">
+            Create a new Agent
+          </Title>
           <form onSubmit={form.onSubmit(createAgentConfig)}>
-            <TextInput label="Agent label" placeholder="Agent label" required {...form.getInputProps('agentLabel')} />
+            <TextInput label="Agent label" placeholder={agentLabel} required {...form.getInputProps('agentLabel')} />
             <TextInput
               label="Mediator invite url"
-              placeholder="Mediator url"
+              placeholder="https://mediator.com/example-url"
               {...form.getInputProps('mediatorInviteUrl')}
             />
 
-            <Button type="submit" fullWidth mt="xl">
+            <PrimaryButton type="submit" fullWidth mt="xl">
               Create
-            </Button>
+            </PrimaryButton>
           </form>
         </Paper>
       </div>
