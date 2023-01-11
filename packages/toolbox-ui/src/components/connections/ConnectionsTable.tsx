@@ -1,8 +1,7 @@
 import type { ConnectionRecord } from '@aries-framework/core'
 
 import { ConnectionsUtil } from '@animo/toolbox-core/src/utils/records/ConnectionsUtil'
-import { Box, createStyles, Flex, Group, ScrollArea, Table, Text } from '@mantine/core'
-import { IconDatabaseOff } from '@tabler/icons'
+import { createStyles, Group, ScrollArea, Table, Text } from '@mantine/core'
 import React from 'react'
 
 import { RecordActions } from '../RecordActions'

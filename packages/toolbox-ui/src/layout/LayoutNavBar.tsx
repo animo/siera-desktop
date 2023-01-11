@@ -1,14 +1,14 @@
 import type { Agent } from '@aries-framework/core'
 import type { TablerIcon } from '@tabler/icons'
 
-import { createStyles, Group, Navbar } from "@mantine/core";
+import { createStyles, Group, Navbar } from '@mantine/core'
 import React, { useState } from 'react'
 
 import { useNavigation } from '../hooks/useNavigation'
 
 import { LayoutAvatar } from './LayoutAvatar'
-import { LogoutAction } from "./actions/LogoutAction";
-import { ColorSchemeSwitch } from "./actions/ColorSchemeSwitch";
+import { ColorSchemeSwitch } from './actions/ColorSchemeSwitch'
+import { LogoutAction } from './actions/LogoutAction'
 
 export interface NavigationItem {
   name: string
