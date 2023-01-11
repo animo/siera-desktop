@@ -46,6 +46,7 @@
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "jest": "^27.0.4",
     "patch-package": "^6.4.7",
     "prettier": "^2.3.1",

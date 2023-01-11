@@ -1,4 +1,5 @@
 module.exports = {
+  plugins: ['unused-imports'],
   parser: '@typescript-eslint/parser',
   extends: [
     'eslint:recommended',
@@ -38,6 +39,11 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'warn',
     '@typescript-eslint/consistent-type-imports': 'error',
     'import/no-cycle': 'error',
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
+    ],
     'import/order': [
       'error',
       {
