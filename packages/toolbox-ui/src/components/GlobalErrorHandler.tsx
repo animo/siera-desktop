@@ -15,7 +15,7 @@ export const GlobalErrorHandler = ({ children }: GlobalErrorHandlerProps) => {
       if (!(reason instanceof AriesFrameworkError)) return
 
       showNotification({
-        color: 'red',
+        color: 'error',
         title: reason.name,
         message: reason.message,
       })

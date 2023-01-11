@@ -2,12 +2,14 @@ import type { ConnectionRecord, CredentialExchangeRecord } from '@aries-framewor
 
 import { formatSchemaName } from '@animo/toolbox-core/src/utils'
 import { CredentialsUtil } from '@animo/toolbox-core/src/utils/records/CredentialsUtil'
-import { Badge, createStyles, Group, ScrollArea, Table, Text, useMantineTheme } from '@mantine/core'
+import { createStyles, Group, ScrollArea, Table, Text } from '@mantine/core'
 import React from 'react'
 
 import { useCredentialsFormatData } from '../../contexts/CredentialFormatDataProvider'
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
+import { EmptyState } from '../generic/table/EmptyState'
+import { StatusBadge } from '../generic/table/StatusBadge'
 
 interface CredentialsTableProps {
   records: CredentialExchangeRecord[]
@@ -36,7 +38,6 @@ const useStyles = createStyles(() => ({
 
 export const CredentialsTable = ({ records, connections, onDelete, onAccept, onDecline }: CredentialsTableProps) => {
   const { classes } = useStyles()
-  const theme = useMantineTheme()
   const { formattedData } = useCredentialsFormatData()
 
   return (
@@ -50,6 +51,13 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
           </tr>
         </thead>
         <tbody>
+          {records.length === 0 && (
+            <tr>
+              <td colSpan={3}>
+                <EmptyState message="No credentials found" />
+              </td>
+            </tr>
+          )}
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id == record.connectionId)
             const formattedCredential = formattedData.find((data) => data.id === record.id)
@@ -70,7 +78,7 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
                   </Group>
                 </td>
                 <td className={classes.stateSize}>
-                  <Badge variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>{record.state}</Badge>
+                  <StatusBadge>{record.state}</StatusBadge>
                 </td>
                 <td className={classes.actionsSize}>
                   <RecordActions
