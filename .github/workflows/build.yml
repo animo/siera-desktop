@@ -90,6 +90,7 @@ jobs:
             SIERA_APPLE_API_KEY_BASE64: ${{ secrets.SIERA_APPLE_API_KEY_BASE64 }}
             SIERA_APPLE_API_KEY_ID: ${{ secrets.SIERA_APPLE_API_KEY_ID }}
             SIERA_APPLE_API_ISSUER: ${{ secrets.SIERA_APPLE_API_ISSUER }}
+            NODE_ENV: production
           run: |
             export SIERA_APPLE_API_KEY_PATH=$RUNNER_TEMP/siera-apple-api-key.p8
 
@@ -97,7 +98,7 @@ jobs:
             
             sudo spctl --master-disable
 
-            yarn --cwd packages/toolbox-electron make -p darwin --arch x64,arm64
+            yarn --cwd packages/toolbox-electron make -p darwin --arch universal
 
         - name: Upload artifacts
           uses: actions/upload-artifact@v3

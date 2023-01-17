@@ -1,16 +1,19 @@
+const nodeenv = process.env.NODE_ENV
+const isProd = nodeenv === 'production'
+
 module.exports = {
   packagerConfig: {
     name: 'toolbox-electron',
     executableName: 'toolbox-electron',
     appBundleId: 'id.animo.siera.ui',
-    osxSign: {
+    osxSign: isProd && {
       identity: 'Developer ID Application: Animo Solutions (G9667JTP83)',
       hardenedRuntime: true,
       entitlements: 'entitlements.mac.plist',
       entitlementsInherit: 'entitlements.mac.plist',
       gatekeeperAssess: false,
     },
-    osxNotarize: {
+    osxNotarize: isProd && {
       appBundleId: 'id.animo.siera.ui',
       tool: 'notarytool',
       appleApiKey: process.env.SIERA_APPLE_API_KEY_PATH,
