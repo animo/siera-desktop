@@ -31,7 +31,8 @@ contextBridge.exposeInMainWorld('nodeFetch', async (endpoint, request) => {
 
 const getConfigDirForPlatform = (platform, homeDir, appDataDir) => {
   switch (platform) {
-    case 'linux' || 'darwin':
+    case 'darwin':
+    case 'linux':
       return `${homeDir}/.config/siera/ui/config.json`
     case 'win32':
       return `${appDataDir}\\siera\\ui\\config.json`

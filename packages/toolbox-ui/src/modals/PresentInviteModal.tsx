@@ -1,7 +1,9 @@
 import type { ContextModalProps } from '@mantine/modals'
 
 import { Box, Center, createStyles, Divider, Text } from '@mantine/core'
+import { useClipboard } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
+import { IconCopy } from '@tabler/icons'
 import { QRCodeSVG } from 'qrcode.react'
 import React from 'react'
 
@@ -10,17 +12,18 @@ import { PrimaryButton } from '../components/generic'
 const useStyles = createStyles((theme) => ({
   qrCode: {
     borderRadius: theme.radius.sm,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.gray[0] : theme.white,
+    backgroundColor: theme.colors.primaryOne[7],
     padding: theme.spacing.xs,
   },
 }))
 
 export const PresentInviteModal = ({ innerProps }: ContextModalProps<{ inviteUrl: string }>) => {
+  const clipBoard = useClipboard()
   const { classes } = useStyles()
   const { inviteUrl } = innerProps
 
   const copyToClipboard = async () => {
-    await window.navigator.clipboard.writeText(inviteUrl)
+    clipBoard.copy(inviteUrl)
 
     showNotification({
       title: 'Invitation copied to clipboard',
@@ -38,11 +41,11 @@ export const PresentInviteModal = ({ innerProps }: ContextModalProps<{ inviteUrl
         </Box>
       </Center>
       <Text mt="xs" align="center">
-        Scan this QR code with your mobile device.
+        Scan the QR-code with your wallet.
       </Text>
-      <Divider label="OR" labelPosition="center" mb="xs" />
+      <Divider label="OR" labelPosition="center" mb="lg" mt="md" />
       <PrimaryButton fullWidth onClick={copyToClipboard}>
-        Copy url
+        <IconCopy size={16} /> Copy url
       </PrimaryButton>
     </>
   )

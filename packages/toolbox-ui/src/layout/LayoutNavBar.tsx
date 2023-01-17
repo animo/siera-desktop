@@ -1,13 +1,14 @@
 import type { Agent } from '@aries-framework/core'
 import type { TablerIcon } from '@tabler/icons'
 
-import { createStyles, Navbar } from '@mantine/core'
+import { createStyles, Group, Navbar } from '@mantine/core'
 import React, { useState } from 'react'
 
 import { useNavigation } from '../hooks/useNavigation'
 
-import { LayoutActions } from './LayoutActions'
 import { LayoutAvatar } from './LayoutAvatar'
+import { ColorSchemeSwitch } from './actions/ColorSchemeSwitch'
+import { LogoutAction } from './actions/LogoutAction'
 
 export interface NavigationItem {
   name: string
@@ -25,12 +26,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
   return {
     navbar: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-    },
-
-    title: {
-      textTransform: 'uppercase',
-      letterSpacing: -0.25,
+      backgroundColor: theme.colors.backgroundOne[7],
     },
 
     link: {
@@ -39,39 +35,41 @@ const useStyles = createStyles((theme, _params, getRef) => {
       alignItems: 'center',
       textDecoration: 'none',
       fontSize: theme.fontSizes.sm,
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+      color: theme.colors.textOne[7],
       padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
-      borderRadius: theme.radius.sm,
+      // borderRadius: theme.radius.sm,
       fontWeight: 500,
 
+      borderLeft: '4px solid transparent',
+
       '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+        backgroundColor: theme.fn.rgba(theme.colors.primaryTwo[7], 0.05),
+        borderLeft: `4px solid ${theme.fn.rgba(theme.colors.primaryTwo[7], 0.7)}`,
 
         [`& .${icon}`]: {
-          color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+          color: theme.colors.textOne[7],
         },
       },
     },
 
     linkIcon: {
       ref: icon,
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+      color: theme.colors.textOne[7],
       marginRight: theme.spacing.sm,
     },
 
     linkActive: {
       '&, &:hover': {
-        backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
-        color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
-        [`& .${icon}`]: {
-          color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
-        },
+        backgroundColor: theme.fn.rgba(theme.colors.primaryTwo[7], 0.1),
+        borderLeft: `4px solid ${theme.colors.primaryTwo[7]}`,
       },
     },
 
+    layoutAvatar: {
+      paddingBottom: theme.spacing.xl,
+    },
+
     footer: {
-      borderTop: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]}`,
       paddingTop: theme.spacing.md,
     },
   }
@@ -83,12 +81,12 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
   const [activeIndex, setActiveIndex] = useState(0)
 
   return (
-    <Navbar p="md" width={{ sm: 300 }} className={classes.navbar}>
-      <Navbar.Section>
+    <Navbar py="md" width={{ sm: 300 }} className={classes.navbar}>
+      <Navbar.Section mx="md" className={classes.layoutAvatar}>
         <LayoutAvatar agent={agent} />
       </Navbar.Section>
 
-      <Navbar.Section grow mt="xl">
+      <Navbar.Section grow mt="xs">
         {navigationItems.map((item, index) => (
           <a
             className={cx(classes.link, { [classes.linkActive]: index === activeIndex })}
@@ -106,8 +104,11 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
         ))}
       </Navbar.Section>
 
-      <Navbar.Section className={classes.footer}>
-        <LayoutActions />
+      <Navbar.Section className={classes.footer} mx="md">
+        <Group position="apart">
+          <LogoutAction />
+          <ColorSchemeSwitch />
+        </Group>
       </Navbar.Section>
     </Navbar>
   )
