@@ -12,7 +12,7 @@ jobs:
 #
 #    steps:
 #      - name: Checkout Repository
-#        uses: actions/checkout@v2
+#        uses: actions/checkout@v3
 #
 #      - name: Setup Libindy
 #        uses: ./.github/actions/setup-libindy
@@ -36,7 +36,12 @@ jobs:
 
     steps:
         - name: Checkout Repository
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
+
+        - name: Change node version
+          uses: actions/setup-node@v2
+          with:
+              node-version: '18'
 
         - name: Install the Apple certificate and provisioning profile
           env:
@@ -80,7 +85,7 @@ jobs:
 
             brew install zeromq
       
-            mv ./libs/libindy.dylib /usr/local/lib
+            mv ./libs/libindy.universal.dylib /usr/local/lib/libindy.dylib
 
         - name: Install dependencies
           run: yarn install --frozen-lockfile
@@ -98,7 +103,7 @@ jobs:
             
             sudo spctl --master-disable
 
-            yarn --cwd packages/toolbox-electron make -p darwin --arch universal
+            yarn --cwd packages/toolbox-electron make -p darwin --arch x64,arm64
 
         - name: Upload artifacts
           uses: actions/upload-artifact@v3
@@ -113,7 +118,7 @@ jobs:
 #
 #    steps:
 #        - name: Checkout Repository
-#          uses: actions/checkout@v2
+#          uses: actions/checkout@v3
 #
 #        - name: Setup Libindy and install dependencies
 #          run: |
