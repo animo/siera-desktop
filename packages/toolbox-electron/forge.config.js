@@ -1,10 +1,18 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const { execSync } = require('child_process')
+
+/* eslint-enable @typescript-eslint/no-var-requires */
+
+/* eslint-disable no-console */
+
 const nodeenv = process.env.NODE_ENV
 const isProd = nodeenv === 'production'
 
 module.exports = {
   packagerConfig: {
-    name: 'toolbox-electron',
-    executableName: 'toolbox-electron',
+    name: 'SieraDesktop',
+    executableName: 'siera-desktop',
     appBundleId: 'id.animo.siera.ui',
     osxSign: isProd && {
       identity: 'Developer ID Application: Animo Solutions (G9667JTP83)',
@@ -19,6 +27,32 @@ module.exports = {
       appleApiKey: process.env.SIERA_APPLE_API_KEY_PATH,
       appleApiKeyId: process.env.SIERA_APPLE_API_KEY_ID,
       appleApiIssuer: process.env.SIERA_APPLE_API_ISSUER,
+    },
+  },
+  hooks: {
+    packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
+      if (platform === 'darwin') {
+        const rootpath = `${buildPath}/../..`
+
+        console.log(execSync(`ls -la ${rootpath}`).toString())
+
+        const libindyPath = `${__dirname}/../../libs/libindy.universal.dylib`
+
+        console.log(execSync(`ls -la ${libindyPath}`).toString())
+
+        console.log(execSync(`cp ${libindyPath} ${rootpath}/Frameworks/libindy.dylib`).toString())
+        console.log(
+          execSync(
+            `install_name_tool -id @rpath/Frameworks/libindy.dylib ${rootpath}/Frameworks/libindy.dylib`
+          ).toString()
+        )
+
+        console.log(
+          execSync(
+            `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib @rpath/Frameworks/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+          ).toString()
+        )
+      }
     },
   },
   electronRebuildConfig: {},

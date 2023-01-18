@@ -17,6 +17,11 @@ jobs:
 #      - name: Setup Libindy
 #        uses: ./.github/actions/setup-libindy
 #
+#        - uses: actions/cache@v3
+#          with:
+#            path: '**/node_modules'
+#            key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+#
 #      - name: Install dependencies
 #        run: yarn install --frozen-lockfile
 #
@@ -84,8 +89,13 @@ jobs:
             ln -s /usr/local/opt/libsodium/lib/libsodium.23.dylib /usr/local/opt/libsodium/lib/libsodium.18.dylib
 
             brew install zeromq
-      
-            mv ./libs/libindy.universal.dylib /usr/local/lib/libindy.dylib
+            
+            cp ./libs/libindy.universal.dylib /usr/local/lib/libindy.dylib
+
+        - uses: actions/cache@v3
+          with:
+            path: '**/node_modules'
+            key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
         - name: Install dependencies
           run: yarn install --frozen-lockfile
@@ -103,7 +113,7 @@ jobs:
             
             sudo spctl --master-disable
 
-            yarn --cwd packages/toolbox-electron make -p darwin --arch x64,arm64
+            yarn --cwd packages/toolbox-electron make -p darwin --arch x64
 
         - name: Upload artifacts
           uses: actions/upload-artifact@v3
@@ -119,6 +129,11 @@ jobs:
 #    steps:
 #        - name: Checkout Repository
 #          uses: actions/checkout@v3
+#
+#        - uses: actions/cache@v3
+#          with:
+#            path: '**/node_modules'
+#            key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 #
 #        - name: Setup Libindy and install dependencies
 #          run: |
