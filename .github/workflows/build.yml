@@ -38,6 +38,9 @@ jobs:
   build-macos:
     name: Build for MacOS and Provide artifacts
     runs-on: macos-12
+    strategy:
+      matrix:
+        arch: [x64, arm64]
 
     steps:
         - name: Checkout Repository
@@ -90,12 +93,7 @@ jobs:
 
             brew install zeromq
             
-            cp ./libs/libindy.universal.dylib /usr/local/lib/libindy.dylib
-
-        - uses: actions/cache@v3
-          with:
-            path: '**/node_modules'
-            key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+            cp ./libs/libindy.${{ matrix.arch }}.dylib /usr/local/lib/libindy.dylib
 
         - name: Install dependencies
           run: yarn install --frozen-lockfile
@@ -113,7 +111,7 @@ jobs:
             
             sudo spctl --master-disable
 
-            yarn --cwd packages/toolbox-electron make -p darwin --arch x64
+            yarn --cwd packages/toolbox-electron make -p darwin --arch ${{ matrix.arch }}
 
         - name: Upload artifacts
           uses: actions/upload-artifact@v3

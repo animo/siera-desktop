@@ -36,20 +36,24 @@ module.exports = {
 
         console.log(execSync(`ls -la ${rootpath}`).toString())
 
-        const libindyPath = `${__dirname}/../../libs/libindy.universal.dylib`
+        const libindyPath = `${__dirname}/../../libs/libindy.${arch}.dylib`
 
         console.log(execSync(`ls -la ${libindyPath}`).toString())
 
         console.log(execSync(`cp ${libindyPath} ${rootpath}/Frameworks/libindy.dylib`).toString())
         console.log(
+          execSync(`install_name_tool -id @rpath/libindy.dylib ${rootpath}/Frameworks/libindy.dylib`).toString()
+        )
+
+        console.log(
           execSync(
-            `install_name_tool -id @rpath/Frameworks/libindy.dylib ${rootpath}/Frameworks/libindy.dylib`
+            `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib @rpath/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
           ).toString()
         )
 
         console.log(
           execSync(
-            `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib @rpath/Frameworks/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+            `install_name_tool -change /private/tmp/indy-sdk/libindy/target/release/deps/libindy.dylib @rpath/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
           ).toString()
         )
       }
