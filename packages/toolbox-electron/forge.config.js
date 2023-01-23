@@ -40,13 +40,6 @@ module.exports = {
 
         console.log(execSync(`ls -la ${libindyPath}`).toString())
 
-        // console.log(execSync(`cp ${libindyPath} ${rootpath}/Frameworks/libindy.dylib`).toString())
-        // console.log(
-        //   execSync(
-        //     `mkdir -p /usr/local/opt/libindy/lib && cp ${libindyPath} /usr/local/opt/libindy/lib/libindy.dylib`
-        //   ).toString()
-        // )
-
         console.log(
           execSync(
             `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
@@ -55,25 +48,15 @@ module.exports = {
 
         console.log(
           execSync(
-            `dylibbundler -ns -od -b -x ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${rootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
+            `install_name_tool -change /private/tmp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
           ).toString()
         )
 
-        // console.log(
-        //   execSync(`install_name_tool -id @rpath/libindy.dylib ${rootpath}/Frameworks/libindy.dylib`).toString()
-        // )
-
-        // console.log(
-        //   execSync(
-        //     `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib @rpath/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-        //   ).toString()
-        // )
-
-        // console.log(
-        //   execSync(
-        //     `install_name_tool -change /private/tmp/indy-sdk/libindy/target/release/deps/libindy.dylib @rpath/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-        //   ).toString()
-        // )
+        console.log(
+          execSync(
+            `dylibbundler -ns -od -b -x ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${rootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
+          ).toString()
+        )
       }
     },
   },
