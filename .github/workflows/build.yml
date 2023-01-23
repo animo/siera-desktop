@@ -40,7 +40,7 @@ jobs:
     runs-on: macos-12
     strategy:
       matrix:
-        arch: [x64, arm64]
+        arch: [x64] # add arm64
 
     steps:
         - name: Checkout Repository
@@ -105,7 +105,7 @@ jobs:
             SIERA_APPLE_API_KEY_BASE64: ${{ secrets.SIERA_APPLE_API_KEY_BASE64 }}
             SIERA_APPLE_API_KEY_ID: ${{ secrets.SIERA_APPLE_API_KEY_ID }}
             SIERA_APPLE_API_ISSUER: ${{ secrets.SIERA_APPLE_API_ISSUER }}
-            NODE_ENV: production
+#            NODE_ENV: production
           run: |
             export SIERA_APPLE_API_KEY_PATH=$RUNNER_TEMP/siera-apple-api-key.p8
 
