@@ -54,6 +54,12 @@ module.exports = {
 
         console.log(
           execSync(
+            `install_name_tool -change /Users/beri/developer/work/hyperledger/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+          ).toString()
+        )
+
+        console.log(
+          execSync(
             `dylibbundler -ns -od -b -x ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${rootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
           ).toString()
         )
