@@ -29,48 +29,48 @@ module.exports = {
       appleApiIssuer: process.env.SIERA_APPLE_API_ISSUER,
     },
   },
-  hooks: {
-    packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
-      if (platform === 'darwin') {
-        const rootpath = `${buildPath}/../..`
-
-        console.log(execSync(`ls -la ${rootpath}`).toString())
-
-        const libindyPath = `${__dirname}/../../libs/libindy.${arch}.dylib`
-
-        console.log(execSync(`ls -la ${libindyPath}`).toString())
-
-        // console.log(
-        //   execSync(
-        //     `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-        //   ).toString()
-        // )
-        console.log(
-          execSync(
-            `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.a ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-          ).toString()
-        )
-
-        // console.log(
-        //   execSync(
-        //     `install_name_tool -change /private/tmp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-        //   ).toString()
-        // )
-
-        // console.log(
-        //   execSync(
-        //     `install_name_tool -change /Users/beri/developer/work/hyperledger/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-        //   ).toString()
-        // )
-
-        console.log(
-          execSync(
-            `dylibbundler -ns -od -b -x ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${rootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
-          ).toString()
-        )
-      }
-    },
-  },
+  // hooks: {
+  //   packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
+  //     if (platform === 'darwin') {
+  //       const rootpath = `${buildPath}/../..`
+  //
+  //       console.log(execSync(`ls -la ${rootpath}`).toString())
+  //
+  //       const libindyPath = `${__dirname}/../../libs/libindy.${arch}.dylib`
+  //
+  //       console.log(execSync(`ls -la ${libindyPath}`).toString())
+  //
+  //       // console.log(
+  //       //   execSync(
+  //       //     `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+  //       //   ).toString()
+  //       // )
+  //       console.log(
+  //         execSync(
+  //           `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.a ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+  //         ).toString()
+  //       )
+  //
+  //       // console.log(
+  //       //   execSync(
+  //       //     `install_name_tool -change /private/tmp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+  //       //   ).toString()
+  //       // )
+  //
+  //       // console.log(
+  //       //   execSync(
+  //       //     `install_name_tool -change /Users/beri/developer/work/hyperledger/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+  //       //   ).toString()
+  //       // )
+  //
+  //       console.log(
+  //         execSync(
+  //           `dylibbundler -ns -od -b -x ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${rootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
+  //         ).toString()
+  //       )
+  //     }
+  //   },
+  // },
   electronRebuildConfig: {},
   makers: [
     {
