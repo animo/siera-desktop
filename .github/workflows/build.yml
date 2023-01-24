@@ -99,8 +99,8 @@ jobs:
             ln -s /usr/local/opt/libsodium/lib/libsodium.23.dylib /usr/local/opt/libsodium/lib/libsodium.18.dylib
 
             brew install zeromq
-            
-            cp ./libs/libindy.${{ matrix.arch }}.a /usr/local/lib/libindy.a
+
+            cp ./libs/libindy.${{ matrix.arch }}.dylib /usr/local/lib/libindy.dylib
 
         - name: Install dependencies
           run: yarn install --frozen-lockfile
