@@ -100,7 +100,7 @@ jobs:
 
             brew install zeromq
             
-            cp ./libs/libindy.${{ matrix.arch }}.dylib /usr/local/lib/libindy.dylib
+            cp ./libs/libindy.${{ matrix.arch }}.a /usr/local/lib/libindy.a
 
         - name: Install dependencies
           run: yarn install --frozen-lockfile

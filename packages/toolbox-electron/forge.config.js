@@ -40,23 +40,28 @@ module.exports = {
 
         console.log(execSync(`ls -la ${libindyPath}`).toString())
 
+        // console.log(
+        //   execSync(
+        //     `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+        //   ).toString()
+        // )
         console.log(
           execSync(
-            `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+            `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.a ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
           ).toString()
         )
 
-        console.log(
-          execSync(
-            `install_name_tool -change /private/tmp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-          ).toString()
-        )
+        // console.log(
+        //   execSync(
+        //     `install_name_tool -change /private/tmp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+        //   ).toString()
+        // )
 
-        console.log(
-          execSync(
-            `install_name_tool -change /Users/beri/developer/work/hyperledger/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-          ).toString()
-        )
+        // console.log(
+        //   execSync(
+        //     `install_name_tool -change /Users/beri/developer/work/hyperledger/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+        //   ).toString()
+        // )
 
         console.log(
           execSync(
