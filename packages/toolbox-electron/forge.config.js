@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const { execSync } = require('child_process')
+const fs = require('fs/promises')
+const path = require('path')
 
 /* eslint-enable @typescript-eslint/no-var-requires */
 
@@ -31,6 +33,34 @@ module.exports = {
   },
   hooks: {
     packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
+      if (platform === 'win32') {
+        const libIndyLibrariesPath = process.env.LD_LIBRARY_PATH
+        if (!libIndyLibrariesPath) {
+          throw new Error('LD_LIBRARY_PATH is not set')
+        }
+
+        const libindyLibFiles = await fs.readdir(libIndyLibrariesPath)
+
+        console.log('Copying libindy libraries to app directory')
+
+        console.log('files', libindyLibFiles)
+        console.log('libIndyLibrariesPath', libIndyLibrariesPath)
+        console.log('__dirname ls', await fs.readdir(__dirname))
+
+        console.log('buildPath', buildPath)
+        console.log('buildPath ls', await fs.readdir(path.join(buildPath, '..', '..')))
+
+        for (const libFile of libindyLibFiles) {
+          if (!libFile.endsWith('.dll')) continue
+
+          console.log('Copying', libFile)
+
+          const filePath = path.join(libIndyLibrariesPath, libFile)
+
+          await fs.copyFile(filePath, path.join(buildPath, '..', '..', libFile))
+        }
+      }
+
       if (platform === 'darwin') {
         const packageRootpath = `${buildPath}/../..`
 

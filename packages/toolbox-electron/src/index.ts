@@ -51,5 +51,7 @@ app.on('activate', () => {
   }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+// Disable hardware acceleration to avoid issues with Electron on Windows
+if (process.platform === 'win32') {
+  app.disableHardwareAcceleration()
+}
