@@ -32,53 +32,29 @@ module.exports = {
   hooks: {
     packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
       if (platform === 'darwin') {
-        const rootpath = `${buildPath}/../..`
-
-        console.log(execSync(`ls -la ${rootpath}`).toString())
-
-        const libindyPath = `${__dirname}/../../libs/libindy.${arch}.dylib`
-
-        console.log(execSync(`ls -la ${libindyPath}`).toString())
-
-        // console.log(
-        //   execSync(
-        //     `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-        //   ).toString()
-        // )
+        const packageRootpath = `${buildPath}/../..`
 
         console.log(
           execSync(
-            `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+            `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.dylib ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
           ).toString()
         )
 
         console.log(
           execSync(
-            `install_name_tool -change /Users/tom/development/animo/temp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+            `install_name_tool -change /Users/tom/development/animo/temp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
           ).toString()
         )
 
         console.log(
           execSync(
-            `install_name_tool -change /Users/beri/Developer/work/hyperledger/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+            `install_name_tool -change /Users/beri/Developer/work/hyperledger/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
           ).toString()
         )
 
-        // console.log(
-        //   execSync(
-        //     `install_name_tool -change /private/tmp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-        //   ).toString()
-        // )
-
-        // console.log(
-        //   execSync(
-        //     `install_name_tool -change /Users/beri/developer/work/hyperledger/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-        //   ).toString()
-        // )
-
         console.log(
           execSync(
-            `dylibbundler -ns -od -b -x ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${rootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
+            `dylibbundler -ns -od -b -x ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${packageRootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
           ).toString()
         )
       }
@@ -89,7 +65,7 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'toolbox-electron',
+        name: 'siera-desktop',
       },
     },
     {
@@ -100,7 +76,7 @@ module.exports = {
       name: '@electron-forge/maker-deb',
       config: {
         options: {
-          bin: 'toolbox-electron',
+          bin: 'siera-desktop',
         },
       },
     },
@@ -108,7 +84,7 @@ module.exports = {
       name: '@electron-forge/maker-rpm',
       config: {
         options: {
-          bin: 'toolbox-electron',
+          bin: 'siera-desktop',
         },
       },
     },
