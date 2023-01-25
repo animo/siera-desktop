@@ -52,6 +52,12 @@ module.exports = {
           ).toString()
         )
 
+        console.log(
+          execSync(
+            `install_name_tool -change /Users/tom/development/animo/temp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
+          ).toString()
+        )
+
         // console.log(
         //   execSync(
         //     `install_name_tool -change /private/tmp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${rootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
