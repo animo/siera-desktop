@@ -31,7 +31,7 @@ jobs:
 #      - name: Upload artifacts
 #        uses: actions/upload-artifact@v3
 #        with:
-#          name: toolbox-electron
+#          name: toolbox-electron-linux
 #          path: ./packages/toolbox-electron/out/make/**/*.*
 #          retention-days: 7
 #
@@ -110,7 +110,7 @@ jobs:
         - name: Upload artifacts
           uses: actions/upload-artifact@v3
           with:
-            name: toolbox-electron
+            name: toolbox-electron-macos-${{ matrix.arch }}
             path: ./packages/toolbox-electron/out/make/**/*.*
             retention-days: 7
 
@@ -150,6 +150,6 @@ jobs:
 #        - name: Upload artifacts
 #          uses: actions/upload-artifact@v3
 #          with:
-#            name: toolbox-electron
+#            name: toolbox-electron-windows
 #            path: ./packages/toolbox-electron/out/make/**/*.*
 #            retention-days: 7
