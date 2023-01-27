@@ -1,9 +1,10 @@
 name: Build and Provide artifacts
 
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - feature/TBX-60
+    tags: ["v*.*.*"]
+
 
 jobs:
 #  build-linux:
@@ -34,7 +35,7 @@ jobs:
 #          name: toolbox-electron-linux
 #          path: ./packages/toolbox-electron/out/make/**/*.*
 #          retention-days: 7
-#
+
   build-macos:
     name: Build for MacOS and Provide artifacts
     runs-on: macos-12
@@ -83,7 +84,7 @@ jobs:
         - name: Check code signing setup
           run: security find-identity -p codesigning -v
 
-        - name: Setup Libindy
+        - name: Setup libindy and libraries
           run: |
             brew install dylibbundler
 
@@ -153,3 +154,22 @@ jobs:
 #            name: toolbox-electron-windows
 #            path: ./packages/toolbox-electron/out/make/**/*.*
 #            retention-days: 7
+
+    release:
+      name: Create Github release with artifacts
+      runs-on: ubuntu-latest
+      needs: [build-windows, build-macos, build-linux]
+
+      if: github.event_name == 'tag'
+
+      steps:
+        - name: Download built binaries
+          uses: actions/download-artifact@v3
+        - run: |
+            mv ./*/*/* .
+
+        - name: Release
+          uses: softprops/action-gh-release@v1
+          with:
+            files: |
+              *.*

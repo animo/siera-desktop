@@ -62,26 +62,7 @@ module.exports = {
       }
 
       if (platform === 'darwin') {
-        const projectRoot = path.join(__dirname, '..', '..')
         const packageRootpath = `${buildPath}/../..`
-
-        console.log(
-          execSync(
-            `install_name_tool -change /usr/local/opt/libindy/lib/libindy.dylib /usr/local/lib/libindy.dylib ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-          ).toString()
-        )
-
-        console.log(
-          execSync(
-            `install_name_tool -change /Users/tom/development/animo/temp/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-          ).toString()
-        )
-
-        console.log(
-          execSync(
-            `install_name_tool -change /Users/beri/Developer/work/hyperledger/indy-sdk/libindy/target/release/deps/libindy.dylib /usr/local/lib/libindy.dylib ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node`
-          ).toString()
-        )
 
         console.log(
           execSync(
