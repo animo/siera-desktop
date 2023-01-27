@@ -40,7 +40,7 @@ jobs:
     runs-on: macos-12
     strategy:
       matrix:
-        arch: [x64, arm64]
+        arch: [x64] # arm64
 
     steps:
         - name: Checkout Repository
@@ -87,7 +87,7 @@ jobs:
           run: |
             brew install dylibbundler
 
-            sudo cp ./libs/${{ matrix.arch }}/* /usr/local/lib/
+            sudo cp ./libs/${{ matrix.arch }}/* /usr/local/lib
 
         - name: Install dependencies
           run: yarn install --frozen-lockfile
