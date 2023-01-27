@@ -32,7 +32,8 @@
     "lint": "eslint --ignore-path .gitignore .",
     "test": "jest",
     "validate": "yarn lint && yarn check-types",
-    "build": "yarn workspaces run build"
+    "build": "yarn workspaces run build",
+    "clean": "rm -rf ./**/node_modules && rm -rf ./**/.webpack && rm -rf ./**/out"
   },
   "devDependencies": {
     "@types/eslint": "^8.2.1",

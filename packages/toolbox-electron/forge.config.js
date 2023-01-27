@@ -62,6 +62,7 @@ module.exports = {
       }
 
       if (platform === 'darwin') {
+        const projectRoot = path.join(__dirname, '..', '..')
         const packageRootpath = `${buildPath}/../..`
 
         console.log(
@@ -84,7 +85,7 @@ module.exports = {
 
         console.log(
           execSync(
-            `dylibbundler -ns -od -b -x ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${packageRootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
+            `dylibbundler -s ${projectRoot}/libs/${arch} -ns -od -b -x ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${packageRootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
           ).toString()
         )
       }
