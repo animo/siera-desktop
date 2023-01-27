@@ -85,22 +85,9 @@ jobs:
 
         - name: Setup Libindy
           run: |
-            brew remove --ignore-dependencies openssl
-            brew remove --ignore-dependencies openssl@1.1
-            brew install openssl@1.1
             brew install dylibbundler
 
-            mkdir -p /usr/local/opt/openssl/lib/
-
-            ln -s /usr/local/opt/openssl@1.1/lib/libssl.dylib /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
-            ln -s /usr/local/opt/openssl@1.1/lib/libcrypto.dylib /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib
-
-            brew install libsodium
-            ln -s /usr/local/opt/libsodium/lib/libsodium.23.dylib /usr/local/opt/libsodium/lib/libsodium.18.dylib
-
-            brew install zeromq
-
-            cp ./libs/libindy.${{ matrix.arch }}.dylib /usr/local/lib/libindy.dylib
+            sudo cp ./libs/${{ matrix.arch }}/* /usr/local/lib/
 
         - name: Install dependencies
           run: yarn install --frozen-lockfile
