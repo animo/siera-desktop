@@ -8,14 +8,14 @@ const path = require('path')
 
 /* eslint-disable no-console */
 
-const nodeenv = process.env.NODE_ENV
-const isProd = nodeenv === 'production'
+const nodeEnv = process.env.NODE_ENV
+const isProd = nodeEnv === 'production'
 
 module.exports = {
   packagerConfig: {
     name: 'SieraDesktop',
     executableName: 'siera-desktop',
-    appBundleId: 'id.animo.siera.ui',
+    appBundleId: 'id.animo.siera.desktop',
     osxSign: isProd && {
       identity: 'Developer ID Application: Animo Solutions (G9667JTP83)',
       hardenedRuntime: true,
@@ -24,7 +24,7 @@ module.exports = {
       gatekeeperAssess: false,
     },
     osxNotarize: isProd && {
-      appBundleId: 'id.animo.siera.ui',
+      appBundleId: 'id.animo.siera.desktop',
       tool: 'notarytool',
       appleApiKey: process.env.SIERA_APPLE_API_KEY_PATH,
       appleApiKeyId: process.env.SIERA_APPLE_API_KEY_ID,
@@ -32,7 +32,7 @@ module.exports = {
     },
   },
   hooks: {
-    packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
+    packageAfterCopy: async (config, buildPath, electronVersion, platform) => {
       if (platform === 'win32') {
         const libIndyLibrariesPath = process.env.LD_LIBRARY_PATH
         if (!libIndyLibrariesPath) {
@@ -41,19 +41,8 @@ module.exports = {
 
         const libindyLibFiles = await fs.readdir(libIndyLibrariesPath)
 
-        console.log('Copying libindy libraries to app directory')
-
-        console.log('files', libindyLibFiles)
-        console.log('libIndyLibrariesPath', libIndyLibrariesPath)
-        console.log('__dirname ls', await fs.readdir(__dirname))
-
-        console.log('buildPath', buildPath)
-        console.log('buildPath ls', await fs.readdir(path.join(buildPath, '..', '..')))
-
         for (const libFile of libindyLibFiles) {
           if (!libFile.endsWith('.dll')) continue
-
-          console.log('Copying', libFile)
 
           const filePath = path.join(libIndyLibrariesPath, libFile)
 
@@ -66,7 +55,7 @@ module.exports = {
 
         console.log(
           execSync(
-            `dylibbundler -ns -od -b -x ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${packageRootpath}/Frameworks/LibIndy/ -p @rpath/LibIndy/`
+            `dylibbundler -ns -od -b -x ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${packageRootpath}/Libs/LibIndy/ -p @rpath/../Libs/LibIndy/`
           ).toString()
         )
       }
