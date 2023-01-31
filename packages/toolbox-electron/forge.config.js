@@ -26,9 +26,9 @@ module.exports = {
     osxNotarize: isProd && {
       appBundleId: 'id.animo.siera.desktop',
       tool: 'notarytool',
-      appleApiKey: process.env.SIERA_APPLE_API_KEY_PATH,
-      appleApiKeyId: process.env.SIERA_APPLE_API_KEY_ID,
-      appleApiIssuer: process.env.SIERA_APPLE_API_ISSUER,
+      appleApiKey: process.env.APPLE_API_KEY_PATH,
+      appleApiKeyId: process.env.APPLE_API_KEY_ID,
+      appleApiIssuer: process.env.APPLE_API_ISSUER,
     },
   },
   hooks: {

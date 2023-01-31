@@ -53,8 +53,6 @@ jobs:
       APPLE_API_KEY_BASE64: ${{ secrets.SIERA_APPLE_API_KEY_BASE64 }}
       APPLE_API_KEY_ID: ${{ secrets.SIERA_APPLE_API_KEY_ID }}
       APPLE_API_ISSUER: ${{ secrets.SIERA_APPLE_API_ISSUER }}
-      NODE_ENV: production
-
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v3
@@ -82,11 +80,6 @@ jobs:
             mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
             cp $PROVISION_PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-        - name: Change node version
-          uses: actions/setup-node@v3
-          with:
-              node-version: '18'
-
         - name: Check code signing setup
           run: security find-identity -p codesigning -v
 
@@ -96,10 +89,17 @@ jobs:
 
             sudo cp ./libs/${{ matrix.arch }}/* /usr/local/lib
 
+        - name: Change node version
+          uses: actions/setup-node@v3
+          with:
+            node-version: '18'
+
         - name: Install dependencies
           run: yarn install --frozen-lockfile
 
         - name: Build for MacOS platform
+          env:
+            NODE_ENV: production
           run: |
             export APPLE_API_KEY_PATH=$RUNNER_TEMP/siera-apple-api-key.p8
 
@@ -129,6 +129,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
+          draft: true
           files: |
             ./**/*.deb
             ./**/*.exe
