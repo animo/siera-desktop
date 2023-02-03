@@ -1,14 +1,53 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const { execSync } = require('child_process')
+
+/* eslint-enable @typescript-eslint/no-var-requires */
+
+/* eslint-disable no-console */
+
+const nodeEnv = process.env.NODE_ENV
+const isProd = nodeEnv === 'production'
+
 module.exports = {
   packagerConfig: {
-    name: 'toolbox-electron',
-    executableName: 'toolbox-electron',
+    name: 'SieraDesktop',
+    executableName: 'siera-desktop',
+    appBundleId: 'id.animo.siera.desktop',
+    osxSign: isProd && {
+      identity: 'Developer ID Application: Animo Solutions (G9667JTP83)',
+      hardenedRuntime: true,
+      entitlements: 'entitlements.mac.plist',
+      entitlementsInherit: 'entitlements.mac.plist',
+      gatekeeperAssess: false,
+    },
+    osxNotarize: isProd && {
+      appBundleId: 'id.animo.siera.desktop',
+      tool: 'notarytool',
+      appleApiKey: process.env.APPLE_API_KEY_PATH,
+      appleApiKeyId: process.env.APPLE_API_KEY_ID,
+      appleApiIssuer: process.env.APPLE_API_ISSUER,
+    },
+  },
+  hooks: {
+    packageAfterCopy: async (config, buildPath, electronVersion, platform) => {
+      if (platform === 'darwin') {
+        const packageRootpath = `${buildPath}/../..`
+
+        console.log(
+          execSync(
+            `dylibbundler -ns -od -b -x ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${packageRootpath}/Libs/LibIndy/ -p @rpath/../Libs/LibIndy/`
+          ).toString()
+        )
+      }
+    },
   },
   electronRebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'toolbox-electron',
+        name: 'siera-desktop',
       },
     },
     {
@@ -17,11 +56,19 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        options: {
+          bin: 'siera-desktop',
+        },
+      },
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {
+        options: {
+          bin: 'siera-desktop',
+        },
+      },
     },
   ],
   plugins: [
