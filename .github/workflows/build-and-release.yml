@@ -36,6 +36,7 @@ jobs:
 
   build-macos:
     name: Build for MacOS and Provide artifacts
+    if: false
     runs-on: macos-12
     strategy:
       matrix:
@@ -113,10 +114,51 @@ jobs:
             path: ./packages/siera-desktop/out/make/**/*.*
             retention-days: 7
 
+  build-windows:
+    name: Build for Windows and Provide artifacts
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Setup Libindy and install dependencies
+        run: |
+          curl.exe --output libindy.zip https://repo.sovrin.org/windows/libindy/master/1.16.0-1636/libindy_1.16.0.zip
+          7z x libindy.zip -oC:\libindy\
+          $env:LD_LIBRARY_PATH = 'C:\libindy\lib'
+          $env:Path += ';C:\libindy\lib'
+          
+          yarn global add --production windows-build-tools
+          yarn config set msvs_version 2022
+          yarn global add node-gyp-install
+          yarn global add node-gyp
+          
+          yarn install --frozen-lockfile
+
+      - name: Build for windows platforms
+        run: |
+          $env:Path += ';C:\libindy\lib'
+          $env:LD_LIBRARY_PATH = 'C:\libindy\lib'
+          yarn --cwd packages/siera-desktop make -p win32
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'workflow_dispatch'
+        with:
+          name: siera-desktop-windows
+          path: ./packages/siera-desktop/out/make/**/*.*
+          retention-days: 7
+
   release:
     name: Create Github release from artifacts
     runs-on: ubuntu-latest
-    needs: [build-macos, build-linux]
+    needs: [build-macos, build-linux, build-windows]
 
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
 
