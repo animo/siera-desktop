@@ -50,8 +50,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-// Disable hardware acceleration to avoid issues with Electron on Windows
-if (process.platform === 'win32') {
-  app.disableHardwareAcceleration()
-}
