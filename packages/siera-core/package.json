@@ -1,0 +1,33 @@
+{
+  "name": "@animo/siera-core",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "license": "Apache-2.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/animo/siera-desktop",
+    "directory": "packages/siera-core"
+  },
+  "author": {
+    "url": "https://animo.id",
+    "name": "Animo Solutions",
+    "email": "contact@animo.id"
+  },
+  "scripts": {
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf -rf ./build",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "yarn run build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@aries-framework/core": "0.3.0-alpha.32",
+    "@aries-framework/node": "0.3.0-alpha.32",
+    "uuid": "^9.0.0",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.4"
+  }
+}

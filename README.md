@@ -6,7 +6,7 @@
   </picture>
 </p>
 
-<h1 align="center" ><b>Animo Toolbox</b></h1>
+<h1 align="center" ><b>Siera Desktop</b></h1>
 
 <h4 align="center">Powered by &nbsp; 
   <picture>
@@ -45,11 +45,11 @@
 
 All packages are placed in the [`packages/`](./packages) directory.
 
-| Package                                           | Version | Description                             |
-| ------------------------------------------------- | ------- | --------------------------------------- |
-| [`toolbox-electron`](./packages/toolbox-electron) | 0.0.1   | Electron app for controlling the agent. |
-| [`toolbox-ui`](./packages/toolbox-ui)             | 0.0.1   | UI components.                          |
-| [`toolbox-core`](./packages/toolbox-core)         | 0.0.1   | The core behind the application.        |
+| Package                                     | Version | Description                             |
+|---------------------------------------------| ------- | --------------------------------------- |
+| [`siera-desktop`](./packages/siera-desktop) | 0.0.1   | Electron app for controlling the agent. |
+| [`siera-ui`](./packages/siera-ui)           | 0.0.1   | UI components.                          |
+| [`siera-core`](./packages/siera-core)       | 0.0.1   | The core behind the application.        |
 
 ## Getting Started
 

@@ -78,14 +78,14 @@ jobs:
 
             sudo spctl --master-disable
 
-            yarn --cwd packages/toolbox-electron make -p darwin --arch ${{ matrix.arch }}
+            yarn --cwd packages/siera-desktop make -p darwin --arch ${{ matrix.arch }}
 
         - name: Upload artifacts
           uses: actions/upload-artifact@v3
           if: (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'workflow_dispatch'
           with:
-            name: toolbox-electron-macos-${{ matrix.arch }}
-            path: ./packages/toolbox-electron/out/make/**/*.*
+            name: siera-desktop-macos-${{ matrix.arch }}
+            path: ./packages/siera-desktop/out/make/**/*.*
             retention-days: 7
 
   release:
