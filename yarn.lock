@@ -1479,6 +1479,14 @@
     "@mantine/utils" "5.8.4"
     react-transition-group "4.4.2"
 
+"@mantine/prism@^5.10.3":
+  version "5.10.3"
+  resolved "https://registry.yarnpkg.com/@mantine/prism/-/prism-5.10.3.tgz#61aad3458aaca1f54921d6976507a037a2cead21"
+  integrity sha512-PvsxpFsaMHZXbjZpxSanhFZHPCvZEzLzSqHAOe537YfFUF4qHoZUAq+JTIQQ1VFfunTkvo9GURbuDPLUyKY/WA==
+  dependencies:
+    "@mantine/utils" "5.10.3"
+    prism-react-renderer "^1.2.1"
+
 "@mantine/styles@5.7.1":
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-5.7.1.tgz#b5901b60e27bf06f209e9dfbcef95273f4e2d17b"
@@ -1491,6 +1499,11 @@
   version "5.10.0"
   resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.10.0.tgz#d77bdbd4fbf0ef7b10dd0c6480ce9a035dd31ae9"
   integrity sha512-mHnNm0ajIa8qLAIEwv82N6+7YKecynOA3I8vzgBHXS2x4HwGsHITFYGmMh2LNpx5dRL034tObfEFYZXqncyEDw==
+
+"@mantine/utils@5.10.3":
+  version "5.10.3"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.10.3.tgz#724e5076812bffdb15a23859f23b9e78c1774239"
+  integrity sha512-ZfR1wouA/rz3xTOb2wBnrQpIiyjLcCLLvbUo7rzaG3LhFy7UoGjZ6uqIW9qDrzs7SR4tETRfMxedYagjcoCiEg==
 
 "@mantine/utils@5.7.1":
   version "5.7.1"
@@ -8133,6 +8146,11 @@ pretty-ms@^7.0.0:
   integrity sha512-973driJZvxiGOQ5ONsFhOF/DtzPMOMtgC11kCpUrPGMTgqp2q/1gwzCquocrN33is0VZ5GFHXZYMM9l6h67v2Q==
   dependencies:
     parse-ms "^2.1.0"
+
+prism-react-renderer@^1.2.1:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/prism-react-renderer/-/prism-react-renderer-1.3.5.tgz#786bb69aa6f73c32ba1ee813fbe17a0115435085"
+  integrity sha512-IJ+MSwBWKG+SM3b2SUfdrhC+gu01QkV2KmRQgREThBfSQRoufqRfxfHUxpG1WcaFjP+kojcFyO9Qqtpgt3qLCg==
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
