@@ -9,9 +9,39 @@ on:
       - main
 
 jobs:
+  build-linux:
+    name: Build for Linux and Provide artifacts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Libindy
+        uses: ./.github/actions/setup-libindy
+
+      - uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build for all platforms
+        run: yarn --cwd packages/siera-desktop make -p linux
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: siera-desktop-linux
+          path: ./packages/siera-desktop/out/make/**/*.*
+          retention-days: 7
+
   build-macos:
     name: Build for MacOS and Provide artifacts
-    runs-on: macos-12
+    if: false
+    runs-on: macos-latest
     strategy:
       matrix:
         arch: [x64, arm64]

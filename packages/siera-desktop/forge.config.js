@@ -70,6 +70,12 @@ module.exports = {
         },
       },
     },
+    {
+      name: 'electron-forge-maker-appimage',
+      config: {
+        bin: 'siera-desktop',
+      },
+    },
   ],
   plugins: [
     [
