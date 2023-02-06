@@ -8,6 +8,7 @@ import { SetupScreen } from './pages/SetupScreen'
 import { AgentHomeScreen } from './pages/agent/AgentHomeScreen'
 import { ConnectionDetailsScreen } from './pages/agent/connections/ConnectionDetailsScreen'
 import { ConnectionsScreen } from './pages/agent/connections/ConnectionsScreen'
+import { CredentialsDetailsScreen } from './pages/agent/credentials/CredentialsDetailsScreen'
 import { CredentialsScreen } from './pages/agent/credentials/CredentialsScreen'
 import { ProofsScreen } from './pages/agent/proofs/ProofsScreen'
 
@@ -18,6 +19,7 @@ export const routeUrls = [
   '/agent/connections',
   '/agent/connections/{connectionId}',
   '/agent/credentials',
+  '/agent/credentials/{credentialId}',
   '/agent/proofs',
 ] as const
 
@@ -58,6 +60,14 @@ export const routes: RouteObject[] = [
         element: (
           <Layout>
             <CredentialsScreen />
+          </Layout>
+        ),
+      },
+      {
+        path: 'credentials/:credentialId',
+        element: (
+          <Layout>
+            <CredentialsDetailsScreen />
           </Layout>
         ),
       },

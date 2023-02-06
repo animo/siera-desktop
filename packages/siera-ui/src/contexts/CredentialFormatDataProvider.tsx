@@ -10,7 +10,7 @@ import {
 import { useState, createContext, useContext, useEffect } from 'react'
 import * as React from 'react'
 
-type FormattedData = GetFormatDataReturn<[IndyCredentialFormat]> & {
+export type FormattedData = GetFormatDataReturn<[IndyCredentialFormat]> & {
   id: string
 }
 
