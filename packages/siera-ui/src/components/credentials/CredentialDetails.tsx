@@ -1,12 +1,14 @@
-import type { FormattedData } from '../../contexts/CredentialFormatDataProvider'
+import type { FormattedCredentialData } from '../../contexts/CredentialFormatDataProvider'
 
 import { capitalize } from '@animo/siera-core'
 import { Flex, Title } from '@mantine/core'
 import { Prism } from '@mantine/prism'
 import React from 'react'
 
+import { InformationCollapse } from '../generic/information/InformationCollapse'
+
 interface CredentialDetailsParams {
-  credentialFormatted: FormattedData
+  credentialFormatted: FormattedCredentialData
 }
 export const CredentialDetails = ({ credentialFormatted }: CredentialDetailsParams) => {
   if (credentialFormatted.offerAttributes == null) {
@@ -27,6 +29,11 @@ export const CredentialDetails = ({ credentialFormatted }: CredentialDetailsPara
           )}
         </Flex>
       ))}
+      <InformationCollapse title="Raw Credential">
+        <Prism language="json" noCopy>
+          {JSON.stringify(credentialFormatted, null, 2)}
+        </Prism>
+      </InformationCollapse>
     </Flex>
   )
 }
