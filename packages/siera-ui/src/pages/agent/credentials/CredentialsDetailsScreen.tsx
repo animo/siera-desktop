@@ -5,26 +5,24 @@ import { CredentialDetails } from '../../../components/credentials/CredentialDet
 import { SmallBackButton } from '../../../components/generic'
 import { useCredentialFormatDataById } from '../../../contexts/CredentialFormatDataProvider'
 
+const CredentialNotFound = () => {
+  return (
+    <>
+      <SmallBackButton />
+      <div>Credential not found</div>
+    </>
+  )
+}
+
 export const CredentialsDetailsScreen = () => {
   const { credentialId } = useParams()
   if (!credentialId) {
-    return (
-      <>
-        <SmallBackButton />
-        <div>Credential not found</div>
-      </>
-    )
+    return <CredentialNotFound />
   }
 
   const formattedCredential = useCredentialFormatDataById(credentialId)
-
   if (!formattedCredential) {
-    return (
-      <>
-        <SmallBackButton />
-        <div>Credential not found</div>
-      </>
-    )
+    return <CredentialNotFound />
   }
 
   return (
