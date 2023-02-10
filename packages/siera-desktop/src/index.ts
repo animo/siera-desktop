@@ -59,3 +59,8 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+if (process.platform === "win32") {
+  console.log("Disabled hardware acceleration")
+  app.disableHardwareAcceleration()
+}
