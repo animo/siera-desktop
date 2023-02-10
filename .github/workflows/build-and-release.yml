@@ -142,6 +142,8 @@ jobs:
           yarn config set msvs_version 2022
           yarn global add node-gyp-install
           yarn global add node-gyp
+
+          node "C:\Users\$($env:username)\AppData\Roaming\npm\node_modules\node-gyp\bin\node-gyp.js" install
           
           yarn install --frozen-lockfile
 
