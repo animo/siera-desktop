@@ -139,7 +139,7 @@ jobs:
           yarn global add node-gyp-install
           yarn global add node-gyp
 
-          Remove-Item -Recurse -Force %LocalAppData%/node-gyp/Cache
+          Remove-Item -Recurse -Force "$($env:LOCALAPPDATA)/node-gyp/Cache"
           
           yarn install --frozen-lockfile
 
