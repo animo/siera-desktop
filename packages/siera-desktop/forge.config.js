@@ -42,8 +42,6 @@ module.exports = {
         const libindyLibFiles = await fs.readdir(libIndyLibrariesPath)
 
         for (const libFile of libindyLibFiles) {
-          if (!libFile.endsWith('.dll')) continue
-
           const filePath = path.join(libIndyLibrariesPath, libFile)
 
           await fs.copyFile(filePath, path.join(buildPath, '..', '..', libFile))
