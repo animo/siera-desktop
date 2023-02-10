@@ -133,7 +133,7 @@ jobs:
 
       - name: Setup Libindy and install dependencies
         run: |
-          curl.exe --output libindy.zip https://repo.sovrin.org/windows/libindy/master/1.16.0-1655/libindy_1.16.0.zip
+          curl.exe --output libindy.zip https://repo.sovrin.org/windows/libindy/stable/1.16.0/libindy_1.16.0.zip
           7z x libindy.zip -oC:\libindy\
           $env:LD_LIBRARY_PATH = 'C:\libindy\lib'
           $env:Path += ';C:\libindy\lib'
