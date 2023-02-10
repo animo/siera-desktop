@@ -139,7 +139,7 @@ jobs:
           yarn global add node-gyp-install
           yarn global add node-gyp
 
-          rmdir /s %LocalAppData%/node-gyp/Cache
+          rmdir /S /Q %LocalAppData%/node-gyp/Cache
           
           yarn install --frozen-lockfile
 
