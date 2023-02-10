@@ -138,6 +138,8 @@ jobs:
           yarn config set msvs_version 2022
           yarn global add node-gyp-install
           yarn global add node-gyp
+
+          npx -p @aries-framework/node is-indy-installed
           
           yarn install --frozen-lockfile
 
