@@ -138,8 +138,6 @@ jobs:
           yarn config set msvs_version 2022
           yarn global add node-gyp-install
           yarn global add node-gyp
-
-          Remove-Item -Recurse -Force "$($env:LOCALAPPDATA)/node-gyp/Cache"
           
           yarn install --frozen-lockfile
 
