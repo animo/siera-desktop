@@ -122,10 +122,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      # - uses: actions/cache@v3
+      #   with:
+      #     path: '**/node_modules'
+      #     key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Setup Libindy and install dependencies
         run: |
