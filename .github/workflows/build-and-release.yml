@@ -20,11 +20,6 @@ jobs:
       - name: Setup Libindy
         uses: ./.github/actions/setup-libindy
 
-      - uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
