@@ -5,6 +5,8 @@ const { contextBridge } = require('electron')
 const indy = require('indy-sdk')
 const { default: nodeFetch } = require('node-fetch')
 
+const packageJson = require('../package.json')
+
 /* eslint-enable @typescript-eslint/no-var-requires */
 
 const fs = new NodeFileSystem()
@@ -56,9 +58,17 @@ contextBridge.exposeInMainWorld(
       console.warn('Unsupported platform for config persistence', error)
     }
 
+    const repoUrl = new URL(packageJson.repository.url)
+    const [owner, repository] = repoUrl.pathname.slice(1).split('/')
+
     return {
+      version: packageJson.version,
       platform: process.platform,
       configDir,
+      github: {
+        owner,
+        repository,
+      },
     }
   })()
 )
