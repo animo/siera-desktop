@@ -4,6 +4,7 @@ import { ConnectionsUtil } from '@animo/siera-core/src/utils/records/Connections
 import { createStyles, Group, ScrollArea, Table, Text } from '@mantine/core'
 import React from 'react'
 
+import { useNavigation } from '../../hooks/useNavigation'
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
 import { EmptyState } from '../generic/table/EmptyState'
@@ -16,7 +17,7 @@ interface ConnectionsTableProps {
   onDecline: (connection: ConnectionRecord) => void
 }
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles((theme) => ({
   table: {
     width: '100%',
     minWidth: 870,
@@ -34,10 +35,23 @@ const useStyles = createStyles(() => ({
   actionsSize: {
     width: 160,
   },
+  clickableTitle: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.colors.textOne[6],
+    },
+  },
 }))
 
 export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: ConnectionsTableProps) => {
   const { classes } = useStyles()
+  const navigation = useNavigation()
+
+  const selectRow = (record: ConnectionRecord) => {
+    navigation.navigate(`/agent/connections/{connectionId}`, {
+      connectionId: record.id,
+    })
+  }
 
   return (
     <ScrollArea>
@@ -70,7 +84,7 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
                     <SmartAvatar size={30} src={record.imageUrl} radius={30}>
                       {record.theirLabel}
                     </SmartAvatar>
-                    <Text size="sm" weight={500}>
+                    <Text size="sm" weight={500} className={classes.clickableTitle} onClick={() => selectRow(record)}>
                       {record.theirLabel}
                     </Text>
                   </Group>
