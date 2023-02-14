@@ -5,14 +5,18 @@ import { AriesFrameworkError } from '@aries-framework/core'
 import { showNotification } from '@mantine/notifications'
 import { useEffect } from 'react'
 
+import { FetchUpdateInformationError } from '../errors/FetchUpdateInformationError'
+
 interface GlobalErrorHandlerProps {
   children?: ReactNode
 }
 
+const allowedErrors = [AriesFrameworkError, FetchUpdateInformationError]
+
 export const GlobalErrorHandler = ({ children }: GlobalErrorHandlerProps) => {
   useEffect(() => {
     const onError = ({ reason }: PromiseRejectionEvent) => {
-      if (!(reason instanceof AriesFrameworkError)) return
+      if (!allowedErrors.some((ErrorType) => reason instanceof ErrorType)) return
 
       showNotification({
         color: 'error',

@@ -12,8 +12,13 @@ declare global {
   interface Window {
     indy: typeof Indy
     configInformation: {
+      version: string
       platform: string
       configDir?: string
+      github: {
+        owner: string
+        repository: string
+      }
     }
     fs: FileSystem
     nodeFetch: (
@@ -28,6 +33,11 @@ declare global {
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 
+// When StrictMode is enabled, React will double-render the components
+// and compare the results. If they are not equal, it will throw an error.
+// This can also trigger some weird behavior in the UI, especially when using useEffects.
+// This weird behavior is caused by the fact that the useEffects are called twice.
+// This will not happen in production.
 root.render(
   <React.StrictMode>
     <App />
