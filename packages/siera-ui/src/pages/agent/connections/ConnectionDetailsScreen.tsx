@@ -11,7 +11,12 @@ export const ConnectionDetailsScreen = () => {
   const { connectionId } = useParams()
 
   if (!connectionId) {
-    return <div>Connection not found</div>
+    return (
+      <>
+        <SmallBackButton />
+        <div>Connection not found</div>
+      </>
+    )
   }
 
   const connection = useConnectionById(connectionId)
