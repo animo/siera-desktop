@@ -16,7 +16,7 @@ export const GlobalErrorHandler = ({ children }: GlobalErrorHandlerProps) => {
 
       showNotification({
         color: 'error',
-        title: reason.name,
+        title: reason.constructor.name,
         message: reason.message,
       })
     }
