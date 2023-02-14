@@ -11,16 +11,16 @@ import {
 import { useState, createContext, useContext, useEffect } from 'react'
 import * as React from 'react'
 
-type FormattedData = GetFormatDataReturn<[IndyProofFormat]> & {
+export type FormattedProofData = GetFormatDataReturn<[IndyProofFormat]> & {
   id: string
 }
 
-type FormattedDataState = {
-  formattedData: Array<FormattedData>
+type FormattedProofDataState = {
+  formattedData: Array<FormattedProofData>
   loading: boolean
 }
 
-const addRecord = (record: FormattedData, state: FormattedDataState): FormattedDataState => {
+const addRecord = (record: FormattedProofData, state: FormattedProofDataState): FormattedProofDataState => {
   const newRecordsState = [...state.formattedData]
   newRecordsState.unshift(record)
   return {
@@ -29,7 +29,7 @@ const addRecord = (record: FormattedData, state: FormattedDataState): FormattedD
   }
 }
 
-const updateRecord = (record: FormattedData, state: FormattedDataState): FormattedDataState => {
+const updateRecord = (record: FormattedProofData, state: FormattedProofDataState): FormattedProofDataState => {
   const newRecordsState = [...state.formattedData]
   const index = newRecordsState.findIndex((r) => r.id === record.id)
   if (index > -1) {
@@ -41,7 +41,7 @@ const updateRecord = (record: FormattedData, state: FormattedDataState): Formatt
   }
 }
 
-const removeRecord = (record: FormattedData, state: FormattedDataState): FormattedDataState => {
+const removeRecord = (record: FormattedProofData, state: FormattedProofDataState): FormattedProofDataState => {
   const newRecordsState = state.formattedData.filter((r) => r.id !== record.id)
   return {
     loading: state.loading,
@@ -49,7 +49,7 @@ const removeRecord = (record: FormattedData, state: FormattedDataState): Formatt
   }
 }
 
-const ProofFormatDataContext = createContext<FormattedDataState | undefined>(undefined)
+const ProofFormatDataContext = createContext<FormattedProofDataState | undefined>(undefined)
 
 export const useProofsFormatData = () => {
   const proofFormatDataContext = useContext(ProofFormatDataContext)
@@ -59,7 +59,7 @@ export const useProofsFormatData = () => {
   return proofFormatDataContext
 }
 
-export const useProofFormatDataById = (id: string): FormattedData | undefined => {
+export const useProofFormatDataById = (id: string): FormattedProofData | undefined => {
   const { formattedData } = useProofsFormatData()
   return formattedData.find((c) => c.id === id)
 }
@@ -70,7 +70,7 @@ interface Props {
 
 const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
   const [state, setState] = useState<{
-    formattedData: Array<FormattedData>
+    formattedData: Array<FormattedProofData>
     loading: boolean
   }>({
     formattedData: [],
@@ -80,7 +80,7 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
   const setInitialState = async () => {
     if (agent) {
       const records = await agent.proofs.getAll()
-      const formattedData: Array<FormattedData> = []
+      const formattedData: Array<FormattedProofData> = []
       for (const record of records) {
         const formatData = await agent.proofs.getFormatData(record.id)
         formattedData.push({ ...formatData, id: record.id })
