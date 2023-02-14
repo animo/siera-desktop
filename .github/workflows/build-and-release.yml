@@ -11,6 +11,7 @@ on:
 jobs:
   build-linux:
     name: Build for Linux and Provide artifacts
+    if: false
     runs-on: ubuntu-latest
 
     steps:
@@ -121,11 +122,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      # - uses: actions/cache@v3
-      #   with:
-      #     path: '**/node_modules'
-      #     key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Setup Libindy and install dependencies
         run: |
