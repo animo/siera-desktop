@@ -10,16 +10,19 @@ import {
 import { useState, createContext, useContext, useEffect } from 'react'
 import * as React from 'react'
 
-type FormattedData = GetFormatDataReturn<[IndyCredentialFormat]> & {
+export type FormattedCredentialData = GetFormatDataReturn<[IndyCredentialFormat]> & {
   id: string
 }
 
-type FormattedDataState = {
-  formattedData: Array<FormattedData>
+type FormattedCredentialDataState = {
+  formattedData: Array<FormattedCredentialData>
   loading: boolean
 }
 
-const addRecord = (record: FormattedData, state: FormattedDataState): FormattedDataState => {
+const addRecord = (
+  record: FormattedCredentialData,
+  state: FormattedCredentialDataState
+): FormattedCredentialDataState => {
   const newRecordsState = [...state.formattedData]
   newRecordsState.unshift(record)
   return {
@@ -28,7 +31,10 @@ const addRecord = (record: FormattedData, state: FormattedDataState): FormattedD
   }
 }
 
-const updateRecord = (record: FormattedData, state: FormattedDataState): FormattedDataState => {
+const updateRecord = (
+  record: FormattedCredentialData,
+  state: FormattedCredentialDataState
+): FormattedCredentialDataState => {
   const newRecordsState = [...state.formattedData]
   const index = newRecordsState.findIndex((r) => r.id === record.id)
   if (index > -1) {
@@ -40,7 +46,10 @@ const updateRecord = (record: FormattedData, state: FormattedDataState): Formatt
   }
 }
 
-const removeRecord = (record: FormattedData, state: FormattedDataState): FormattedDataState => {
+const removeRecord = (
+  record: FormattedCredentialData,
+  state: FormattedCredentialDataState
+): FormattedCredentialDataState => {
   const newRecordsState = state.formattedData.filter((r) => r.id !== record.id)
   return {
     loading: state.loading,
@@ -48,7 +57,7 @@ const removeRecord = (record: FormattedData, state: FormattedDataState): Formatt
   }
 }
 
-const CredentialFormatDataContext = createContext<FormattedDataState | undefined>(undefined)
+const CredentialFormatDataContext = createContext<FormattedCredentialDataState | undefined>(undefined)
 
 export const useCredentialsFormatData = () => {
   const credentialFormatDataContext = useContext(CredentialFormatDataContext)
@@ -58,7 +67,7 @@ export const useCredentialsFormatData = () => {
   return credentialFormatDataContext
 }
 
-export const useCredentialFormatDataById = (id: string): FormattedData | undefined => {
+export const useCredentialFormatDataById = (id: string): FormattedCredentialData | undefined => {
   const { formattedData } = useCredentialsFormatData()
   return formattedData.find((c) => c.id === id)
 }
@@ -69,7 +78,7 @@ interface Props {
 
 const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
   const [state, setState] = useState<{
-    formattedData: Array<FormattedData>
+    formattedData: Array<FormattedCredentialData>
     loading: boolean
   }>({
     formattedData: [],
@@ -79,7 +88,7 @@ const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agen
   const setInitialState = async () => {
     if (agent) {
       const records = await agent.credentials.getAll()
-      const formattedData: Array<FormattedData> = []
+      const formattedData: Array<FormattedCredentialData> = []
       for (const record of records) {
         const formatData = await agent.credentials.getFormatData(record.id)
         formattedData.push({ ...formatData, id: record.id })
