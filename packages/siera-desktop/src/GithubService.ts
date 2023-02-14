@@ -2,7 +2,12 @@ import type { UpdateInformation } from '@animo/siera-ui/src/contexts/UpdateInfor
 
 import { FetchUpdateInformationError } from '@animo/siera-ui/src/errors/FetchUpdateInformationError'
 
-const getLatestRelease = async (owner: string, repo: string): Promise<any> => {
+interface LatestReleaseResponse {
+  tag_name: string
+  html_url: string
+}
+
+const getLatestRelease = async (owner: string, repo: string): Promise<LatestReleaseResponse> => {
   const url = `https://api.github.com/repos/${owner}/${repo}/releases/latest`
   const response = await fetch(url)
 
