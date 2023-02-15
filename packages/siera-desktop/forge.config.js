@@ -14,6 +14,7 @@ module.exports = {
     name: 'SieraDesktop',
     executableName: 'siera-desktop',
     appBundleId: 'id.animo.siera.desktop',
+    icon: './icons/icon',
     osxSign: isProd && {
       identity: 'Developer ID Application: Animo Solutions (G9667JTP83)',
       hardenedRuntime: true,
@@ -48,15 +49,21 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         name: 'siera-desktop',
+        icon: './icons/icon.ico',
+        setupIcon: './icons/icon.ico',
       },
     },
     {
       name: '@electron-forge/maker-zip',
       platforms: ['darwin'],
+      config: {
+        icon: './icons/icon.icns',
+      },
     },
     {
       name: '@electron-forge/maker-deb',
       config: {
+        icon: './icons/icon.png',
         options: {
           bin: 'siera-desktop',
         },
@@ -65,6 +72,7 @@ module.exports = {
     {
       name: '@electron-forge/maker-rpm',
       config: {
+        icon: './icons/icon.png',
         options: {
           bin: 'siera-desktop',
         },
