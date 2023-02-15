@@ -13,7 +13,7 @@ export const agentInitializer = async (
   const agentProvider = new AgentFactory(dependenciesProvider)
 
   const config: InitConfig = {
-    logger: new ConsoleLogger(LogLevel.warn),
+    logger: new ConsoleLogger(LogLevel.trace),
     indyLedgers: [
       {
         id: 'bcovin-test-net',

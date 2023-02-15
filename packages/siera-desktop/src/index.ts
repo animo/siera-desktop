@@ -33,7 +33,7 @@ const createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
   // Open the DevTools.
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || process.env.DEVTOOLS === 'true') {
     mainWindow.webContents.openDevTools({ mode: 'detach' })
   }
 }
@@ -60,7 +60,7 @@ app.on('activate', () => {
   }
 })
 
-if (process.platform === "win32") {
-  console.log("Disabled hardware acceleration")
+if (process.platform === 'win32') {
+  console.log('Disabled hardware acceleration')
   app.disableHardwareAcceleration()
 }
