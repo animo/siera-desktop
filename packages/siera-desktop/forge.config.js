@@ -37,7 +37,7 @@ module.exports = {
 
         console.log(
           execSync(
-            `dylibbundler -ns -od -b -x ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${packageRootpath}/Libs/LibIndy/ -p @rpath/../Libs/LibIndy/`
+            `dylibbundler -ns -od -b -x "${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node" -d "${packageRootpath}/Libs/LibIndy/" -p @rpath/../Libs/LibIndy/`
           ).toString()
         )
       }
