@@ -11,7 +11,7 @@ const isProd = nodeEnv === 'production'
 
 module.exports = {
   packagerConfig: {
-    name: 'SieraDesktop',
+    name: 'Siera Desktop',
     executableName: 'siera-desktop',
     appBundleId: 'id.animo.siera.desktop',
     icon: './icons/icon',
@@ -48,7 +48,7 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'siera-desktop',
+        name: 'Siera Desktop',
         icon: './icons/icon.ico',
         setupIcon: './icons/icon.ico',
       },
