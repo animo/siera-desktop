@@ -11,9 +11,10 @@ const isProd = nodeEnv === 'production'
 
 module.exports = {
   packagerConfig: {
-    name: 'SieraDesktop',
+    name: 'Siera Desktop',
     executableName: 'siera-desktop',
     appBundleId: 'id.animo.siera.desktop',
+    icon: './icons/icon',
     osxSign: isProd && {
       identity: 'Developer ID Application: Animo Solutions (G9667JTP83)',
       hardenedRuntime: true,
@@ -36,7 +37,7 @@ module.exports = {
 
         console.log(
           execSync(
-            `dylibbundler -ns -od -b -x ${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node -d ${packageRootpath}/Libs/LibIndy/ -p @rpath/../Libs/LibIndy/`
+            `dylibbundler -ns -od -b -x "${packageRootpath}/Resources/app/.webpack/renderer/main_window/native_modules/build/Release/indynodejs.node" -d "${packageRootpath}/Libs/LibIndy/" -p @rpath/../Libs/LibIndy/`
           ).toString()
         )
       }
@@ -47,16 +48,22 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'siera-desktop',
+        name: 'Siera Desktop',
+        icon: './icons/icon.ico',
+        setupIcon: './icons/icon.ico',
       },
     },
     {
       name: '@electron-forge/maker-zip',
       platforms: ['darwin'],
+      config: {
+        icon: './icons/icon.icns',
+      },
     },
     {
       name: '@electron-forge/maker-deb',
       config: {
+        icon: './icons/icon.png',
         options: {
           bin: 'siera-desktop',
         },
@@ -65,6 +72,7 @@ module.exports = {
     {
       name: '@electron-forge/maker-rpm',
       config: {
+        icon: './icons/icon.png',
         options: {
           bin: 'siera-desktop',
         },
