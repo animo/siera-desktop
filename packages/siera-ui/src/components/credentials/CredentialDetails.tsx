@@ -1,39 +1,48 @@
 import type { FormattedCredentialData } from '../../contexts/CredentialFormatDataProvider'
 
-import { capitalize } from '@animo/siera-core'
-import { Flex, Title } from '@mantine/core'
-import { Prism } from '@mantine/prism'
+import { formatSchemaName } from '@animo/siera-core'
+import { createStyles, Group, SimpleGrid, Title } from '@mantine/core'
 import React from 'react'
 
-import { InformationCollapse } from '../generic/information/InformationCollapse'
+import { Card } from '../Card'
+import { AttributeValue } from '../generic/information/AttributeValue'
+import { RecordCodeBlock } from '../generic/information/RecordCodeBlock'
 
 interface CredentialDetailsParams {
   credentialFormatted: FormattedCredentialData
 }
+
+const useStyles = createStyles(() => ({
+  attributeName: {
+    whiteSpace: 'nowrap',
+  },
+}))
+
 export const CredentialDetails = ({ credentialFormatted }: CredentialDetailsParams) => {
+  const { classes } = useStyles()
   if (credentialFormatted.offerAttributes == null) {
     return <div>There are no attributes</div>
   }
 
+  const credentialName = formatSchemaName(credentialFormatted.credential?.indy?.schema_id)
+
   return (
-    <Flex direction="column" gap="md">
-      {credentialFormatted.offerAttributes.map(({ name, value }) => (
-        <Flex direction="column" key={name} gap="xs">
-          <Title size="h5">{capitalize(name)}</Title>
-          {value ? (
-            <Prism language="json" noCopy>
-              {JSON.stringify(value, null, 2)}
-            </Prism>
-          ) : (
-            <Prism language="javascript">{value == null ? 'null' : 'undefined'}</Prism>
-          )}
-        </Flex>
-      ))}
-      <InformationCollapse title="Raw Credential">
-        <Prism language="json" noCopy>
-          {JSON.stringify(credentialFormatted, null, 2)}
-        </Prism>
-      </InformationCollapse>
-    </Flex>
+    <Card title={credentialName} titleSize="h2" withPadding>
+      <SimpleGrid cols={2} mt="md" mb="xl">
+        {credentialFormatted.offerAttributes.map(({ name, value }) => (
+          <Group key={name} noWrap>
+            <Title size="h6" className={classes.attributeName} w={120}>
+              {name}
+            </Title>
+            <AttributeValue value={value} />
+          </Group>
+        ))}
+      </SimpleGrid>
+
+      <Title size="h3" mb="xs">
+        Record
+      </Title>
+      <RecordCodeBlock record={credentialFormatted} />
+    </Card>
   )
 }

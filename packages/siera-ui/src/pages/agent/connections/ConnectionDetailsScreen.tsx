@@ -1,5 +1,5 @@
 import { useConnectionById } from '@aries-framework/react-hooks'
-import { Box } from '@mantine/core'
+import { Box, Space } from '@mantine/core'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -22,7 +22,9 @@ export const ConnectionDetailsScreen = () => {
   const connection = useConnectionById(connectionId)
   return (
     <>
-      <SmallBackButton />
+      <Space h="md" />
+      <SmallBackButton>Connections</SmallBackButton>
+      <Space h="md" />
       <Box>{!connection ? <Loading /> : <ConnectionDetails connectionRecord={connection} />}</Box>
     </>
   )
