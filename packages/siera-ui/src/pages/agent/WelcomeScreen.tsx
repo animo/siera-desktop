@@ -1,5 +1,4 @@
 import { Center, Flex, Text, Title, useMantineColorScheme } from '@mantine/core'
-import { IconPlus } from '@tabler/icons'
 import React from 'react'
 
 import { PrimaryButton } from '../../components/generic'
@@ -17,7 +16,7 @@ export const WelcomeScreen = () => {
           Welcome to Siera Desktop! Hit the button below to <br /> create your very first agent.
         </Text>
         <Center mt="md">
-          <PrimaryButton onClick={openCreateAgentModal} leftIcon={<IconPlus size={16} stroke={3} />}>
+          <PrimaryButton onClick={openCreateAgentModal} withPlusIcon>
             New agent
           </PrimaryButton>
         </Center>
