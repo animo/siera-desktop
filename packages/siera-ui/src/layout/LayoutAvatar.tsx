@@ -1,8 +1,6 @@
 import type { Agent } from '@aries-framework/core'
 
 import { Box, createStyles, Group, Text } from '@mantine/core'
-import { useNetwork } from '@mantine/hooks'
-import { IconWifi } from '@tabler/icons'
 import React from 'react'
 
 import { SmartAvatar } from '../components/SmartAvatar'
@@ -14,8 +12,6 @@ interface LayoutAvatarProps {
 const useStyles = createStyles((theme) => ({
   variantLabel: {
     color: theme.colors.textOne[3],
-    textTransform: 'uppercase',
-    fontWeight: 700,
     fontSize: theme.fontSizes.xs,
   },
   avatarLabel: {
@@ -37,26 +33,16 @@ const useStyles = createStyles((theme) => ({
 
 export const LayoutAvatar = ({ agent }: LayoutAvatarProps) => {
   const { classes } = useStyles()
-  const { online } = useNetwork()
   const avatarLabel = agent.config.label
 
   return (
     <Group noWrap>
-      <SmartAvatar src={agent.config.connectionImageUrl} size={64} radius="md">
+      <SmartAvatar src={agent.config.connectionImageUrl} size="md" radius="xl">
         {avatarLabel}
       </SmartAvatar>
       <Box>
-        <Text className={classes.variantLabel}>Native (AFJ)</Text>
         <Text className={classes.avatarLabel}>{avatarLabel}</Text>
-
-        <Group noWrap spacing={10} mt={3}>
-          <Text className={classes.attributeLabel}>{online ? 'Connected' : 'Offline'}</Text>
-          <IconWifi
-            size={20}
-            stroke={1.5}
-            className={online ? classes.connectedStatusConnected : classes.connectedStatusDisconnected}
-          />
-        </Group>
+        <Text className={classes.variantLabel}>Native (AFJ)</Text>
       </Box>
     </Group>
   )

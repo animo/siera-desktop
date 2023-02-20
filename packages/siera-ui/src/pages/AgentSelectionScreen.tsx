@@ -19,7 +19,6 @@ const useStyles = createStyles((theme) => ({
   },
   variantLabel: {
     color: theme.colors.textOne[7],
-    textTransform: 'uppercase',
     fontWeight: 500,
     fontSize: theme.fontSizes.xs,
   },

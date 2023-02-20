@@ -1,19 +1,17 @@
 import type { Agent } from '@aries-framework/core'
-import type { TablerIcon } from '@tabler/icons'
 
-import { createStyles, Group, Navbar } from '@mantine/core'
+import { ActionIcon, createStyles, Group, Menu, Navbar, useMantineColorScheme } from '@mantine/core'
+import { IconChevronDown, IconMoonStars, IconSun } from '@tabler/icons'
 import React, { useState } from 'react'
 
 import { useNavigation } from '../hooks/useNavigation'
 
 import { LayoutAvatar } from './LayoutAvatar'
-import { ColorSchemeSwitch } from './actions/ColorSchemeSwitch'
 import { LogoutAction } from './actions/LogoutAction'
 
 export interface NavigationItem {
   name: string
   href: string
-  icon: TablerIcon
 }
 
 interface LayoutNavigationProps {
@@ -21,9 +19,7 @@ interface LayoutNavigationProps {
   agent: Agent
 }
 
-const useStyles = createStyles((theme, _params, getRef) => {
-  const icon = getRef('icon')
-
+const useStyles = createStyles((theme) => {
   return {
     navbar: {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
@@ -34,34 +30,20 @@ const useStyles = createStyles((theme, _params, getRef) => {
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',
-      fontSize: theme.fontSizes.sm,
-      color: theme.colors.textOne[7],
-      padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
-      // borderRadius: theme.radius.sm,
-      fontWeight: 500,
-
-      borderLeft: '4px solid transparent',
+      color: theme.colors.textOne[3],
+      padding: `7px ${theme.spacing.sm}px`,
+      margin: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+      borderRadius: theme.radius.md,
 
       '&:hover': {
-        backgroundColor: theme.fn.rgba(theme.colors.primaryTwo[7], 0.05),
-        borderLeft: `4px solid ${theme.fn.rgba(theme.colors.primaryTwo[7], 0.7)}`,
-
-        [`& .${icon}`]: {
-          color: theme.colors.textOne[7],
-        },
+        backgroundColor: theme.fn.rgba(theme.colors.primaryOne[7], 0.05),
       },
-    },
-
-    linkIcon: {
-      ref: icon,
-      color: theme.colors.textOne[7],
-      marginRight: theme.spacing.sm,
     },
 
     linkActive: {
       '&, &:hover': {
-        backgroundColor: theme.fn.rgba(theme.colors.primaryTwo[7], 0.1),
-        borderLeft: `4px solid ${theme.colors.primaryTwo[7]}`,
+        color: theme.colors.textOne[7],
+        backgroundColor: theme.fn.rgba(theme.colors.primaryOne[7], 0.07),
       },
     },
 
@@ -79,14 +61,33 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
   const { classes, cx } = useStyles()
   const navigation = useNavigation()
   const [activeIndex, setActiveIndex] = useState(0)
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme()
+
+  const oppositeColorScheme = colorScheme === 'dark' ? 'light' : 'dark'
+  const oppositeColorSchemeIcon = colorScheme === 'dark' ? <IconSun size={18} /> : <IconMoonStars size={18} />
 
   return (
     <Navbar py="md" width={{ sm: 300 }} className={classes.navbar}>
       <Navbar.Section mx="md" className={classes.layoutAvatar}>
-        <LayoutAvatar agent={agent} />
+        <Group position="apart">
+          <LayoutAvatar agent={agent} />
+          <Menu shadow="md" width={200} position="bottom-end">
+            <Menu.Target>
+              <ActionIcon>
+                <IconChevronDown />
+              </ActionIcon>
+            </Menu.Target>
+
+            <Menu.Dropdown>
+              <Menu.Item onClick={() => toggleColorScheme()} icon={oppositeColorSchemeIcon}>
+                Switch to {oppositeColorScheme} theme
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </Group>
       </Navbar.Section>
 
-      <Navbar.Section grow mt="xs">
+      <Navbar.Section grow>
         {navigationItems.map((item, index) => (
           <a
             className={cx(classes.link, { [classes.linkActive]: index === activeIndex })}
@@ -98,17 +99,13 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
               setActiveIndex(index)
             }}
           >
-            <item.icon className={classes.linkIcon} stroke={1.5} />
-            <span>{item.name}</span>
+            {item.name}
           </a>
         ))}
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer} mx="md">
-        <Group position="apart">
-          <LogoutAction />
-          <ColorSchemeSwitch />
-        </Group>
+        <LogoutAction />
       </Navbar.Section>
     </Navbar>
   )

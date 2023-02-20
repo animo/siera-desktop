@@ -7,8 +7,8 @@ type SmartAvatarProps = AvatarProps
 
 const useStyles = createStyles((theme) => ({
   placeholder: {
-    backgroundColor: theme.fn.rgba(theme.colors.primaryOne[7], 0.1),
-    color: theme.colors.primaryOne[7],
+    backgroundColor: theme.colors.primaryTwo[7],
+    color: theme.colors.textTwo[7],
   },
 }))
 
