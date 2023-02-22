@@ -14,7 +14,6 @@ interface LayoutProps {
 }
 
 const navigationItems: NavigationItem[] = [
-  { name: 'Dashboard', href: '/agent' },
   { name: 'Connections', href: '/agent/connections' },
   { name: 'Credentials', href: '/agent/credentials' },
   { name: 'Proofs', href: '/agent/proofs' },
