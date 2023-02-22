@@ -104,31 +104,5 @@ export const ProofDetails = ({ formattedProofData }: ProofDetailsProps) => {
       </Title>
       <RecordCodeBlock record={formattedProofData} />
     </Card>
-
-    // <Flex direction="column" gap="md">
-    //   <Flex direction="column" gap="lg">
-    //     {credentialDetails.map((credentialDetails) => (
-    //       <CredentialCard key={credentialDetails.credentialId} credentialDetails={credentialDetails} />
-    //     ))}
-    //   </Flex>
-    //   <InformationCollapse title="Raw Proof request">
-    //     <Flex direction="column" gap="md">
-    //       {Object.entries(formattedProofData).map(([key, value]) => (
-    //         <Flex direction="column" key={key} gap="xs">
-    //           <Title size="h5">{capitalize(key)}</Title>
-    //           {value ? (
-    //             <Prism language="json" noCopy>
-    //               {JSON.stringify(value, null, 2)}
-    //             </Prism>
-    //           ) : (
-    //             <Prism language="javascript" noCopy>
-    //               {value == null ? 'null' : 'undefined'}
-    //             </Prism>
-    //           )}
-    //         </Flex>
-    //       ))}
-    //     </Flex>
-    //   </InformationCollapse>
-    // </Flex>
   )
 }
