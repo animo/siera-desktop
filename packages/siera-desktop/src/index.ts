@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { app, BrowserWindow, autoUpdater, dialog } from 'electron'
 
 import packageJson from '../package.json'
@@ -39,12 +38,6 @@ autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     if (returnValue.response === 0) autoUpdater.quitAndInstall()
   })
 })
-autoUpdater.on('error', (message) => {
-  console.error('There was a problem updating the application')
-  console.error(message)
-})
-autoUpdater.on('checking-for-update', () => console.log('Checking for update...'))
-autoUpdater.on('update-available', () => console.log('Update available. Downloading...'))
 
 const createWindow = (): void => {
   // Create the browser window.
