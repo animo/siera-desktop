@@ -14,7 +14,7 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
 
   primaryColor: 'primaryOne',
 
-  fontFamily: 'Montserrat, sans-serif',
+  fontFamily: 'Inter, sans-serif',
 
   components: {
     Title: {
