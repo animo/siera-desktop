@@ -1,7 +1,7 @@
 import type { ButtonProps } from '@mantine/core'
 
 import { Button, createStyles } from '@mantine/core'
-import { IconChevronLeft, IconPlus } from '@tabler/icons'
+import { IconArrowLeft, IconPlus } from '@tabler/icons'
 import React from 'react'
 
 import { useNavigation } from '../../../hooks/useNavigation'
@@ -32,8 +32,9 @@ const useStyles = createStyles((theme) => ({
 
   smallBackButton: {
     color: theme.colors.textOne[7],
+    fontSize: theme.fontSizes.md,
     '&:hover': {
-      backgroundColor: theme.fn.rgba(theme.colors.textOne[7], 0.1),
+      backgroundColor: 'transparent',
     },
   },
 }))
@@ -72,10 +73,10 @@ export const SmallBackButton = (props: ButtonProps & ClickAble) => {
       px="xs"
       onClick={props.onClick || goBack}
       {...props}
-      leftIcon={<IconChevronLeft />}
+      leftIcon={<IconArrowLeft />}
       className={cx(classes.smallBackButton, props.className)}
     >
-      Back
+      {props.children ?? 'Back'}
     </Button>
   )
 }

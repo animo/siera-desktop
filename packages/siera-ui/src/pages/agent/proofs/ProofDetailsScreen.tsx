@@ -1,3 +1,4 @@
+import { Space } from '@mantine/core'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -27,7 +28,9 @@ export const ProofDetailsScreen = () => {
 
   return (
     <>
-      <SmallBackButton />
+      <Space h="md" />
+      <SmallBackButton>Proof requests</SmallBackButton>
+      <Space h="md" />
       <ProofDetails formattedProofData={proofFormatted} />
     </>
   )

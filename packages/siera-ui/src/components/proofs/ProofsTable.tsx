@@ -50,7 +50,7 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
       <Table verticalSpacing="sm" className={classes.table}>
         <TableHead
           columns={[
-            { label: 'Connection', size: 150 },
+            { label: 'Request', size: 150 },
             { label: 'Proof identifier', size: 200 },
             { label: 'State', size: 100 },
             { label: 'Actions', blank: true, size: 160 },
