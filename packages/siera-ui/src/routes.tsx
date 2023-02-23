@@ -4,7 +4,6 @@ import React from 'react'
 
 import { Layout } from './layout/Layout'
 import { AgentSelectionScreen } from './pages/AgentSelectionScreen'
-import { SetupScreen } from './pages/SetupScreen'
 import { AgentHomeScreen } from './pages/agent/AgentHomeScreen'
 import { ConnectionDetailsScreen } from './pages/agent/connections/ConnectionDetailsScreen'
 import { ConnectionsScreen } from './pages/agent/connections/ConnectionsScreen'
@@ -15,7 +14,6 @@ import { ProofsScreen } from './pages/agent/proofs/ProofsScreen'
 
 export const routeUrls = [
   '/',
-  '/setup',
   '/agent',
   '/agent/connections',
   '/agent/connections/{connectionId}',
@@ -90,9 +88,5 @@ export const routes: RouteObject[] = [
         ),
       },
     ],
-  },
-  {
-    path: '/setup',
-    element: <SetupScreen />,
   },
 ]

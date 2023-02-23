@@ -2,9 +2,10 @@ import type { CredentialExchangeRecord } from '@aries-framework/core'
 
 import { CredentialState } from '@aries-framework/core'
 import { useAgent, useConnections, useCredentials } from '@aries-framework/react-hooks'
-import { Title } from '@mantine/core'
 import React from 'react'
 
+import { Card } from '../../../components/Card'
+import { Header } from '../../../components/Header'
 import { Loading } from '../../../components/Loading'
 import { CredentialsTable } from '../../../components/credentials/CredentialsTable'
 
@@ -29,13 +30,11 @@ export const CredentialsScreen = () => {
 
   return (
     <>
-      <Title size="h2" mb={20}>
-        Credentials
-      </Title>
-      <div>
-        {credentialsLoading || connectionsLoading ? (
-          <Loading />
-        ) : (
+      <Header title="Credentials" description="This will show you the credentials you received." />
+      {credentialsLoading || connectionsLoading ? (
+        <Loading />
+      ) : (
+        <Card title="Received credentials">
           <CredentialsTable
             records={credentialRecords}
             connections={connectionRecords}
@@ -43,8 +42,8 @@ export const CredentialsScreen = () => {
             onAccept={(credential) => acceptCredential(credential)}
             onDecline={(credential) => agent?.credentials.declineOffer(credential.id)}
           />
-        )}
-      </div>
+        </Card>
+      )}
     </>
   )
 }

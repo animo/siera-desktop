@@ -9,6 +9,7 @@ import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
 import { EmptyState } from '../generic/table/EmptyState'
 import { StatusBadge } from '../generic/table/StatusBadge'
+import { TableHead } from '../generic/table/TableHeader'
 
 interface ConnectionsTableProps {
   records: ConnectionRecord[]
@@ -22,18 +23,6 @@ const useStyles = createStyles((theme) => ({
     width: '100%',
     minWidth: 870,
     tableLayout: 'fixed',
-  },
-  labelSize: {
-    width: 150,
-  },
-  idSize: {
-    width: 200,
-  },
-  stateSize: {
-    width: 100,
-  },
-  actionsSize: {
-    width: 160,
   },
   clickableTitle: {
     cursor: 'pointer',
@@ -56,14 +45,14 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
   return (
     <ScrollArea>
       <Table verticalSpacing="sm" className={classes.table}>
-        <thead>
-          <tr>
-            <th className={classes.labelSize}>Connection</th>
-            <th className={classes.idSize}>Connection</th>
-            <th className={classes.stateSize}>State</th>
-            <th className={classes.actionsSize} />
-          </tr>
-        </thead>
+        <TableHead
+          columns={[
+            { label: 'Connection', size: 150 },
+            { label: 'Connection identifier', size: 200 },
+            { label: 'State', size: 100 },
+            { label: 'Actions', blank: true, size: 160 },
+          ]}
+        />
         <tbody>
           {records.length === 0 && (
             <tr>
@@ -77,9 +66,11 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
             const isWaitingForAccept = ConnectionsUtil.isConnectionWaitingForAcceptInput(record)
             const isWaitingForDecline = ConnectionsUtil.isConnectionWaitingForDeclineInput(record)
 
+            const lastUpdated = record.updatedAt ?? record.createdAt
+
             return (
               <tr key={record.id}>
-                <td className={classes.labelSize}>
+                <td>
                   <Group spacing="sm" noWrap>
                     <SmartAvatar size={30} src={record.imageUrl} radius={30}>
                       {record.theirLabel}
@@ -89,15 +80,18 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
                     </Text>
                   </Group>
                 </td>
-                <td className={classes.idSize}>
+                <td>
                   <Text size="sm" weight={500}>
                     {record.id}
                   </Text>
+                  <Text color="dimmed" size="xs">
+                    Last updated {lastUpdated.toLocaleString()}
+                  </Text>
                 </td>
-                <td className={classes.stateSize}>
+                <td>
                   <StatusBadge>{record.state}</StatusBadge>
                 </td>
-                <td className={classes.actionsSize}>
+                <td>
                   <RecordActions
                     onAccept={isWaitingForAccept ? () => onAccept(record) : undefined}
                     onDecline={isWaitingForDecline ? () => onDecline(record) : undefined}

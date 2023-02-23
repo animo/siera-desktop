@@ -3,7 +3,6 @@ import type { ReactNode } from 'react'
 
 import { useAgent } from '@aries-framework/react-hooks'
 import { AppShell } from '@mantine/core'
-import { IconHome, IconId, IconKey, IconPlugConnected } from '@tabler/icons'
 import React from 'react'
 
 import { Loading } from '../components/Loading'
@@ -15,10 +14,9 @@ interface LayoutProps {
 }
 
 const navigationItems: NavigationItem[] = [
-  { name: 'Dashboard', href: '/agent', icon: IconHome },
-  { name: 'Connections', href: '/agent/connections', icon: IconPlugConnected },
-  { name: 'Credentials', href: '/agent/credentials', icon: IconKey },
-  { name: 'Proofs', href: '/agent/proofs', icon: IconId },
+  { name: 'Connections', href: '/agent/connections' },
+  { name: 'Credentials', href: '/agent/credentials' },
+  { name: 'Proofs', href: '/agent/proofs' },
 ]
 
 export const Layout = ({ children }: LayoutProps) => {

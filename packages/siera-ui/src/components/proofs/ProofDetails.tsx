@@ -1,22 +1,36 @@
 import type { FormattedProofData } from '../../contexts/ProofsFormatDataProvider'
-import type { CredentialDetails } from '../credentials/CredentialCard'
 
-import { capitalize } from '@animo/siera-core'
 import { useAgent } from '@aries-framework/react-hooks'
-import { Flex, Title } from '@mantine/core'
-import { Prism } from '@mantine/prism'
+import { createStyles, Group, SimpleGrid, Space, Stack, Title } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 
-import { CredentialCard } from '../credentials/CredentialCard'
-import { InformationCollapse } from '../generic/information/InformationCollapse'
+import { Card } from '../Card'
+import { Loading } from '../Loading'
+import { AttributeValue } from '../generic/information/AttributeValue'
+import { RecordCodeBlock } from '../generic/information/RecordCodeBlock'
 
 interface ProofDetailsProps {
   formattedProofData: FormattedProofData
 }
 
+export interface CredentialDetails {
+  credentialId: string
+  credentialName: string
+  credentialAttributes: [string, string][]
+}
+
+const useStyles = createStyles(() => ({
+  attributeName: {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+}))
+
 export const ProofDetails = ({ formattedProofData }: ProofDetailsProps) => {
+  const { classes } = useStyles()
   const { agent } = useAgent()
-  const [credentialDetails, setCredentialDetails] = useState<CredentialDetails[]>([])
+  const [credentialDetails, setCredentialDetails] = useState<CredentialDetails[] | null>(null)
 
   useEffect(() => {
     void (async () => {
@@ -50,31 +64,45 @@ export const ProofDetails = ({ formattedProofData }: ProofDetailsProps) => {
     })()
   }, [formattedProofData.id, agent])
 
+  const proofRequestName = formattedProofData.request?.indy?.name ?? 'No name'
+
   return (
-    <Flex direction="column" gap="md">
-      <Flex direction="column" gap="lg">
-        {credentialDetails.map((credentialDetails) => (
-          <CredentialCard key={credentialDetails.credentialId} credentialDetails={credentialDetails} />
-        ))}
-      </Flex>
-      <InformationCollapse title="Raw Proof request">
-        <Flex direction="column" gap="md">
-          {Object.entries(formattedProofData).map(([key, value]) => (
-            <Flex direction="column" key={key} gap="xs">
-              <Title size="h5">{capitalize(key)}</Title>
-              {value ? (
-                <Prism language="json" noCopy>
-                  {JSON.stringify(value, null, 2)}
-                </Prism>
-              ) : (
-                <Prism language="javascript" noCopy>
-                  {value == null ? 'null' : 'undefined'}
-                </Prism>
-              )}
-            </Flex>
+    <Card
+      title={proofRequestName}
+      titleSize="h2"
+      description="The following credentials were used to satisfy the proof request."
+      descriptionSize="md"
+      withPadding
+    >
+      <Space h="xl" />
+      {credentialDetails == null ? (
+        <Loading />
+      ) : (
+        <Stack>
+          {credentialDetails.map((credentialDetail) => (
+            <Stack key={credentialDetail.credentialId} spacing={0}>
+              <Title size="h3">{credentialDetail.credentialName}</Title>
+              <SimpleGrid cols={2} mt="md" mb="xl">
+                {credentialDetail.credentialAttributes.map(([name, value]: [string, unknown]) => (
+                  <Group key={name} noWrap>
+                    <Title size="h6" className={classes.attributeName} w={120}>
+                      {name}
+                    </Title>
+                    <AttributeValue value={value} />
+                  </Group>
+                ))}
+              </SimpleGrid>
+            </Stack>
           ))}
-        </Flex>
-      </InformationCollapse>
-    </Flex>
+        </Stack>
+      )}
+
+      <Space h="xl" />
+
+      <Title size="h3" mb="xs">
+        Record
+      </Title>
+      <RecordCodeBlock record={formattedProofData} />
+    </Card>
   )
 }

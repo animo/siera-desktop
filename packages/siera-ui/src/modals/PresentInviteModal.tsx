@@ -1,52 +1,65 @@
 import type { ContextModalProps } from '@mantine/modals'
 
-import { Box, Center, createStyles, Divider, Text } from '@mantine/core'
-import { useClipboard } from '@mantine/hooks'
-import { showNotification } from '@mantine/notifications'
-import { IconCopy } from '@tabler/icons'
+import { ActionIcon, Box, Center, CopyButton, createStyles, Group, Text, TextInput, Tooltip } from '@mantine/core'
+import { openContextModal } from '@mantine/modals'
+import { IconCheck, IconCopy } from '@tabler/icons'
 import { QRCodeSVG } from 'qrcode.react'
 import React from 'react'
 
 import { PrimaryButton } from '../components/generic'
 
+export const openPresentInviteModal = (inviteUrl: string) => {
+  openContextModal({
+    modal: 'presentInvite',
+    title: 'Create connection',
+    centered: true,
+    withCloseButton: false,
+    innerProps: {
+      inviteUrl,
+    },
+  })
+}
+
 const useStyles = createStyles((theme) => ({
   qrCode: {
     borderRadius: theme.radius.sm,
-    backgroundColor: theme.colors.primaryOne[7],
+    backgroundColor: theme.colors.backgroundOne[6],
     padding: theme.spacing.xs,
+    boxShadow: theme.shadows.sm,
+  },
+  urlInput: {
+    backgroundColor: theme.colors.backgroundOne[7],
   },
 }))
 
-export const PresentInviteModal = ({ innerProps }: ContextModalProps<{ inviteUrl: string }>) => {
-  const clipBoard = useClipboard()
+export const PresentInviteModal = ({ innerProps, context, id }: ContextModalProps<{ inviteUrl: string }>) => {
   const { classes } = useStyles()
   const { inviteUrl } = innerProps
 
-  const copyToClipboard = async () => {
-    clipBoard.copy(inviteUrl)
-
-    showNotification({
-      title: 'Invitation copied to clipboard',
-      message: 'You can now use it how you like',
-    })
-  }
+  const copyUrl = (
+    <CopyButton value={inviteUrl} timeout={2000}>
+      {({ copied, copy }) => (
+        <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
+          <ActionIcon onClick={copy}>{copied ? <IconCheck size={16} /> : <IconCopy size={16} />}</ActionIcon>
+        </Tooltip>
+      )}
+    </CopyButton>
+  )
 
   return (
     <>
-      <Center>
+      <Text color="dimmed">Scan the QR code or compy the invitation url</Text>
+      <Center mt="xl">
         <Box className={classes.qrCode}>
           <Box h={250} w={250}>
             <QRCodeSVG value={inviteUrl} size={250} />
           </Box>
         </Box>
       </Center>
-      <Text mt="xs" align="center">
-        Scan the QR-code with your wallet.
-      </Text>
-      <Divider label="OR" labelPosition="center" mb="lg" mt="md" />
-      <PrimaryButton fullWidth onClick={copyToClipboard}>
-        <IconCopy size={16} /> Copy url
-      </PrimaryButton>
+      <TextInput mt={40} value={inviteUrl} readOnly classNames={{ input: classes.urlInput }} rightSection={copyUrl} />
+      <Group mt="xl" position="center">
+        <PrimaryButton onClick={() => context.closeModal(id)}>Done</PrimaryButton>
+      </Group>
     </>
   )
 }

@@ -2,7 +2,7 @@ import type { ConnectionRecord, CredentialExchangeRecord } from '@aries-framewor
 
 import { formatSchemaName } from '@animo/siera-core/src/utils'
 import { CredentialsUtil } from '@animo/siera-core/src/utils/records/CredentialsUtil'
-import { createStyles, Group, ScrollArea, Table, Text } from '@mantine/core'
+import { createStyles, Group, ScrollArea, Stack, Table, Text } from '@mantine/core'
 import React from 'react'
 
 import { useCredentialsFormatData } from '../../contexts/CredentialFormatDataProvider'
@@ -11,6 +11,7 @@ import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
 import { EmptyState } from '../generic/table/EmptyState'
 import { StatusBadge } from '../generic/table/StatusBadge'
+import { TableHead } from '../generic/table/TableHeader'
 
 interface CredentialsTableProps {
   records: CredentialExchangeRecord[]
@@ -25,15 +26,6 @@ const useStyles = createStyles((theme) => ({
     width: '100%',
     minWidth: 490,
     tableLayout: 'fixed',
-  },
-  labelSize: {
-    width: 150,
-  },
-  stateSize: {
-    width: 100,
-  },
-  actionsSize: {
-    width: 160,
   },
   clickableTitle: {
     cursor: 'pointer',
@@ -57,13 +49,13 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
   return (
     <ScrollArea>
       <Table verticalSpacing="sm" className={classes.table}>
-        <thead>
-          <tr>
-            <th className={classes.labelSize}>Credential</th>
-            <th className={classes.stateSize}>State</th>
-            <th className={classes.actionsSize} />
-          </tr>
-        </thead>
+        <TableHead
+          columns={[
+            { label: 'Credential', size: 150 },
+            { label: 'State', size: 100 },
+            { label: 'Actions', blank: true, size: 160 },
+          ]}
+        />
         <tbody>
           {records.length === 0 && (
             <tr>
@@ -79,22 +71,29 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
             const isWaitingForAccept = CredentialsUtil.isCredentialWaitingForAcceptInput(record)
             const isWaitingForDecline = CredentialsUtil.isCredentialWaitingForDeclineInput(record)
 
+            const lastUpdated = record.updatedAt ?? record.createdAt
+
             return (
               <tr key={record.id}>
-                <td className={classes.labelSize}>
+                <td>
                   <Group spacing="sm" noWrap>
                     <SmartAvatar size={30} radius={30} src={connection?.imageUrl}>
                       {connection?.theirLabel}
                     </SmartAvatar>
-                    <Text size="sm" weight={500} className={classes.clickableTitle} onClick={() => selectRow(record)}>
-                      {formatSchemaName(formattedCredential?.offer?.indy?.schema_id)}
-                    </Text>
+                    <Stack spacing={0}>
+                      <Text size="sm" weight={500} className={classes.clickableTitle} onClick={() => selectRow(record)}>
+                        {formatSchemaName(formattedCredential?.offer?.indy?.schema_id)}
+                      </Text>
+                      <Text size="xs" color="dimmed">
+                        Last updated {lastUpdated.toLocaleString()}
+                      </Text>
+                    </Stack>
                   </Group>
                 </td>
-                <td className={classes.stateSize}>
+                <td>
                   <StatusBadge>{record.state}</StatusBadge>
                 </td>
-                <td className={classes.actionsSize}>
+                <td>
                   <RecordActions
                     onAccept={isWaitingForAccept ? () => onAccept(record) : undefined}
                     onDecline={isWaitingForDecline ? () => onDecline(record) : undefined}
