@@ -29,6 +29,13 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
       styles: () => ({
         title: {
           fontWeight: 700,
+          fontSize: '1.7rem',
+        },
+        modal: {
+          borderRadius: '0.5rem',
+        },
+        header: {
+          marginBottom: '0',
         },
       }),
     },

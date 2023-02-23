@@ -4,18 +4,17 @@ import React from 'react'
 
 import { Loading } from '../components/Loading'
 import { SmartAvatar } from '../components/SmartAvatar'
+import { PrimaryButton } from '../components/generic'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
-import { ColorSchemeSwitch } from '../layout/actions/ColorSchemeSwitch'
+import { openCreateAgentModal } from '../modals'
+
+import { WelcomeScreen } from './agent/WelcomeScreen'
 
 const useStyles = createStyles((theme) => ({
   card: {
-    backgroundColor: theme.colors.secondaryOne[6],
-    boxShadow: theme.shadows.xs,
-
-    '&:hover': {
-      backgroundColor: theme.colors.secondaryOne[5],
-    },
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
+    border: `2px solid ${theme.colors.backgroundOne[6]}`,
   },
   variantLabel: {
     color: theme.colors.textOne[7],
@@ -47,21 +46,28 @@ export const AgentSelectionScreen = () => {
     return <Loading description="Loading configuration" />
   }
 
+  if (agents.length === 0) {
+    return <WelcomeScreen />
+  }
+
   return (
-    <Container mt={20}>
+    <Container mt={70}>
       <Flex justify="space-between">
-        <Title size="h2" mb="md">
-          Agents
+        <Title size="h1" mb="md">
+          Overview
         </Title>
-        <ColorSchemeSwitch />
+        <PrimaryButton onClick={openCreateAgentModal} leftIcon={<IconPlus size={16} stroke={3} />}>
+          New agent
+        </PrimaryButton>
       </Flex>
-      <Flex gap="md" wrap="wrap">
+      <Text size="md">Select an agent or click the create new agent button.</Text>
+      <Flex gap="md" wrap="wrap" mt="xl">
         {agents.map((agent) => (
           <UnstyledButton key={agent.id} onClick={() => switchToAgent(agent.id)}>
             <Card h={80} w={220} className={classes.card} radius="md">
               <Flex align="center" h="100%">
                 <Group noWrap>
-                  <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={48} radius="md">
+                  <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={38} radius="xl">
                     {agent.agentConfig.label}
                   </SmartAvatar>
                   <Box>
@@ -73,12 +79,6 @@ export const AgentSelectionScreen = () => {
             </Card>
           </UnstyledButton>
         ))}
-        <UnstyledButton className={classes.createAgentButton} onClick={() => navigation.navigate('/setup')}>
-          <Group spacing="sm">
-            <IconPlus />
-            <Text span>Create new Agent</Text>
-          </Group>
-        </UnstyledButton>
       </Flex>
     </Container>
   )

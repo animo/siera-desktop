@@ -1,36 +1,30 @@
+import type { ContextModalProps } from '@mantine/modals'
+
 import { uuid } from '@animo/siera-core/src/utils'
-import { createStyles, TextInput, Paper, Title } from '@mantine/core'
+import { Flex, Group, TextInput, Text } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { openContextModal } from '@mantine/modals'
 import React from 'react'
 
-import { BackButton } from '../components/BackButton'
-import { PrimaryButton } from '../components/generic'
+import { PrimaryButton, SecondaryButton } from '../components/generic'
 import { useAgentManager } from '../contexts/AgentManagerContext'
-import { useNavigation } from '../hooks/useNavigation'
-
-const useStyles = createStyles(() => ({
-  backButton: {
-    position: 'absolute',
-    top: '13px',
-    left: '13px',
-  },
-  screen: {
-    height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-}))
 
 interface CreateAgentForm {
   agentLabel: string
   mediatorInviteUrl: string
 }
 
-export const SetupScreen = () => {
-  const navigation = useNavigation()
-  const { classes } = useStyles()
+export const openCreateAgentModal = () => {
+  openContextModal({
+    modal: 'createAgent',
+    title: 'Create a new agent',
+    innerProps: {},
+    centered: true,
+    withCloseButton: false,
+  })
+}
+
+export const CreateAgentModal = ({ context, id }: ContextModalProps) => {
   const agentManager = useAgentManager()
   const form = useForm<CreateAgentForm>({
     initialValues: {
@@ -55,35 +49,26 @@ export const SetupScreen = () => {
       },
     })
 
-    navigation.navigate('/')
+    context.closeModal(id)
   }
 
-  const agentLabel = agentManager.agents.length === 0 ? 'First agent' : 'My agent'
+  const agentLabel = agentManager.agents.length === 0 ? 'First agent' : 'Development'
 
   return (
-    <>
-      <div className={classes.backButton}>
-        <BackButton />
-      </div>
-      <div className={classes.screen}>
-        <Paper withBorder shadow="md" p={30} mt={20} radius="md">
-          <Title align="center" size="h3" weight={900} mb="xs">
-            Create a new Agent
-          </Title>
-          <form onSubmit={form.onSubmit(createAgentConfig)}>
-            <TextInput label="Agent label" placeholder={agentLabel} required {...form.getInputProps('agentLabel')} />
-            <TextInput
-              label="Mediator invite url"
-              placeholder="https://mediator.com/example-url"
-              {...form.getInputProps('mediatorInviteUrl')}
-            />
-
-            <PrimaryButton type="submit" fullWidth mt="xl">
-              Create
-            </PrimaryButton>
-          </form>
-        </Paper>
-      </div>
-    </>
+    <form onSubmit={form.onSubmit(createAgentConfig)}>
+      <Flex direction="column" gap="md">
+        <Text color="dimmed">Enter the details for your new agent.</Text>
+        <TextInput label="Label" placeholder={agentLabel} required {...form.getInputProps('agentLabel')} />
+        <TextInput
+          label="Mediator"
+          placeholder="https://mediator.com/example-url"
+          {...form.getInputProps('mediatorInviteUrl')}
+        />
+        <Group position="right" mt="md">
+          <SecondaryButton onClick={() => context.closeModal(id)}>Cancel</SecondaryButton>
+          <PrimaryButton type="submit">Create</PrimaryButton>
+        </Group>
+      </Flex>
+    </form>
   )
 }
