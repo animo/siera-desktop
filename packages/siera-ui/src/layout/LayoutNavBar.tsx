@@ -26,7 +26,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
   return {
     navbar: {
-      backgroundColor: theme.colors.backgroundOne[7],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
     },
 
     link: {

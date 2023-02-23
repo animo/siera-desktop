@@ -9,7 +9,7 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
 
   defaultRadius: '0.25rem',
 
-  white: '#F5F5F4',
+  white: '#F4F3F2',
   black: '#202223',
 
   primaryColor: 'primaryOne',
