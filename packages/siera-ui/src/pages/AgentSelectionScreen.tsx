@@ -38,7 +38,7 @@ export const AgentSelectionScreen = () => {
 
   const switchToAgent = (agentId: string) => {
     setCurrentAgentId(agentId)
-    navigation.navigate('/agent')
+    navigation.navigate('/agent/connections')
   }
 
   if (loading) {
