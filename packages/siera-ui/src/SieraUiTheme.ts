@@ -26,16 +26,27 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
     },
 
     Modal: {
-      styles: () => ({
+      styles: (theme) => ({
         title: {
           fontWeight: 700,
           fontSize: '1.7rem',
         },
         modal: {
           borderRadius: '0.5rem',
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
         },
         header: {
           marginBottom: '0',
+        },
+      }),
+    },
+
+    TextInput: {
+      styles: (theme) => ({
+        input: {
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
+          border: `1px solid ${theme.colors.backgroundOne[5]}`,
+          borderRadius: '0.5rem',
         },
       }),
     },

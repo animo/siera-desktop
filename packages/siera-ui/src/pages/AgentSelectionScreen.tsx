@@ -1,5 +1,4 @@
 import { Box, Card, Container, createStyles, Flex, Group, Text, Title, UnstyledButton } from '@mantine/core'
-import { IconPlus } from '@tabler/icons'
 import React from 'react'
 
 import { Loading } from '../components/Loading'
@@ -56,7 +55,7 @@ export const AgentSelectionScreen = () => {
         <Title size="h1" mb="md">
           Overview
         </Title>
-        <PrimaryButton onClick={openCreateAgentModal} leftIcon={<IconPlus size={16} stroke={3} />}>
+        <PrimaryButton onClick={openCreateAgentModal} withPlusIcon>
           New agent
         </PrimaryButton>
       </Flex>

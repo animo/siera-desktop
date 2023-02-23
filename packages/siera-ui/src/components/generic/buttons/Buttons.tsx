@@ -1,7 +1,7 @@
 import type { ButtonProps } from '@mantine/core'
 
 import { Button, createStyles } from '@mantine/core'
-import { IconChevronLeft } from '@tabler/icons'
+import { IconChevronLeft, IconPlus } from '@tabler/icons'
 import React from 'react'
 
 import { useNavigation } from '../../../hooks/useNavigation'
@@ -22,7 +22,6 @@ const useStyles = createStyles((theme) => ({
   },
 
   secondary: {
-    backgroundColor: theme.colors.secondaryOne[7],
     color: theme.colors.textTwo[0],
     transition: 'background-color 0.2s ease',
 
@@ -39,16 +38,23 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export const PrimaryButton = (props: ButtonProps & ClickAble) => {
-  const { classes, cx } = useStyles()
+interface PrimaryButtonProps extends ButtonProps, ClickAble {
+  withPlusIcon?: boolean
+}
 
-  return <Button {...props} className={cx(classes.primary, props.className)} />
+export const PrimaryButton = (props: PrimaryButtonProps) => {
+  const { classes, cx } = useStyles()
+  const { withPlusIcon } = props
+
+  const plusButton = withPlusIcon && <IconPlus size={16} stroke={3} />
+
+  return <Button leftIcon={plusButton} {...props} className={cx(classes.primary, props.className)} />
 }
 
 export const SecondaryButton = (props: ButtonProps & ClickAble) => {
   const { classes, cx } = useStyles()
 
-  return <Button {...props} className={cx(classes.secondary, props.className)} />
+  return <Button variant="subtle" {...props} className={cx(classes.secondary, props.className)} />
 }
 
 export const DangerButton = (props: ButtonProps & ClickAble) => {

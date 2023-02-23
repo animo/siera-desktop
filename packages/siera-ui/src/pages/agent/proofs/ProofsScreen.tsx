@@ -1,9 +1,10 @@
 import type { ProofExchangeRecord } from '@aries-framework/core'
 
 import { useAgent, useConnections, useProofs } from '@aries-framework/react-hooks'
-import { Title } from '@mantine/core'
 import React from 'react'
 
+import { Card } from '../../../components/Card'
+import { Header } from '../../../components/Header'
 import { Loading } from '../../../components/Loading'
 import { ProofsTable } from '../../../components/proofs/ProofsTable'
 
@@ -37,19 +38,19 @@ export const ProofsScreen = () => {
 
   return (
     <>
-      <Title size="h2" mb={20}>
-        Proofs
-      </Title>
+      <Header title="Proofs" description="This will show you the proof requests you received." />
       {proofsLoading || connectionsLoading ? (
         <Loading />
       ) : (
-        <ProofsTable
-          records={proofRecords}
-          connections={connectionRecords}
-          onDelete={deleteProof}
-          onAccept={acceptProofRequest}
-          onDecline={declineProofRequest}
-        />
+        <Card title="Proofs history">
+          <ProofsTable
+            records={proofRecords}
+            connections={connectionRecords}
+            onDelete={deleteProof}
+            onAccept={acceptProofRequest}
+            onDecline={declineProofRequest}
+          />
+        </Card>
       )}
     </>
   )

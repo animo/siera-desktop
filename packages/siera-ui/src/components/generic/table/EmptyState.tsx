@@ -21,7 +21,7 @@ export const EmptyState = ({ message }: EmptyStateProps) => {
   const { classes } = useStyles()
 
   return (
-    <Flex direction="column" align="center" mt="xl">
+    <Flex direction="column" align="center" mt="xl" mb="xl">
       <Box className={classes.icon}>
         <Flex align="center" justify="center" h="100%" w="100%">
           <IconDatabaseOff size={32} stroke={1} />
