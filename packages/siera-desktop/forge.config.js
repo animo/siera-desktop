@@ -61,20 +61,14 @@ module.exports = {
       },
     },
     {
-      name: '@electron-forge/maker-deb',
+      name: '@reforged/maker-appimage',
       config: {
-        icon: './icons/icon.png',
         options: {
+          icon: './icons/icon.png',
+          categories: ['Utility'],
           bin: 'siera-desktop',
-        },
-      },
-    },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {
-        icon: './icons/icon.png',
-        options: {
-          bin: 'siera-desktop',
+          name: 'Siera Desktop',
+          AppImageKitRelease: 'continuous',
         },
       },
     },
