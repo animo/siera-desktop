@@ -24,8 +24,12 @@ export const Loading = ({ description }: LoadingProps) => {
   return (
     <Center className={classes.spinnerCentering}>
       <Flex direction="column" align="center" gap="sm">
-        <Loader size="xl" stroke={strokeColor} />
-        {description && <Text align="center">{description}</Text>}
+        <Loader size="md" stroke={strokeColor} />
+        {description && (
+          <Text size="sm" align="center">
+            {description}
+          </Text>
+        )}
       </Flex>
     </Center>
   )

@@ -25,18 +25,37 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
       }),
     },
 
+    Menu: {
+      styles: (theme) => ({
+        dropdown: {
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
+        },
+      }),
+    },
+
     Modal: {
       styles: (theme) => ({
         title: {
           fontWeight: 700,
           fontSize: '1.7rem',
+          padding: `0 ${theme.spacing.xl}px`,
         },
         modal: {
-          borderRadius: '0.5rem',
+          border: `2px solid ${theme.colors.backgroundOne[6]}`,
+          borderRadius: theme.radius.md,
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
+          padding: `${theme.spacing.lg}px 0 !important`,
         },
         header: {
           marginBottom: '0',
+        },
+      }),
+    },
+
+    Divider: {
+      styles: (theme) => ({
+        root: {
+          borderTopColor: `${theme.colors.backgroundOne[6]} !important`,
         },
       }),
     },
@@ -47,6 +66,33 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
           border: `1px solid ${theme.colors.backgroundOne[5]}`,
           borderRadius: '0.5rem',
+
+          '&:focus': {
+            borderColor: theme.colors.backgroundOne[4],
+          },
+        },
+
+        label: {
+          fontWeight: 600,
+          marginBottom: 5,
+        },
+      }),
+    },
+
+    Button: {
+      styles: () => ({
+        root: {
+          '&:active': {
+            transform: 'none',
+          },
+        },
+      }),
+    },
+
+    Notification: {
+      styles: (theme) => ({
+        root: {
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
         },
       }),
     },

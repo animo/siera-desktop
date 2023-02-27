@@ -8,6 +8,7 @@ import { Card } from '../../../components/Card'
 import { Header } from '../../../components/Header'
 import { Loading } from '../../../components/Loading'
 import { CredentialsTable } from '../../../components/credentials/CredentialsTable'
+import { EmptyState } from '../../../components/generic/table/EmptyState'
 
 export const CredentialsScreen = () => {
   const { records: credentialRecords, loading: credentialsLoading } = useCredentials()
@@ -33,6 +34,8 @@ export const CredentialsScreen = () => {
       <Header title="Credentials" description="This will show you the credentials you received." />
       {credentialsLoading || connectionsLoading ? (
         <Loading />
+      ) : credentialRecords.length === 0 ? (
+        <EmptyState title="No credentials received" message="You haven't received any credentials yet." withCard />
       ) : (
         <Card title="Received credentials">
           <CredentialsTable

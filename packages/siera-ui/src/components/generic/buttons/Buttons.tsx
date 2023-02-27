@@ -1,14 +1,11 @@
 import type { ButtonProps } from '@mantine/core'
+import type { ButtonHTMLAttributes } from 'react'
 
 import { Button, createStyles } from '@mantine/core'
 import { IconArrowLeft, IconPlus } from '@tabler/icons'
 import React from 'react'
 
 import { useNavigation } from '../../../hooks/useNavigation'
-
-interface ClickAble {
-  onClick?: () => void
-}
 
 const useStyles = createStyles((theme) => ({
   primary: {
@@ -22,11 +19,11 @@ const useStyles = createStyles((theme) => ({
   },
 
   secondary: {
-    color: theme.colors.textTwo[0],
-    transition: 'background-color 0.2s ease',
+    color: theme.colors.textOne[3],
 
     '&:hover': {
-      backgroundColor: theme.colors.secondaryOne[6],
+      backgroundColor: 'transparent',
+      color: theme.colors.textOne[2],
     },
   },
 
@@ -39,11 +36,11 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-interface PrimaryButtonProps extends ButtonProps, ClickAble {
+interface PrimaryButtonProps extends ButtonProps {
   withPlusIcon?: boolean
 }
 
-export const PrimaryButton = (props: PrimaryButtonProps) => {
+export const PrimaryButton = (props: PrimaryButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) => {
   const { classes, cx } = useStyles()
   const { withPlusIcon } = props
 
@@ -52,17 +49,17 @@ export const PrimaryButton = (props: PrimaryButtonProps) => {
   return <Button leftIcon={plusButton} {...props} className={cx(classes.primary, props.className)} />
 }
 
-export const SecondaryButton = (props: ButtonProps & ClickAble) => {
+export const SecondaryButton = (props: ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) => {
   const { classes, cx } = useStyles()
 
   return <Button variant="subtle" {...props} className={cx(classes.secondary, props.className)} />
 }
 
-export const DangerButton = (props: ButtonProps & ClickAble) => {
+export const DangerButton = (props: ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) => {
   return <Button color="danger" variant="subtle" {...props} />
 }
 
-export const SmallBackButton = (props: ButtonProps & ClickAble) => {
+export const SmallBackButton = (props: ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) => {
   const { classes, cx } = useStyles()
   const { goBack } = useNavigation()
 

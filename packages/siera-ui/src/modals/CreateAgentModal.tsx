@@ -1,7 +1,7 @@
 import type { ContextModalProps } from '@mantine/modals'
 
 import { uuid } from '@animo/siera-core/src/utils'
-import { Flex, Group, TextInput, Text } from '@mantine/core'
+import { Group, TextInput, Text, Divider, Stack } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { openContextModal } from '@mantine/modals'
 import React from 'react'
@@ -12,16 +12,6 @@ import { useAgentManager } from '../contexts/AgentManagerContext'
 interface CreateAgentForm {
   agentLabel: string
   mediatorInviteUrl: string
-}
-
-export const openCreateAgentModal = () => {
-  openContextModal({
-    modal: 'createAgent',
-    title: 'Create a new agent',
-    innerProps: {},
-    centered: true,
-    withCloseButton: false,
-  })
 }
 
 export const CreateAgentModal = ({ context, id }: ContextModalProps) => {
@@ -56,19 +46,32 @@ export const CreateAgentModal = ({ context, id }: ContextModalProps) => {
 
   return (
     <form onSubmit={form.onSubmit(createAgentConfig)}>
-      <Flex direction="column" gap="md">
-        <Text color="dimmed">Enter the details for your new agent.</Text>
-        <TextInput label="Label" placeholder={agentLabel} required {...form.getInputProps('agentLabel')} />
-        <TextInput
-          label="Mediator"
-          placeholder="https://mediator.com/example-url"
-          {...form.getInputProps('mediatorInviteUrl')}
-        />
-        <Group position="right" mt="md">
+      <Stack>
+        <Stack px="xl">
+          <Text color="dimmed">Enter the details for your new agent.</Text>
+          <TextInput label="Label" placeholder={agentLabel} required {...form.getInputProps('agentLabel')} />
+          <TextInput
+            label="Mediator"
+            placeholder="https://mediator.com/example-url"
+            {...form.getInputProps('mediatorInviteUrl')}
+          />
+        </Stack>
+        <Divider mt="xs" />
+        <Group position="right" px="xl">
           <SecondaryButton onClick={() => context.closeModal(id)}>Cancel</SecondaryButton>
           <PrimaryButton type="submit">Create</PrimaryButton>
         </Group>
-      </Flex>
+      </Stack>
     </form>
   )
+}
+
+export const openCreateAgentModal = () => {
+  openContextModal({
+    modal: CreateAgentModal.name,
+    title: 'Create a new agent',
+    innerProps: {},
+    centered: true,
+    withCloseButton: false,
+  })
 }

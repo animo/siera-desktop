@@ -1,33 +1,25 @@
-import { Box, createStyles, Flex, Text } from '@mantine/core'
-import { IconDatabaseOff } from '@tabler/icons'
+import { Flex, Text } from '@mantine/core'
 import React from 'react'
 
+import { Card } from '../../Card'
+
 interface EmptyStateProps {
+  title?: string
   message: string
+  withCard?: boolean
 }
 
-const useStyles = createStyles((theme) => ({
-  icon: {
-    backgroundColor: theme.fn.rgba(theme.colors.grayscaleOne[7], 0.1),
-    padding: theme.spacing.xs,
-    borderRadius: theme.radius.xl,
-    height: 48,
-    width: 48,
-    marginBottom: theme.spacing.xs,
-  },
-}))
-
-export const EmptyState = ({ message }: EmptyStateProps) => {
-  const { classes } = useStyles()
-
-  return (
-    <Flex direction="column" align="center" mt="xl" mb="xl">
-      <Box className={classes.icon}>
-        <Flex align="center" justify="center" h="100%" w="100%">
-          <IconDatabaseOff size={32} stroke={1} />
-        </Flex>
-      </Box>
-      <Text>{message}</Text>
+export const EmptyState = ({ title, message, withCard }: EmptyStateProps) => {
+  const emptyContent = (
+    <Flex direction="column" align="center" my={80}>
+      {title && <Text weight={600}>{title}</Text>}
+      <Text color="dimmed">{message}</Text>
     </Flex>
   )
+
+  if (!withCard) {
+    return emptyContent
+  }
+
+  return <Card>{emptyContent}</Card>
 }

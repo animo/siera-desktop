@@ -1,5 +1,5 @@
 import { useAgent, useConnections } from '@aries-framework/react-hooks'
-import { Group, Space, TextInput } from '@mantine/core'
+import { Box, Group, Space, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { showNotification } from '@mantine/notifications'
 import React from 'react'
@@ -9,6 +9,7 @@ import { Header } from '../../../components/Header'
 import { Loading } from '../../../components/Loading'
 import { ConnectionsTable } from '../../../components/connections/ConnectionsTable'
 import { PrimaryButton, SecondaryButton } from '../../../components/generic'
+import { EmptyState } from '../../../components/generic/table/EmptyState'
 import { openPresentInviteModal } from '../../../modals'
 
 interface ConnectionInviteValues {
@@ -63,7 +64,9 @@ export const ConnectionsScreen = () => {
       <Card title="Receive invitations" description="Paste in the invitation url to receive a invitation." withPadding>
         <form onSubmit={form.onSubmit(receiveInvite)}>
           <Group>
-            <TextInput placeholder="https://example.com/?c_i=abc" {...form.getInputProps('url')} required />
+            <Box w={270} maw="50%">
+              <TextInput placeholder="https://example.com/?c_i=abc" {...form.getInputProps('url')} required />
+            </Box>
             <SecondaryButton type="submit">Receive</SecondaryButton>
           </Group>
         </form>
@@ -71,6 +74,8 @@ export const ConnectionsScreen = () => {
       <Space h="xl" />
       {connectionLoading ? (
         <Loading />
+      ) : connectionRecords.length === 0 ? (
+        <EmptyState title="No connections" message="You don't have any connections yet." withCard />
       ) : (
         <Card title="Connection history">
           <ConnectionsTable

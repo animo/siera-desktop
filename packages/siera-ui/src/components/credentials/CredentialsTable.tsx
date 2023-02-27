@@ -9,7 +9,7 @@ import { useCredentialsFormatData } from '../../contexts/CredentialFormatDataPro
 import { useNavigation } from '../../hooks/useNavigation'
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
-import { EmptyState } from '../generic/table/EmptyState'
+import { useGenericTableStyle } from '../generic/table/GenericTableStyle'
 import { StatusBadge } from '../generic/table/StatusBadge'
 import { TableHead } from '../generic/table/TableHeader'
 
@@ -21,21 +21,16 @@ interface CredentialsTableProps {
   onAccept: (credential: CredentialExchangeRecord) => void
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   table: {
     width: '100%',
     minWidth: 490,
     tableLayout: 'fixed',
   },
-  clickableTitle: {
-    cursor: 'pointer',
-    '&:hover': {
-      color: theme.colors.textOne[6],
-    },
-  },
 }))
 
 export const CredentialsTable = ({ records, connections, onDelete, onAccept, onDecline }: CredentialsTableProps) => {
+  const { classes: tableStyle } = useGenericTableStyle()
   const { classes } = useStyles()
   const { formattedData } = useCredentialsFormatData()
   const navigation = useNavigation()
@@ -57,13 +52,6 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
           ]}
         />
         <tbody>
-          {records.length === 0 && (
-            <tr>
-              <td colSpan={3}>
-                <EmptyState message="No credentials found" />
-              </td>
-            </tr>
-          )}
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id == record.connectionId)
             const formattedCredential = formattedData.find((data) => data.id === record.id)
@@ -72,16 +60,17 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
             const isWaitingForDecline = CredentialsUtil.isCredentialWaitingForDeclineInput(record)
 
             const lastUpdated = record.updatedAt ?? record.createdAt
+            const clickRow = () => selectRow(record)
 
             return (
-              <tr key={record.id}>
+              <tr key={record.id} className={tableStyle.clickableRow} onClick={clickRow}>
                 <td>
                   <Group spacing="sm" noWrap>
                     <SmartAvatar size={30} radius={30} src={connection?.imageUrl}>
                       {connection?.theirLabel}
                     </SmartAvatar>
                     <Stack spacing={0}>
-                      <Text size="sm" weight={500} className={classes.clickableTitle} onClick={() => selectRow(record)}>
+                      <Text size="sm" weight={500}>
                         {formatSchemaName(formattedCredential?.offer?.indy?.schema_id)}
                       </Text>
                       <Text size="xs" color="dimmed">

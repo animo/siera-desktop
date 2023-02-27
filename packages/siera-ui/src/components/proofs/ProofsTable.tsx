@@ -1,14 +1,14 @@
 import type { ConnectionRecord, ProofExchangeRecord } from '@aries-framework/core'
 
 import { ProofsUtil } from '@animo/siera-core/src/utils/records/ProofsUtil'
-import { createStyles, Group, ScrollArea, Table, Text } from '@mantine/core'
+import { createStyles, Group, ScrollArea, Stack, Table, Text } from '@mantine/core'
 import React from 'react'
 
 import { useProofsFormatData } from '../../contexts/ProofsFormatDataProvider'
 import { useNavigation } from '../../hooks/useNavigation'
 import { RecordActions } from '../RecordActions'
 import { SmartAvatar } from '../SmartAvatar'
-import { EmptyState } from '../generic/table/EmptyState'
+import { useGenericTableStyle } from '../generic/table/GenericTableStyle'
 import { StatusBadge } from '../generic/table/StatusBadge'
 import { TableHead } from '../generic/table/TableHeader'
 
@@ -20,21 +20,16 @@ interface ProofsTableProps {
   onDecline: (proof: ProofExchangeRecord) => void
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   table: {
     width: '100%',
     minWidth: 870,
     tableLayout: 'fixed',
   },
-  clickableTitle: {
-    cursor: 'pointer',
-    '&:hover': {
-      color: theme.colors.textOne[6],
-    },
-  },
 }))
 
 export const ProofsTable = ({ records, connections, onDelete, onAccept, onDecline }: ProofsTableProps) => {
+  const { classes: tableStyle } = useGenericTableStyle()
   const { classes } = useStyles()
   const { formattedData } = useProofsFormatData()
   const navigation = useNavigation()
@@ -51,19 +46,11 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
         <TableHead
           columns={[
             { label: 'Request', size: 150 },
-            { label: 'Proof identifier', size: 200 },
             { label: 'State', size: 100 },
             { label: 'Actions', blank: true, size: 160 },
           ]}
         />
         <tbody>
-          {records.length === 0 && (
-            <tr>
-              <td colSpan={4}>
-                <EmptyState message="No proofs found" />
-              </td>
-            </tr>
-          )}
           {records.map((record) => {
             const connection = connections.find((connection) => connection.id === record.connectionId)
             const formattedProof = formattedData.find((proof) => proof.id === record.id)
@@ -75,25 +62,24 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
 
             const lastUpdated = record.updatedAt ?? record.createdAt
 
+            const select = () => selectRow(record)
+
             return (
-              <tr key={record.id}>
+              <tr key={record.id} className={tableStyle.clickableRow} onClick={select}>
                 <td>
                   <Group spacing="sm" noWrap>
                     <SmartAvatar size={30} radius={30} src={connection?.imageUrl}>
                       {proofName}
                     </SmartAvatar>
-                    <Text size="sm" weight={500} className={classes.clickableTitle} onClick={() => selectRow(record)}>
-                      {proofName}
-                    </Text>
+                    <Stack spacing={0}>
+                      <Text size="sm" weight={500}>
+                        {proofName}
+                      </Text>
+                      <Text size="xs" color="dimmed">
+                        Last updated {lastUpdated.toLocaleString()}
+                      </Text>
+                    </Stack>
                   </Group>
-                </td>
-                <td>
-                  <Text size="sm" weight={500}>
-                    {record.id}
-                  </Text>
-                  <Text size="xs" color="dimmed">
-                    Last updated {lastUpdated.toLocaleString()}
-                  </Text>
                 </td>
                 <td>
                   <StatusBadge>{record.state}</StatusBadge>

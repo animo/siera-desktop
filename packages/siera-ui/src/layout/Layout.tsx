@@ -32,7 +32,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
   return (
     <AppShell
-      padding="md"
+      padding="xl"
       navbar={<LayoutNavBar navigationItems={navigationItems} agent={agent} />}
       styles={{ main: { width: '100%' } }}
     >

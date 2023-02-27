@@ -14,11 +14,10 @@ const useStyles = createStyles((theme) => ({
   card: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
     border: `2px solid ${theme.colors.backgroundOne[6]}`,
-  },
-  variantLabel: {
-    color: theme.colors.textOne[7],
-    fontWeight: 500,
-    fontSize: theme.fontSizes.xs,
+
+    '&:hover': {
+      border: `2px solid ${theme.colors.backgroundOne[5]}`,
+    },
   },
   avatarLabel: {
     color: theme.colors.textOne[7],
@@ -59,7 +58,9 @@ export const AgentSelectionScreen = () => {
           New agent
         </PrimaryButton>
       </Flex>
-      <Text size="md">Select an agent or click the create new agent button.</Text>
+      <Text color="dimmed" size="md">
+        Select an agent or click the create new agent button.
+      </Text>
       <Flex gap="md" wrap="wrap" mt="xl">
         {agents.map((agent) => (
           <UnstyledButton key={agent.id} onClick={() => switchToAgent(agent.id)}>
@@ -71,7 +72,9 @@ export const AgentSelectionScreen = () => {
                   </SmartAvatar>
                   <Box>
                     <Text className={classes.avatarLabel}>{agent.agentConfig.label}</Text>
-                    <Text className={classes.variantLabel}>Native (AFJ)</Text>
+                    <Text size="xs" color="dimmed">
+                      Native (AFJ)
+                    </Text>
                   </Box>
                 </Group>
               </Flex>

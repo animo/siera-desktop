@@ -6,6 +6,7 @@ import React from 'react'
 import { Card } from '../../../components/Card'
 import { Header } from '../../../components/Header'
 import { Loading } from '../../../components/Loading'
+import { EmptyState } from '../../../components/generic/table/EmptyState'
 import { ProofsTable } from '../../../components/proofs/ProofsTable'
 
 export const ProofsScreen = () => {
@@ -41,8 +42,14 @@ export const ProofsScreen = () => {
       <Header title="Proofs" description="This will show you the proof requests you received." />
       {proofsLoading || connectionsLoading ? (
         <Loading />
+      ) : proofRecords.length === 0 ? (
+        <EmptyState
+          title="No proof requests received"
+          message="You haven't received any proof requests yet."
+          withCard
+        />
       ) : (
-        <Card title="Proofs history">
+        <Card title="Proof request history">
           <ProofsTable
             records={proofRecords}
             connections={connectionRecords}
