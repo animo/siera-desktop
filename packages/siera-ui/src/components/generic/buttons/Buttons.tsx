@@ -38,11 +38,11 @@ const useStyles = createStyles((theme) => ({
 
 type StandardButton = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-interface PrimaryButtonProps {
+type PrimaryButtonProps = StandardButton & {
   withPlusIcon?: boolean
 }
 
-export const PrimaryButton = (props: PrimaryButtonProps & StandardButton) => {
+export const PrimaryButton = (props: PrimaryButtonProps) => {
   const { classes, cx } = useStyles()
   const { withPlusIcon } = props
 
