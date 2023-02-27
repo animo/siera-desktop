@@ -63,7 +63,7 @@ const createWindow = (): void => {
 
   if (process.env.NODE_ENV === 'production') {
     autoUpdater.checkForUpdates()
-    setInterval(() => autoUpdater.checkForUpdates(), 1000 * 60 * 30) // Check for updates every 30 minutes
+    setInterval(() => autoUpdater.checkForUpdates(), 1000 * 60 * 60 * 6) // Check for updates every 6 hours
   }
 }
 
