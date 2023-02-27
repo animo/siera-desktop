@@ -36,11 +36,13 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-interface PrimaryButtonProps extends ButtonProps {
+type StandardButton = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
+
+interface PrimaryButtonProps {
   withPlusIcon?: boolean
 }
 
-export const PrimaryButton = (props: PrimaryButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const PrimaryButton = (props: PrimaryButtonProps & StandardButton) => {
   const { classes, cx } = useStyles()
   const { withPlusIcon } = props
 
@@ -49,17 +51,17 @@ export const PrimaryButton = (props: PrimaryButtonProps & ButtonHTMLAttributes<H
   return <Button leftIcon={plusButton} {...props} className={cx(classes.primary, props.className)} />
 }
 
-export const SecondaryButton = (props: ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const SecondaryButton = (props: StandardButton) => {
   const { classes, cx } = useStyles()
 
   return <Button variant="subtle" {...props} className={cx(classes.secondary, props.className)} />
 }
 
-export const DangerButton = (props: ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const DangerButton = (props: StandardButton) => {
   return <Button color="danger" variant="subtle" {...props} />
 }
 
-export const SmallBackButton = (props: ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const SmallBackButton = (props: StandardButton) => {
   const { classes, cx } = useStyles()
   const { goBack } = useNavigation()
 
