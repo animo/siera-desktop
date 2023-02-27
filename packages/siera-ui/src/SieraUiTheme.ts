@@ -41,7 +41,7 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
           padding: `0 ${theme.spacing.xl}px`,
         },
         modal: {
-          border: `2px solid ${theme.colors.backgroundOne[6]}`,
+          border: `1px solid ${theme.colors.backgroundOne[6]}`,
           borderRadius: theme.radius.md,
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
           padding: `${theme.spacing.lg}px 0 !important`,
@@ -69,6 +69,7 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
 
           '&:focus': {
             borderColor: theme.colors.backgroundOne[4],
+            boxShadow: `0 0 0 1px ${theme.colors.backgroundOne[4]}`,
           },
         },
 

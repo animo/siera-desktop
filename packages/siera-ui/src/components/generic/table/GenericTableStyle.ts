@@ -7,4 +7,9 @@ export const useGenericTableStyle = createStyles((theme) => ({
       backgroundColor: theme.fn.rgba(theme.colors.backgroundOne[0], 0.05),
     },
   },
+  row: {
+    '& td:first-child': {
+      paddingLeft: theme.spacing.md,
+    },
+  },
 }))

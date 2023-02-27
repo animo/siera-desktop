@@ -29,7 +29,7 @@ const useStyles = createStyles(() => ({
 }))
 
 export const ProofsTable = ({ records, connections, onDelete, onAccept, onDecline }: ProofsTableProps) => {
-  const { classes: tableStyle } = useGenericTableStyle()
+  const { classes: tableStyle, cx } = useGenericTableStyle()
   const { classes } = useStyles()
   const { formattedData } = useProofsFormatData()
   const navigation = useNavigation()
@@ -65,7 +65,7 @@ export const ProofsTable = ({ records, connections, onDelete, onAccept, onDeclin
             const select = () => selectRow(record)
 
             return (
-              <tr key={record.id} className={tableStyle.clickableRow} onClick={select}>
+              <tr key={record.id} className={cx(tableStyle.clickableRow, tableStyle.row)} onClick={select}>
                 <td>
                   <Group spacing="sm" noWrap>
                     <SmartAvatar size={30} radius={30} src={connection?.imageUrl}>

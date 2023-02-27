@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => {
       textDecoration: 'none',
       color: theme.colors.textOne[3],
       padding: `7px ${theme.spacing.sm}px`,
-      margin: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+      margin: `0.25rem ${theme.spacing.sm}px`,
       borderRadius: theme.radius.md,
       fontWeight: 500,
 
@@ -90,7 +90,7 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
 
             <Menu.Dropdown>
               <Menu.Item onClick={() => toggleColorScheme()}>Switch theme</Menu.Item>
-              <Menu.Item onClick={() => signOut()}>Logout</Menu.Item>
+              <Menu.Item onClick={() => signOut()}>Log out</Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </Group>

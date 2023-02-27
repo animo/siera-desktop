@@ -30,7 +30,7 @@ const useStyles = createStyles(() => ({
 }))
 
 export const CredentialsTable = ({ records, connections, onDelete, onAccept, onDecline }: CredentialsTableProps) => {
-  const { classes: tableStyle } = useGenericTableStyle()
+  const { classes: tableStyle, cx } = useGenericTableStyle()
   const { classes } = useStyles()
   const { formattedData } = useCredentialsFormatData()
   const navigation = useNavigation()
@@ -63,7 +63,7 @@ export const CredentialsTable = ({ records, connections, onDelete, onAccept, onD
             const clickRow = () => selectRow(record)
 
             return (
-              <tr key={record.id} className={tableStyle.clickableRow} onClick={clickRow}>
+              <tr key={record.id} className={cx(tableStyle.clickableRow, tableStyle.row)} onClick={clickRow}>
                 <td>
                   <Group spacing="sm" noWrap>
                     <SmartAvatar size={30} radius={30} src={connection?.imageUrl}>

@@ -27,7 +27,7 @@ const useStyles = createStyles(() => ({
 }))
 
 export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: ConnectionsTableProps) => {
-  const { classes: tableStyle } = useGenericTableStyle()
+  const { classes: tableStyle, cx } = useGenericTableStyle()
   const { classes } = useStyles()
   const navigation = useNavigation()
 
@@ -58,7 +58,7 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
             const select = () => selectRow(record)
 
             return (
-              <tr key={record.id} className={tableStyle.clickableRow} onClick={select}>
+              <tr key={record.id} className={cx(tableStyle.clickableRow, tableStyle.row)} onClick={select}>
                 <td>
                   <Group spacing="sm" noWrap>
                     <SmartAvatar size={30} src={record.imageUrl} radius={30}>
