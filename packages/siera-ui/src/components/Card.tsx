@@ -16,7 +16,7 @@ interface CardProps {
 const useStyles = createStyles((theme) => ({
   card: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
-    border: `2px solid ${theme.colors.backgroundOne[6]}`,
+    border: `1px solid ${theme.colors.backgroundOne[6]}`,
     borderRadius: theme.radius.md,
   },
 }))

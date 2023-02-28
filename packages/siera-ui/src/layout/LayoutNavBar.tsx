@@ -1,13 +1,13 @@
 import type { Agent } from '@aries-framework/core'
 
-import { ActionIcon, createStyles, Group, Menu, Navbar, useMantineColorScheme } from '@mantine/core'
-import { IconChevronDown, IconMoonStars, IconSun } from '@tabler/icons'
+import { ActionIcon, createStyles, Group, Menu, Navbar, UnstyledButton, useMantineColorScheme } from '@mantine/core'
+import { IconChevronDown, IconLogout } from '@tabler/icons'
 import React, { useState } from 'react'
 
+import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
 
 import { LayoutAvatar } from './LayoutAvatar'
-import { LogoutAction } from './actions/LogoutAction'
 
 export interface NavigationItem {
   name: string
@@ -32,8 +32,9 @@ const useStyles = createStyles((theme) => {
       textDecoration: 'none',
       color: theme.colors.textOne[3],
       padding: `7px ${theme.spacing.sm}px`,
-      margin: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+      margin: `0.25rem ${theme.spacing.sm}px`,
       borderRadius: theme.radius.md,
+      fontWeight: 500,
 
       '&:hover': {
         backgroundColor: theme.fn.rgba(theme.colors.primaryOne[7], 0.05),
@@ -51,6 +52,12 @@ const useStyles = createStyles((theme) => {
       paddingBottom: theme.spacing.xl,
     },
 
+    logoutButton: {
+      color: theme.colors.textOne[6],
+      marginLeft: theme.spacing.sm,
+      cursor: 'pointer',
+    },
+
     footer: {
       paddingTop: theme.spacing.md,
     },
@@ -61,10 +68,13 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
   const { classes, cx } = useStyles()
   const navigation = useNavigation()
   const [activeIndex, setActiveIndex] = useState(0)
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme()
+  const { toggleColorScheme } = useMantineColorScheme()
+  const { logout } = useAgentManager()
 
-  const oppositeColorScheme = colorScheme === 'dark' ? 'light' : 'dark'
-  const oppositeColorSchemeIcon = colorScheme === 'dark' ? <IconSun size={18} /> : <IconMoonStars size={18} />
+  const signOut = () => {
+    logout()
+    navigation.navigate('/')
+  }
 
   return (
     <Navbar py="md" width={{ sm: 300 }} className={classes.navbar}>
@@ -79,9 +89,8 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item onClick={() => toggleColorScheme()} icon={oppositeColorSchemeIcon}>
-                Switch to {oppositeColorScheme} theme
-              </Menu.Item>
+              <Menu.Item onClick={() => toggleColorScheme()}>Switch theme</Menu.Item>
+              <Menu.Item onClick={() => signOut()}>Log out</Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </Group>
@@ -105,7 +114,9 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer} mx="md">
-        <LogoutAction />
+        <UnstyledButton className={classes.logoutButton} onClick={signOut}>
+          <IconLogout stroke={1.5} />
+        </UnstyledButton>
       </Navbar.Section>
     </Navbar>
   )

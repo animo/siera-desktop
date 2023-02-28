@@ -1,24 +1,23 @@
 import type { ContextModalProps } from '@mantine/modals'
 
-import { ActionIcon, Box, Center, CopyButton, createStyles, Group, Text, TextInput, Tooltip } from '@mantine/core'
+import {
+  ActionIcon,
+  Box,
+  Center,
+  CopyButton,
+  createStyles,
+  Divider,
+  Group,
+  Text,
+  TextInput,
+  Tooltip,
+} from '@mantine/core'
 import { openContextModal } from '@mantine/modals'
 import { IconCheck, IconCopy } from '@tabler/icons'
 import { QRCodeSVG } from 'qrcode.react'
 import React from 'react'
 
-import { PrimaryButton } from '../components/generic'
-
-export const openPresentInviteModal = (inviteUrl: string) => {
-  openContextModal({
-    modal: 'presentInvite',
-    title: 'Create connection',
-    centered: true,
-    withCloseButton: false,
-    innerProps: {
-      inviteUrl,
-    },
-  })
-}
+import { SecondaryButton } from '../components/generic'
 
 const useStyles = createStyles((theme) => ({
   qrCode: {
@@ -48,18 +47,33 @@ export const PresentInviteModal = ({ innerProps, context, id }: ContextModalProp
 
   return (
     <>
-      <Text color="dimmed">Scan the QR code or compy the invitation url</Text>
-      <Center mt="xl">
-        <Box className={classes.qrCode}>
-          <Box h={250} w={250}>
-            <QRCodeSVG value={inviteUrl} size={250} />
+      <Box px="xl">
+        <Text color="dimmed">Scan the QR code or compy the invitation url</Text>
+        <Center mt="xl">
+          <Box className={classes.qrCode}>
+            <Box h={250} w={250}>
+              <QRCodeSVG value={inviteUrl} size={250} />
+            </Box>
           </Box>
-        </Box>
-      </Center>
-      <TextInput mt={40} value={inviteUrl} readOnly classNames={{ input: classes.urlInput }} rightSection={copyUrl} />
-      <Group mt="xl" position="center">
-        <PrimaryButton onClick={() => context.closeModal(id)}>Done</PrimaryButton>
+        </Center>
+        <TextInput mt={40} value={inviteUrl} readOnly classNames={{ input: classes.urlInput }} rightSection={copyUrl} />
+      </Box>
+      <Divider mt="xl" />
+      <Group mt="md" position="center">
+        <SecondaryButton onClick={() => context.closeModal(id)}>Done</SecondaryButton>
       </Group>
     </>
   )
+}
+
+export const openPresentInviteModal = (inviteUrl: string) => {
+  openContextModal({
+    modal: PresentInviteModal.name,
+    title: 'Create connection',
+    centered: true,
+    withCloseButton: false,
+    innerProps: {
+      inviteUrl,
+    },
+  })
 }

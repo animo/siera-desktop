@@ -18,26 +18,28 @@ if (require('electron-squirrel-startup')) {
   app.quit()
 }
 
-const updateServer = 'https://update.electronjs.org'
-const githubRepositoryUrl = new URL(packageJson.repository.url)
-const repo = githubRepositoryUrl.pathname.slice(1) // This will resolve to "animo/siera-desktop"
-const feed = `${updateServer}/${repo}/${process.platform}-${process.arch}/${app.getVersion()}`
-autoUpdater.setFeedURL({
-  url: feed,
-})
-autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: process.platform === 'win32' ? releaseNotes : releaseName,
-    detail: 'A new version has been downloaded. Restart the application to apply the updates.',
-  }
-
-  dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    if (returnValue.response === 0) autoUpdater.quitAndInstall()
+if (process.env.NODE_ENV === 'production') {
+  const updateServer = 'https://update.electronjs.org'
+  const githubRepositoryUrl = new URL(packageJson.repository.url)
+  const repo = githubRepositoryUrl.pathname.slice(1) // This will resolve to "animo/siera-desktop"
+  const feed = `${updateServer}/${repo}/${process.platform}-${process.arch}/${app.getVersion()}`
+  autoUpdater.setFeedURL({
+    url: feed,
   })
-})
+  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+    const dialogOpts = {
+      type: 'info',
+      buttons: ['Restart', 'Later'],
+      title: 'Application Update',
+      message: process.platform === 'win32' ? releaseNotes : releaseName,
+      detail: 'A new version has been downloaded. Restart the application to apply the updates.',
+    }
+
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    })
+  })
+}
 
 const createWindow = (): void => {
   // Create the browser window.
@@ -59,8 +61,10 @@ const createWindow = (): void => {
     mainWindow.webContents.openDevTools({ mode: 'detach' })
   }
 
-  autoUpdater.checkForUpdates()
-  setInterval(() => autoUpdater.checkForUpdates(), 1000 * 60 * 30) // Check for updates every 30 minutes
+  if (process.env.NODE_ENV === 'production') {
+    autoUpdater.checkForUpdates()
+    setInterval(() => autoUpdater.checkForUpdates(), 1000 * 60 * 60 * 6) // Check for updates every 6 hours
+  }
 }
 
 // This method will be called when Electron has finished

@@ -6,6 +6,9 @@ import React from 'react'
 type SmartAvatarProps = AvatarProps
 
 const useStyles = createStyles((theme) => ({
+  image: {
+    backgroundColor: '#ffffff',
+  },
   placeholder: {
     backgroundColor: theme.colors.primaryTwo[7],
     color: theme.colors.textTwo[7],
@@ -30,6 +33,7 @@ export const SmartAvatar = ({ children, ...props }: SmartAvatarProps) => {
       classNames={{
         ...props.classNames,
         placeholder: cx(classes.placeholder, props.classNames?.placeholder),
+        image: cx(classes.image, props.classNames?.image),
       }}
     >
       {label}

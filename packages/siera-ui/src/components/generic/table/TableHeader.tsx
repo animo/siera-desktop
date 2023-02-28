@@ -13,9 +13,13 @@ interface TableHeadProps {
 
 const useStyles = createStyles((theme) => ({
   tableHeader: {
-    backgroundColor: theme.colors.backgroundOne[7],
-    borderTop: `2px solid ${theme.colors.backgroundOne[6]}`,
-    borderBottom: `2px solid ${theme.colors.backgroundOne[6]}`,
+    backgroundColor: theme.fn.rgba(theme.colors.backgroundOne[7], 0.75),
+    borderTop: `1px solid ${theme.colors.backgroundOne[6]}`,
+    borderBottom: `1px solid ${theme.colors.backgroundOne[6]}`,
+
+    '& th:first-child': {
+      paddingLeft: theme.spacing.md,
+    },
   },
 }))
 
