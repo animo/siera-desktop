@@ -31,6 +31,19 @@ declare global {
   }
 }
 
+const attachPlausible = () => {
+  const PLAUSIBLE_DOMAIN = 'siera-desktop.animo.id'
+
+  const script = document.createElement('script')
+  script.setAttribute('data-domain', PLAUSIBLE_DOMAIN)
+  script.setAttribute('src', 'https://plausible.io/js/plausible.js')
+  document.head.appendChild(script)
+}
+
+if (process.env.NODE_ENV === 'production') {
+  attachPlausible()
+}
+
 const root = createRoot(document.getElementById('root') as HTMLElement)
 
 // When StrictMode is enabled, React will double-render the components
