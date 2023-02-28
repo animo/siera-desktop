@@ -1,7 +1,7 @@
 import type { Agent } from '@aries-framework/core'
 
-import { ActionIcon, createStyles, Group, Menu, Navbar, UnstyledButton, useMantineColorScheme } from '@mantine/core'
-import { IconChevronDown, IconLogout } from '@tabler/icons'
+import { ActionIcon, createStyles, Group, Menu, Navbar, useMantineColorScheme } from '@mantine/core'
+import { IconChevronDown } from '@tabler/icons'
 import React, { useState } from 'react'
 
 import { useAgentManager } from '../contexts/AgentManagerContext'
@@ -50,16 +50,6 @@ const useStyles = createStyles((theme) => {
 
     layoutAvatar: {
       paddingBottom: theme.spacing.xl,
-    },
-
-    logoutButton: {
-      color: theme.colors.textOne[6],
-      marginLeft: theme.spacing.sm,
-      cursor: 'pointer',
-    },
-
-    footer: {
-      paddingTop: theme.spacing.md,
     },
   }
 })
@@ -111,12 +101,6 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
             {item.name}
           </a>
         ))}
-      </Navbar.Section>
-
-      <Navbar.Section className={classes.footer} mx="md">
-        <UnstyledButton className={classes.logoutButton} onClick={signOut}>
-          <IconLogout stroke={1.5} />
-        </UnstyledButton>
       </Navbar.Section>
     </Navbar>
   )
