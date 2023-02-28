@@ -55,7 +55,8 @@ export const RecordActions = ({ onAccept, onDecline, onDelete, isLoading, propag
 
   return (
     <Group spacing={4} position="right">
-      {isLoading ? <Loader size={20} /> : actions}
+      {isLoading && <Loader size={20} />}
+      {actions}
     </Group>
   )
 }

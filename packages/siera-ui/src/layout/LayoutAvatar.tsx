@@ -28,7 +28,7 @@ export const LayoutAvatar = ({ agent }: LayoutAvatarProps) => {
       </SmartAvatar>
       <Box>
         <Text className={classes.avatarLabel}>{avatarLabel}</Text>
-        <Text color="dimmed" size="xs">
+        <Text color="dimmed" size="xs" weight={500}>
           Native (AFJ)
         </Text>
       </Box>

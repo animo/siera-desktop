@@ -72,7 +72,7 @@ export const AgentSelectionScreen = () => {
                   </SmartAvatar>
                   <Box>
                     <Text className={classes.avatarLabel}>{agent.agentConfig.label}</Text>
-                    <Text size="xs" color="dimmed">
+                    <Text size="xs" color="dimmed" weight={500}>
                       Native (AFJ)
                     </Text>
                   </Box>
