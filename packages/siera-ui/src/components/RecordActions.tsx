@@ -2,7 +2,7 @@ import { ActionIcon, createStyles, Group, Loader } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
 import React from 'react'
 
-import { openConfirmActionModal } from '../modals/ConfirmActionModal'
+import { openConfirmActionModal } from '../modals'
 
 import { PrimaryButton, SecondaryButton } from './generic'
 
