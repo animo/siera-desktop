@@ -133,4 +133,5 @@ jobs:
             ./**/*.nupkg
             ./**/*.rpm
             ./**/*.zip
+            ./**/*.AppImage
             ./**/RELEASES
