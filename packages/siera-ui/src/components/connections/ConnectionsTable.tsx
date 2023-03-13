@@ -14,8 +14,6 @@ import { TableHead } from '../generic/table/TableHeader'
 interface ConnectionsTableProps {
   records: ConnectionRecord[]
   onDelete: (connection: ConnectionRecord) => void
-  onAccept: (connection: ConnectionRecord) => void
-  onDecline: (connection: ConnectionRecord) => void
 }
 
 const useStyles = createStyles(() => ({
@@ -26,7 +24,7 @@ const useStyles = createStyles(() => ({
   },
 }))
 
-export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: ConnectionsTableProps) => {
+export const ConnectionsTable = ({ records, onDelete }: ConnectionsTableProps) => {
   const { classes: tableStyle, cx } = useGenericTableStyle()
   const { classes } = useStyles()
   const navigation = useNavigation()
@@ -50,8 +48,6 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
         <tbody>
           {records.map((record: ConnectionRecord) => {
             const isLoading = ConnectionsUtil.isConnectionWaitingForResponse(record)
-            const isWaitingForAccept = ConnectionsUtil.isConnectionWaitingForAcceptInput(record)
-            const isWaitingForDecline = ConnectionsUtil.isConnectionWaitingForDeclineInput(record)
 
             const lastUpdated = record.updatedAt ?? record.createdAt
 
@@ -78,12 +74,7 @@ export const ConnectionsTable = ({ records, onDelete, onAccept, onDecline }: Con
                   <StatusBadge>{record.state}</StatusBadge>
                 </td>
                 <td>
-                  <RecordActions
-                    onAccept={isWaitingForAccept ? () => onAccept(record) : undefined}
-                    onDecline={isWaitingForDecline ? () => onDecline(record) : undefined}
-                    onDelete={() => onDelete(record)}
-                    isLoading={isLoading}
-                  />
+                  <RecordActions onDelete={() => onDelete(record)} isLoading={isLoading} />
                 </td>
               </tr>
             )
