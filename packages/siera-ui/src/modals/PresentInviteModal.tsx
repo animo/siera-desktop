@@ -48,7 +48,7 @@ export const PresentInviteModal = ({ innerProps, context, id }: ContextModalProp
   return (
     <>
       <Box px="xl">
-        <Text color="dimmed">Scan the QR code or compy the invitation url</Text>
+        <Text color="dimmed">Scan the QR code or copy the invitation url</Text>
         <Center mt="xl">
           <Box className={classes.qrCode}>
             <Box h={250} w={250}>
