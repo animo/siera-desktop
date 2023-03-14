@@ -33,10 +33,13 @@ declare global {
 
 const attachPlausible = () => {
   const PLAUSIBLE_DOMAIN = 'siera-desktop.animo.id'
+  // It's using the local script because the script from plausible.io is disabled on localhost by default
+  // For more information, see https://plausible.io/docs/script-extensions#all-our-script-extensions
+  const PLAUSIBLE_SCRIPT_URL = 'https://plausible.io/js/plausible.local.js'
 
   const script = document.createElement('script')
   script.setAttribute('data-domain', PLAUSIBLE_DOMAIN)
-  script.setAttribute('src', 'https://plausible.io/js/plausible.js')
+  script.setAttribute('src', PLAUSIBLE_SCRIPT_URL)
   document.head.appendChild(script)
 }
 
