@@ -74,9 +74,9 @@ module.exports = {
     },
   ],
   plugins: [
-    [
-      '@electron-forge/plugin-webpack',
-      {
+    {
+      name: '@electron-forge/plugin-webpack',
+      config: {
         devServer: {
           liveReload: false,
           hot: true,
@@ -97,6 +97,6 @@ module.exports = {
           ],
         },
       },
-    ],
+    },
   ],
 }
