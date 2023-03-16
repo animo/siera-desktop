@@ -16,8 +16,8 @@ export const agentInitializer = async (
     logger: new ConsoleLogger(LogLevel.warn),
     indyLedgers: [
       {
-        id: 'bcovin-test-net',
-        indyNamespace: 'bcovin-test-net',
+        id: 'bcovrin-test-net',
+        indyNamespace: 'bcovrin:test',
         isProduction: false,
         genesisTransactions: sampleTransactions,
       },
