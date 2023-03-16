@@ -23,6 +23,9 @@ export const ConnectionsScreen = () => {
 
   const receiveInvite = async ({ url }: ConnectionInviteValues) => {
     await agent?.oob.receiveInvitationFromUrl(url)
+
+    // Reset form after invitation has been received
+    form.reset()
   }
 
   const createInvite = async () => {
