@@ -1,7 +1,7 @@
 {
   "name": "@animo/siera-desktop",
   "productName": "siera-desktop",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
