@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-   <source media="(prefers-color-scheme: light)" srcset="https://res.cloudinary.com/animo-solutions/image/upload/v1656578320/animo-logo-light-no-text_ok9auy.svg">
-   <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/animo-solutions/image/upload/v1656578320/animo-logo-dark-no-text_fqqdq9.svg">
-   <img alt="Animo Logo" height="250px" />
+   <source media="(prefers-color-scheme: dark)" srcset="./logo/siera-light.svg">
+   <source media="(prefers-color-scheme: light)" srcset="./logo/siera-dark.svg">
+   <img alt="Siera Logo" height="250px" />
   </picture>
 </p>
 
@@ -52,7 +52,7 @@ If you are looking for more information about the concepts and tutorials on how 
 
 ## Installation
 
-Check out the [installation guide](https://docs.siera-desktop.animo.id/getting-started/installation) for more information.
+Check out the [installation guide](https://docs.siera-desktop.animo.id/guides/installation) for more information.
 
 ## Contributing
 
