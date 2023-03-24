@@ -41,7 +41,7 @@
 
 ---
 
-**Siera Desktop** is a desktop app that allows you to interact with **AFJ** agent. It is built using Electron and React.
+**Siera Desktop** is a desktop app that allows you to work with decentralized identity through an [Aries Framework JavaScript](https://github.com/hyperledger/aries-framework-javascript) agent. It is built using Electron and React.
 
 - **Connections** to manage connections with other agents
 - **Credentials** to manage received credentials
