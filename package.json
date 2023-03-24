@@ -32,7 +32,8 @@
     "lint": "eslint --ignore-path .gitignore .",
     "test": "jest",
     "validate": "yarn lint && yarn check-types",
-    "build": "yarn workspaces run build"
+    "build": "yarn workspaces run build",
+    "start": "yarn workspace @animo/siera-desktop run start"
   },
   "devDependencies": {
     "@types/eslint": "^8.2.1",
