@@ -24,7 +24,7 @@ export const CredentialDetails = ({ credentialFormatted }: CredentialDetailsPara
     return <div>There are no attributes</div>
   }
 
-  const credentialName = formatSchemaName(credentialFormatted.credential?.indy?.schema_id)
+  const credentialName = formatSchemaName(credentialFormatted.offer?.indy?.schema_id)
 
   return (
     <Card title={credentialName} titleSize="h2" withPadding>
