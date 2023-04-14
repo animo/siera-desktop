@@ -9,6 +9,7 @@ import { ConnectionDetailsScreen } from './pages/agent/connections/ConnectionDet
 import { ConnectionsScreen } from './pages/agent/connections/ConnectionsScreen'
 import { CredentialsDetailsScreen } from './pages/agent/credentials/CredentialsDetailsScreen'
 import { CredentialsScreen } from './pages/agent/credentials/CredentialsScreen'
+import { DidsScreen } from './pages/agent/dids/DidsScreen'
 import { ProofDetailsScreen } from './pages/agent/proofs/ProofDetailsScreen'
 import { ProofsScreen } from './pages/agent/proofs/ProofsScreen'
 
@@ -21,6 +22,7 @@ export const routeUrls = [
   '/agent/credentials/{credentialId}',
   '/agent/proofs',
   '/agent/proofs/{proofId}',
+  '/agent/dids',
 ] as const
 
 export const routes: RouteObject[] = [
@@ -84,6 +86,14 @@ export const routes: RouteObject[] = [
         element: (
           <Layout>
             <ProofDetailsScreen />
+          </Layout>
+        ),
+      },
+      {
+        path: 'dids',
+        element: (
+          <Layout>
+            <DidsScreen />
           </Layout>
         ),
       },
