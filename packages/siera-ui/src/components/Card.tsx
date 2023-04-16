@@ -1,7 +1,7 @@
 import type { MantineNumberSize } from '@mantine/core'
 import type { TitleSize } from '@mantine/core/lib/Title/Title'
 
-import { Box, createStyles, Paper, Text, Title } from '@mantine/core'
+import { Flex, Box, createStyles, Paper, Text, Title } from '@mantine/core'
 import React from 'react'
 
 interface CardProps {
@@ -11,6 +11,7 @@ interface CardProps {
   descriptionSize?: MantineNumberSize
   children?: React.ReactNode
   withPadding?: boolean
+  actions?: React.ReactNode
 }
 
 const useStyles = createStyles((theme) => ({
@@ -28,6 +29,7 @@ export const Card = ({
   withPadding,
   titleSize = 'h4',
   descriptionSize = 'sm',
+  actions,
 }: CardProps) => {
   const { classes } = useStyles()
 
@@ -38,11 +40,16 @@ export const Card = ({
 
   return (
     <Paper className={classes.card} pt="xs" pb={bottomPadding}>
-      {title && (
-        <Title size={titleSize} weight={600} mb="xs" px={xPadding}>
-          {title}
-        </Title>
-      )}
+      {/* <Group position={!title ? 'right' : 'apart'} pb="xs" pr="sm"> */}
+      <Flex justify="space-between" align="center" pb="xs" pr="xs">
+        {title && (
+          <Title size={titleSize} weight={600} px={xPadding}>
+            {title}
+          </Title>
+        )}
+        {actions}
+      </Flex>
+      {/* </Group> */}
       {description && (
         <Text color="dimmed" size={descriptionSize} mb="md" px={xPadding}>
           {description}

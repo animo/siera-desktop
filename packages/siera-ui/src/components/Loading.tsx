@@ -1,5 +1,7 @@
-import { Center, createStyles, Flex, Loader, Text, useMantineTheme } from '@mantine/core'
+import { Center, createStyles, Flex, Text } from '@mantine/core'
 import React from 'react'
+
+import { LoadingSpinner } from './LoadingSpinner'
 
 const useStyles = createStyles((theme) => ({
   spinnerCentering: {
@@ -16,15 +18,11 @@ interface LoadingProps {
 
 export const Loading = ({ description }: LoadingProps) => {
   const { classes } = useStyles()
-  const { colors, colorScheme } = useMantineTheme()
-
-  // The styling is a bit weird for the loader component
-  const strokeColor = colorScheme == 'dark' ? colors.primaryTwo[0] : undefined
 
   return (
     <Center className={classes.spinnerCentering}>
       <Flex direction="column" align="center" gap="sm">
-        <Loader size="md" stroke={strokeColor} />
+        <LoadingSpinner />
         {description && (
           <Text size="sm" align="center">
             {description}

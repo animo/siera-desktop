@@ -11,7 +11,14 @@ import { sieraUiTheme } from './SieraUiTheme'
 import { GlobalErrorHandler } from './components/GlobalErrorHandler'
 import { UpdateNotifier } from './components/UpdateNotifier'
 import { useConfigUnsafe } from './contexts/ConfigProvider'
-import { CreateAgentModal, PresentInviteModal, ConfirmActionModal } from './modals'
+import {
+  CreateAgentModal,
+  PresentInviteModal,
+  ConfirmActionModal,
+  IssueCredentialModal,
+  CreateSchemaModal,
+  CreateCredentialDefinitionModal,
+} from './modals'
 
 interface SieraUiAppProps {
   router: RouterProviderProps['router']
@@ -27,7 +34,16 @@ export const SieraUiApp = ({ router }: SieraUiAppProps) => {
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={sieraUiTheme(colorScheme)}>
         <NotificationsProvider position="top-right">
-          <ModalsProvider modals={{ PresentInviteModal, CreateAgentModal, ConfirmActionModal }}>
+          <ModalsProvider
+            modals={{
+              PresentInviteModal,
+              CreateAgentModal,
+              ConfirmActionModal,
+              IssueCredentialModal,
+              CreateSchemaModal,
+              CreateCredentialDefinitionModal,
+            }}
+          >
             <GlobalErrorHandler>
               <UpdateNotifier />
               <RouterProvider router={router} />

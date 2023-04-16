@@ -5,6 +5,7 @@ import React from 'react'
 import { Layout } from './layout/Layout'
 import { AgentSelectionScreen } from './pages/AgentSelectionScreen'
 import { AgentHomeScreen } from './pages/agent/AgentHomeScreen'
+import { AnonCredsScreen } from './pages/agent/anoncreds/AnonCredsScreen'
 import { ConnectionDetailsScreen } from './pages/agent/connections/ConnectionDetailsScreen'
 import { ConnectionsScreen } from './pages/agent/connections/ConnectionsScreen'
 import { CredentialsDetailsScreen } from './pages/agent/credentials/CredentialsDetailsScreen'
@@ -21,6 +22,7 @@ export const routeUrls = [
   '/agent/credentials/{credentialId}',
   '/agent/proofs',
   '/agent/proofs/{proofId}',
+  '/anoncreds',
 ] as const
 
 export const routes: RouteObject[] = [
@@ -84,6 +86,14 @@ export const routes: RouteObject[] = [
         element: (
           <Layout>
             <ProofDetailsScreen />
+          </Layout>
+        ),
+      },
+      {
+        path: 'anoncreds',
+        element: (
+          <Layout>
+            <AnonCredsScreen />
           </Layout>
         ),
       },

@@ -8,7 +8,9 @@ import { Card } from '../../../components/Card'
 import { Header } from '../../../components/Header'
 import { Loading } from '../../../components/Loading'
 import { CredentialsTable } from '../../../components/credentials/CredentialsTable'
+import { PrimaryButton } from '../../../components/generic'
 import { EmptyState } from '../../../components/generic/table/EmptyState'
+import { openIssueCredentialModal } from '../../../modals'
 
 export const CredentialsScreen = () => {
   const { records: credentialRecords, loading: credentialsLoading } = useCredentials()
@@ -31,7 +33,15 @@ export const CredentialsScreen = () => {
 
   return (
     <>
-      <Header title="Credentials" description="This will show you the credentials you received." />
+      <Header
+        title="Credentials"
+        description="Accept and manage your credentials or issue credentials to other agents."
+        actions={
+          <PrimaryButton onClick={openIssueCredentialModal} withPlusIcon>
+            Issue Credential
+          </PrimaryButton>
+        }
+      />
       {credentialsLoading || connectionsLoading ? (
         <Loading />
       ) : credentialRecords.length === 0 ? (
