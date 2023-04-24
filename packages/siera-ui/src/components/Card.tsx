@@ -40,7 +40,6 @@ export const Card = ({
 
   return (
     <Paper className={classes.card} pt="xs" pb={bottomPadding}>
-      {/* <Group position={!title ? 'right' : 'apart'} pb="xs" pr="sm"> */}
       <Flex justify="space-between" align="center" pb="xs" pr="xs">
         {title && (
           <Title size={titleSize} weight={600} px={xPadding}>
@@ -49,7 +48,6 @@ export const Card = ({
         )}
         {actions}
       </Flex>
-      {/* </Group> */}
       {description && (
         <Text color="dimmed" size={descriptionSize} mb="md" px={xPadding}>
           {description}
