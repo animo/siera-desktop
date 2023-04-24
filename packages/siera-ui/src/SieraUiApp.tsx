@@ -9,7 +9,7 @@ import { RouterProvider } from 'react-router-dom'
 
 import { sieraUiTheme } from './SieraUiTheme'
 import { GlobalErrorHandler } from './components/GlobalErrorHandler'
-import { UpdateNotifier } from './components/UpdateNotifier'
+import { UpdateNotifierModal } from './components/UpdateNotifierModal'
 import { useConfigUnsafe } from './contexts/ConfigProvider'
 import { CreateAgentModal, PresentInviteModal, ConfirmActionModal } from './modals'
 
@@ -29,7 +29,7 @@ export const SieraUiApp = ({ router }: SieraUiAppProps) => {
         <NotificationsProvider position="top-right">
           <ModalsProvider modals={{ PresentInviteModal, CreateAgentModal, ConfirmActionModal }}>
             <GlobalErrorHandler>
-              <UpdateNotifier />
+              <UpdateNotifierModal />
               <RouterProvider router={router} />
             </GlobalErrorHandler>
           </ModalsProvider>

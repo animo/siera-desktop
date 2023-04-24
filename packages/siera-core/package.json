@@ -22,8 +22,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@aries-framework/core": "0.3.0-alpha.32",
-    "@aries-framework/node": "0.3.0-alpha.32",
+    "@aries-framework/core": "0.3.3",
+    "@aries-framework/node": "0.3.3",
     "uuid": "^9.0.0",
     "zod": "^3.20.2"
   },
