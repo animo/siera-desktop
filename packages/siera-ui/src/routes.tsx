@@ -5,6 +5,8 @@ import React from 'react'
 import { Layout } from './layout/Layout'
 import { AgentSelectionScreen } from './pages/AgentSelectionScreen'
 import { AgentHomeScreen } from './pages/agent/AgentHomeScreen'
+import { AnonCredsCredentialDefinitionsDetailsScreen } from './pages/agent/anoncreds/AnonCredsCredentialDefinitionsDetailsScreen'
+import { AnonCredsSchemasDetailsScreen } from './pages/agent/anoncreds/AnonCredsSchemasDetailsScreen'
 import { AnonCredsScreen } from './pages/agent/anoncreds/AnonCredsScreen'
 import { ConnectionDetailsScreen } from './pages/agent/connections/ConnectionDetailsScreen'
 import { ConnectionsScreen } from './pages/agent/connections/ConnectionsScreen'
@@ -22,7 +24,9 @@ export const routeUrls = [
   '/agent/credentials/{credentialId}',
   '/agent/proofs',
   '/agent/proofs/{proofId}',
-  '/anoncreds',
+  '/agent/anoncreds',
+  '/agent/anoncreds/schemas/{schemaId}',
+  '/agent/anoncreds/credential-definitions/{credentialDefinitionId}',
 ] as const
 
 export const routes: RouteObject[] = [
@@ -94,6 +98,22 @@ export const routes: RouteObject[] = [
         element: (
           <Layout>
             <AnonCredsScreen />
+          </Layout>
+        ),
+      },
+      {
+        path: 'anoncreds/schemas/:schemaId',
+        element: (
+          <Layout>
+            <AnonCredsSchemasDetailsScreen />
+          </Layout>
+        ),
+      },
+      {
+        path: 'anoncreds/credential-definitions/:credentialDefinitionId',
+        element: (
+          <Layout>
+            <AnonCredsCredentialDefinitionsDetailsScreen />
           </Layout>
         ),
       },

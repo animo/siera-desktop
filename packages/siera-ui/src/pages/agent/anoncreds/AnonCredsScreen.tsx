@@ -1,30 +1,20 @@
-import { useAgent, useConnections } from '@aries-framework/react-hooks'
 import { Space } from '@mantine/core'
-import { useForm } from '@mantine/form'
 import React from 'react'
 
 import { Card } from '../../../components/Card'
 import { Header } from '../../../components/Header'
 import { Loading } from '../../../components/Loading'
-import { ConnectionsTable } from '../../../components/connections/ConnectionsTable'
+import { AnonCredsCredentialDefinitionTable } from '../../../components/credential-definitions/AnonCredsCredentialDefinitionTable'
 import { PrimaryButton } from '../../../components/generic'
 import { EmptyState } from '../../../components/generic/table/EmptyState'
+import { AnonCredsSchemaTable } from '../../../components/schemas/AnonCredsSchemaTable'
+import { useAnonCredsCredentialDefinitions } from '../../../contexts/AnonCredsCredentialDefinitionProvider'
+import { useAnonCredsSchemas } from '../../../contexts/AnonCredsSchemaProvider'
 import { openCreateCredentialDefinitionModal, openCreateSchemaModal } from '../../../modals'
 
-interface ConnectionInviteValues {
-  url: string
-}
-
 export const AnonCredsScreen = () => {
-  const form = useForm<ConnectionInviteValues>({ initialValues: { url: '' } })
-  const { agent } = useAgent()
-  const { records: connectionRecords, loading: connectionLoading } = useConnections()
-
-  const { records: schemaRecords, loading: schemasLoading } = { records: [], loading: false }
-  const { records: credentialDefinitionRecords, loading: credentialDefinitionsLoading } = {
-    records: [],
-    loading: false,
-  }
+  const { schemas, loading: schemasLoading } = useAnonCredsSchemas()
+  const { credentialDefinitions, loading: credentialDefinitionsLoading } = useAnonCredsCredentialDefinitions()
 
   const isLoading = schemasLoading || credentialDefinitionsLoading
 
@@ -35,7 +25,7 @@ export const AnonCredsScreen = () => {
 
       {!isLoading && (
         <>
-          {schemaRecords.length === 0 ? (
+          {schemas.length === 0 ? (
             <EmptyState title="No schemas" message="You don't have any schemas yet." withCard>
               <PrimaryButton size="xs" onClick={openCreateSchemaModal}>
                 Create schema
@@ -50,16 +40,11 @@ export const AnonCredsScreen = () => {
                 </PrimaryButton>
               }
             >
-              <ConnectionsTable
-                records={[]}
-                onDelete={(connection) => {
-                  console.log('delete')
-                }}
-              />
+              <AnonCredsSchemaTable records={schemas} />
             </Card>
           )}
           <Space h="xl" />
-          {credentialDefinitionRecords.length === 0 ? (
+          {credentialDefinitions.length === 0 ? (
             <EmptyState
               title="No credential definitions"
               message="You don't have any credential definitions yet."
@@ -78,10 +63,7 @@ export const AnonCredsScreen = () => {
                 </PrimaryButton>
               }
             >
-              <ConnectionsTable
-                records={connectionRecords}
-                onDelete={(connection) => agent?.connections.deleteById(connection.id)}
-              />
+              <AnonCredsCredentialDefinitionTable records={credentialDefinitions} />
             </Card>
           )}
         </>

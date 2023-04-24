@@ -1,17 +1,20 @@
 import type { ConnectionRecord } from '@aries-framework/core'
-import type { AnonCredsCredentialDefinitionRecord } from '@aries-framework/core/build/modules/indy/repository/AnonCredsCredentialDefinitionRecord'
 import type { ContextModalProps } from '@mantine/modals'
 
-import { AnonCredsCredentialDefinitionRepository } from '@aries-framework/core/build/modules/indy/repository/AnonCredsCredentialDefinitionRepository'
+import { CredentialRepository, AutoAcceptCredential } from '@aries-framework/core'
+import { getLegacyCredentialDefinitionId } from '@aries-framework/core/build/utils'
 import { useAgent, useConnections } from '@aries-framework/react-hooks'
 import { Box, Center, Divider, Flex, Group, SegmentedControl, Select, Space, Text, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { openContextModal } from '@mantine/modals'
+import { showNotification } from '@mantine/notifications'
 import React, { useEffect, useMemo, useState } from 'react'
 
 import { Card } from '../components/Card'
 import { LoadingSpinner } from '../components/LoadingSpinner'
 import { PrimaryButton, SecondaryButton } from '../components/generic'
+import { useAnonCredsCredentialDefinitions } from '../contexts/AnonCredsCredentialDefinitionProvider'
+import { useAnonCredsSchemas } from '../contexts/AnonCredsSchemaProvider'
 
 interface IssueCredentialValues {
   connectionId: string
@@ -32,35 +35,10 @@ const getConnectionLabel = (connectionRecord: ConnectionRecord) => {
   return `${prefix} - ${idPart}`
 }
 
-const useCredentialDefinitions = () => {
-  const { agent } = useAgent()
-  const [credentialDefinitions, setCredentialDefinitions] = useState<AnonCredsCredentialDefinitionRecord[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-
-  useEffect(() => {
-    if (!agent) return
-
-    setIsLoading(true)
-    const anonCredsCredentialDefinitionRepository = agent.dependencyManager.resolve(
-      AnonCredsCredentialDefinitionRepository
-    )
-
-    anonCredsCredentialDefinitionRepository
-      .getAll(agent.context)
-      .then((credentialDefinitions) => {
-        setCredentialDefinitions(credentialDefinitions)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
-  }, [agent])
-
-  return { credentialDefinitions, isLoading }
-}
-
 export const IssueCredentialModal = ({ context, id }: ContextModalProps) => {
   const { records } = useConnections()
   const readyConnections = useMemo(() => records.filter((c) => c.isReady), [records])
+  const { schemas } = useAnonCredsSchemas()
   const [anonCredsCredentialKeys, setAnonCredsCredentialKeys] = useState<string[]>([])
 
   const form = useForm<IssueCredentialValues>({
@@ -97,7 +75,7 @@ export const IssueCredentialModal = ({ context, id }: ContextModalProps) => {
       },
     },
   })
-  const { credentialDefinitions, isLoading: isLoadingCredentialDefinitions } = useCredentialDefinitions()
+  const { credentialDefinitions, loading: isLoadingCredentialDefinitions } = useAnonCredsCredentialDefinitions()
   const { agent } = useAgent()
 
   const credentialFormats =
@@ -113,35 +91,81 @@ export const IssueCredentialModal = ({ context, id }: ContextModalProps) => {
           { value: 'jsonld', label: 'JSON-LD', disabled: true },
         ]
 
-  const selectedCredentialDefinition = credentialDefinitions[0]?.credentialDefinition
-
   useEffect(() => {
-    if (!selectedCredentialDefinition || !agent) return
+    const credentialDefinitionId = form.values.anoncreds?.credentialDefinitionId
 
-    agent.ledger.getSchema(selectedCredentialDefinition.schemaId).then((schema) => {
-      setAnonCredsCredentialKeys(schema.attrNames)
+    if (!credentialDefinitionId || credentialDefinitionId === '') {
+      setAnonCredsCredentialKeys([])
+      return
+    }
+
+    const selectedCredentialDefinition = credentialDefinitions.find((c) => c.id === credentialDefinitionId)
+    if (!selectedCredentialDefinition) {
+      // TODO: handle error
+      setAnonCredsCredentialKeys([])
+      showNotification({
+        title: 'Error',
+        message: `Credential definition with id '${credentialDefinitionId}' not found in your agent.`,
+        color: 'error',
+      })
+      return
+    }
+
+    // NOTE: Currently, we can only use local schemas, as we can't easily fetch the schema
+    // based on the seqNo. This will automatically be fixed when 0.4.0 is used
+    const selectedSchema = schemas.find((s) => String(s.seqNo) === selectedCredentialDefinition.schemaId)
+    if (!selectedSchema) {
+      // TODO: handle error
+      setAnonCredsCredentialKeys([])
+      showNotification({
+        title: 'Error',
+        message: `Schema with seqNo '${selectedCredentialDefinition.schemaId}' not found in agent. Only schemas created in this agent are supported currently.`,
+        color: 'error',
+      })
+      return
+    }
+
+    setAnonCredsCredentialKeys(selectedSchema.attrNames)
+  }, [form.values.anoncreds?.credentialDefinitionId])
+
+  const issueCredential = async (props: IssueCredentialValues) => {
+    if (!agent) return
+
+    if (!props.anoncreds) {
+      showNotification({
+        title: 'Error',
+        message: `Only issuance for AnonCreds is supported currently.`,
+        color: 'error',
+      })
+      return
+    }
+
+    const [did, , , , schemaSeqNo, tag] = props.anoncreds.credentialDefinitionId.split('/')
+    const namespaceIdentifier = did.split(':').pop() as string
+    const credentialDefinitionId = getLegacyCredentialDefinitionId(namespaceIdentifier, Number(schemaSeqNo), tag)
+
+    const credentialExchangeRecord = await agent.credentials.offerCredential({
+      connectionId: props.connectionId,
+      protocolVersion: props.protocolVersion,
+      autoAcceptCredential: AutoAcceptCredential.ContentApproved,
+      credentialFormats: {
+        indy: {
+          credentialDefinitionId,
+          attributes: Object.entries(props.anoncreds.values).map(([name, value]) => ({ name, value })),
+        },
+      },
     })
-  }, [selectedCredentialDefinition, agent])
 
-  const issueCredential = (props: IssueCredentialValues) => {
-    console.log(props)
+    // FIXME: there's currently no role in AFJ, and thus we don't know which role a record has when it's in state 'issued'.
+    // We will soon add it to AFJ, but this way we can at least show it properly in Siera Desktop
+    credentialExchangeRecord.metadata.set('role', {
+      role: 'issuer',
+    })
+    const credentialRepository = agent.dependencyManager.resolve(CredentialRepository)
+    await credentialRepository.update(agent.context, credentialExchangeRecord)
+
+    context.closeModal(id)
   }
-
-  useEffect(() => {
-    agent?.ledger
-      .registerSchema({
-        attributes: ['Name', 'Date of Birth', 'Role'],
-        name: 'Employee Badge',
-        version: '1.0',
-      })
-      .then((s) => {
-        agent.ledger.registerCredentialDefinition({
-          schema: s,
-          supportRevocation: false,
-          tag: 'Employee Badge',
-        })
-      })
-  }, [])
 
   return (
     <>
@@ -202,8 +226,8 @@ export const IssueCredentialModal = ({ context, id }: ContextModalProps) => {
                           },
                         ]
                       : credentialDefinitions.map((c) => ({
-                          value: c.credentialDefinition.id,
-                          label: `${c.credentialDefinition.tag} - ${c.credentialDefinition.id}`,
+                          value: c.id,
+                          label: `${c.tag} - ${c.id}`,
                         }))
                   }
                   {...form.getInputProps('anoncreds.credentialDefinitionId')}
@@ -218,29 +242,23 @@ export const IssueCredentialModal = ({ context, id }: ContextModalProps) => {
                     <Card title="Credential Attributes" titleSize="sm">
                       <Divider pb="xs" />
                       <Box px="md">
-                        {anonCredsCredentialKeys.length > 0 && (
+                        {anonCredsCredentialKeys.map((key) => (
                           <>
-                            {anonCredsCredentialKeys.map((key) => (
-                              <>
-                                <TextInput key={key} label={key} {...form.getInputProps(`anoncreds.values.${key}`)} />
-                                <Space key={`${key}-spacer`} h="md" />
-                              </>
-                            ))}
+                            <TextInput key={key} label={key} {...form.getInputProps(`anoncreds.values.${key}`)} />
+                            <Space key={`${key}-spacer`} h="md" />
                           </>
-                        )}
+                        ))}
                       </Box>
                     </Card>
                   </>
                 ) : (
                   <>
                     <Space h="md" />
-                    {/* <Box h={200}> */}
                     <Flex direction="column" h={200} align="center" gap="sm" justify="center">
                       <Center>
                         <LoadingSpinner />
                       </Center>
                     </Flex>
-                    {/* </Box> */}
                   </>
                 ))}
             </Box>

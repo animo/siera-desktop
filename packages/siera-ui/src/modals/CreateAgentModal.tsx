@@ -8,6 +8,7 @@ import React from 'react'
 
 import { PrimaryButton, SecondaryButton } from '../components/generic'
 import { useAgentManager } from '../contexts/AgentManagerContext'
+import { registerIndyDidOnBcovrinTest } from '../utils'
 
 interface CreateAgentForm {
   agentLabel: string
@@ -26,6 +27,8 @@ export const CreateAgentModal = ({ context, id }: ContextModalProps) => {
   const { addAgent } = useAgentManager()
 
   const createAgentConfig = async (formData: CreateAgentForm) => {
+    const { seed } = await registerIndyDidOnBcovrinTest()
+
     await addAgent({
       id: uuid(),
       name: formData.agentLabel,
@@ -35,6 +38,7 @@ export const CreateAgentModal = ({ context, id }: ContextModalProps) => {
           id: uuid(),
           key: uuid(),
         },
+        publicDidSeed: seed,
         mediatorConnectionsInvite: formData.mediatorInviteUrl === '' ? undefined : formData.mediatorInviteUrl,
       },
     })

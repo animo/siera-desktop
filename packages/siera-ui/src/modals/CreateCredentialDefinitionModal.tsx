@@ -1,6 +1,6 @@
 import type { ContextModalProps } from '@mantine/modals'
 
-import { schemaIdRegex } from '@aries-framework/core/build/utils'
+import { getLegacySchemaId } from '@aries-framework/core/build/utils'
 import { useAgent } from '@aries-framework/react-hooks'
 import { Box, Divider, Flex, Group, Select, Space, Text, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
@@ -10,7 +10,8 @@ import React, { useState } from 'react'
 
 import { LoadingSpinner } from '../components/LoadingSpinner'
 import { PrimaryButton, SecondaryButton } from '../components/generic'
-import { useSchemas } from '../hooks/useSchemas'
+import { useAnonCredsSchemas } from '../contexts/AnonCredsSchemaProvider'
+import { useAgentPublicDid } from '../hooks/useAgentPublicDid'
 
 interface CreateCredentialDefinitionValues {
   schemaId: string
@@ -20,12 +21,15 @@ interface CreateCredentialDefinitionValues {
 
 export const CreateCredentialDefinitionModal = ({ context, id }: ContextModalProps) => {
   const { agent } = useAgent()
-  const [customSchemaId, setCustomSchemaId] = useState<string | undefined>()
-  const { schemas } = useSchemas()
   const [isLoading, setIsLoading] = useState(false)
+
+  // const [customSchemaId, setCustomSchemaId] = useState<string | undefined>()
+  const { schemas } = useAnonCredsSchemas()
+  const agentPublicDid = useAgentPublicDid()
+
   const form = useForm<CreateCredentialDefinitionValues>({
     initialValues: {
-      issuerId: agent?.publicDid?.did ?? '',
+      issuerId: agentPublicDid ?? '',
       schemaId: '',
       tag: '',
     },
@@ -37,24 +41,26 @@ export const CreateCredentialDefinitionModal = ({ context, id }: ContextModalPro
   })
 
   const selectableSchemaIds = schemas.map((s) => s.id)
-  if (customSchemaId) selectableSchemaIds.unshift(customSchemaId)
+  // if (customSchemaId) selectableSchemaIds.unshift(customSchemaId)
 
   const createCredentialDefinition = async (credentialDefinition: CreateCredentialDefinitionValues) => {
-    try {
-      if (!schemaIdRegex.test(credentialDefinition.schemaId)) {
-        showNotification({
-          title: 'Error',
-          message: `Schema id '${credentialDefinition.schemaId}' is not a valid schema id.`,
-          color: 'error',
-        })
-        return
-      }
+    setIsLoading(true)
 
-      setIsLoading(true)
+    try {
+      const [did, , , , schemaName, schemaVersion] = credentialDefinition.schemaId.split('/')
+      const namespaceIdentifier = did.split(':').pop() as string
+      const schemaId = getLegacySchemaId(namespaceIdentifier, schemaName, schemaVersion)
 
       let schema = schemas.find((s) => s.id === credentialDefinition.schemaId)
-      if (!schema) {
-        schema = await agent?.ledger.getSchema(credentialDefinition.schemaId)
+
+      if (schema) {
+        schema = {
+          ...schema,
+          id: schemaId,
+        }
+      } else {
+        // Need to retrieve using unqualified schema id
+        schema = await agent?.ledger.getSchema(schemaId)
       }
 
       if (!schema) {
@@ -100,11 +106,11 @@ export const CreateCredentialDefinitionModal = ({ context, id }: ContextModalPro
               <Select
                 label="Issuer id"
                 data={
-                  agent?.publicDid?.did
+                  agentPublicDid
                     ? [
                         {
-                          value: agent.publicDid.did,
-                          label: agent.publicDid.did,
+                          value: agentPublicDid,
+                          label: agentPublicDid,
                         },
                       ]
                     : [
@@ -122,16 +128,16 @@ export const CreateCredentialDefinitionModal = ({ context, id }: ContextModalPro
               <Select
                 label="Schema id"
                 data={selectableSchemaIds.map((id) => ({ value: id, label: id }))}
-                description="Choose a schema from the agent, or provide a schema created outside the agent."
+                description="Choose a schema from the agent. In the future you will be able to provide schemas created outside the agent."
                 placeholder="Provide a schema id."
                 searchable
-                creatable
-                getCreateLabel={(query) => `Use ${query}`}
-                onCreate={(query) => {
-                  // TODO: async fetch schemaId, and check whether it's a valid schema
-                  setCustomSchemaId(query)
-                  return query
-                }}
+                // TODO: re-add when we can support schemas not created by this agent
+                // creatable
+                // onCreate={(query) => {
+                //   setCustomSchemaId(query)
+                //   return query
+                // }}
+                // getCreateLabel={(query) => `Use ${query}`}
                 {...form.getInputProps('schemaId')}
               />
 
