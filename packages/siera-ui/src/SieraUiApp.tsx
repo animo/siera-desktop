@@ -9,7 +9,7 @@ import { RouterProvider } from 'react-router-dom'
 
 import { sieraUiTheme } from './SieraUiTheme'
 import { GlobalErrorHandler } from './components/GlobalErrorHandler'
-import { UpdateNotifier } from './components/UpdateNotifier'
+import { UpdateNotifierModal } from './components/UpdateNotifierModal'
 import { useConfigUnsafe } from './contexts/ConfigProvider'
 import {
   CreateAgentModal,
@@ -45,7 +45,7 @@ export const SieraUiApp = ({ router }: SieraUiAppProps) => {
             }}
           >
             <GlobalErrorHandler>
-              <UpdateNotifier />
+              <UpdateNotifierModal />
               <RouterProvider router={router} />
             </GlobalErrorHandler>
           </ModalsProvider>

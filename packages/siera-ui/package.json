@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@animo/siera-core": "*",
-    "@aries-framework/core": "0.3.0-alpha.32",
-    "@aries-framework/react-hooks": "^0.3.1",
+    "@aries-framework/core": "0.3.3",
+    "@aries-framework/react-hooks": "^0.4.1",
     "@emotion/react": "^11.10.5",
     "@mantine/core": "^5.7.1",
     "@mantine/form": "^5.7.2",

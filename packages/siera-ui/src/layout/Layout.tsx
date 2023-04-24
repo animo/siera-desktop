@@ -17,6 +17,7 @@ const navigationItems: NavigationItem[] = [
   { name: 'Connections', href: '/agent/connections' },
   { name: 'Credentials', href: '/agent/credentials' },
   { name: 'Proofs', href: '/agent/proofs' },
+  { name: 'Dids', href: '/agent/dids' },
   { name: 'AnonCreds', href: '/agent/anoncreds' },
 ]
 

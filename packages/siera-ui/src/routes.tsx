@@ -12,6 +12,7 @@ import { ConnectionDetailsScreen } from './pages/agent/connections/ConnectionDet
 import { ConnectionsScreen } from './pages/agent/connections/ConnectionsScreen'
 import { CredentialsDetailsScreen } from './pages/agent/credentials/CredentialsDetailsScreen'
 import { CredentialsScreen } from './pages/agent/credentials/CredentialsScreen'
+import { DidsScreen } from './pages/agent/dids/DidsScreen'
 import { ProofDetailsScreen } from './pages/agent/proofs/ProofDetailsScreen'
 import { ProofsScreen } from './pages/agent/proofs/ProofsScreen'
 
@@ -27,6 +28,7 @@ export const routeUrls = [
   '/agent/anoncreds',
   '/agent/anoncreds/schemas/{schemaId}',
   '/agent/anoncreds/credential-definitions/{credentialDefinitionId}',
+  '/agent/dids',
 ] as const
 
 export const routes: RouteObject[] = [
@@ -114,6 +116,15 @@ export const routes: RouteObject[] = [
         element: (
           <Layout>
             <AnonCredsCredentialDefinitionsDetailsScreen />
+            <DidsScreen />
+          </Layout>
+        ),
+      },
+      {
+        path: 'dids',
+        element: (
+          <Layout>
+            <DidsScreen />
           </Layout>
         ),
       },

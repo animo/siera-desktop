@@ -22,6 +22,7 @@ export const agentInitializer = async (
         genesisTransactions: sampleTransactions,
       },
     ],
+    autoUpdateStorageOnStartup: true,
     ...providedConfig,
   }
 

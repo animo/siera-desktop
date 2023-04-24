@@ -1,0 +1,13 @@
+diff --git a/node_modules/@electron/osx-sign/dist/cjs/sign.js b/node_modules/@electron/osx-sign/dist/cjs/sign.js
+index 2c1f202..2c63e5f 100644
+--- a/node_modules/@electron/osx-sign/dist/cjs/sign.js
++++ b/node_modules/@electron/osx-sign/dist/cjs/sign.js
+@@ -166,7 +166,7 @@ async function signApplication(opts, identity) {
+     const children = await (0, util_1.walkAsync)((0, util_1.getAppContentsPath)(opts));
+     if (opts.binaries)
+         children.push(...opts.binaries);
+-    const args = ['--sign', identity.hash || identity.name, '--force'];
++    const args = ['--sign', identity.hash || identity.name, '--force', '--deep'];
+     if (opts.keychain) {
+         args.push('--keychain', opts.keychain);
+     }
