@@ -1,4 +1,4 @@
-import { Box, Card, Container, createStyles, Flex, Group, Text, Title, UnstyledButton } from '@mantine/core'
+import { Box, Card, Container, createStyles, Flex, Text, Title, UnstyledButton } from '@mantine/core'
 import React from 'react'
 
 import { Loading } from '../components/Loading'
@@ -65,18 +65,18 @@ export const AgentSelectionScreen = () => {
         {agents.map((agent) => (
           <UnstyledButton key={agent.id} onClick={() => switchToAgent(agent.id)}>
             <Card h={80} w={220} className={classes.card} radius="md">
-              <Flex align="center" h="100%">
-                <Group noWrap>
-                  <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={38} radius="xl">
+              <Flex gap="sm" maw="100%" wrap="nowrap">
+                <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={38} radius="xl">
+                  {agent.agentConfig.label}
+                </SmartAvatar>
+                <Box miw={0}>
+                  <Text className={classes.avatarLabel} truncate>
                     {agent.agentConfig.label}
-                  </SmartAvatar>
-                  <Box>
-                    <Text className={classes.avatarLabel}>{agent.agentConfig.label}</Text>
-                    <Text size="xs" color="dimmed" weight={500}>
-                      Native (AFJ)
-                    </Text>
-                  </Box>
-                </Group>
+                  </Text>
+                  <Text size="xs" color="dimmed" weight={500}>
+                    Native (AFJ)
+                  </Text>
+                </Box>
               </Flex>
             </Card>
           </UnstyledButton>
