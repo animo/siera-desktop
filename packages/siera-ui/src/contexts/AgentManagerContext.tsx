@@ -10,6 +10,7 @@ export interface IAgentContext {
   currentAgentId?: string
   setCurrentAgentId: (id: string | undefined) => void
   addAgent: (agent: AgentConfigRecord) => Promise<void>
+  removeAgent: (agentId: string) => Promise<void>
   loading: boolean
   logout: () => void
 }
@@ -33,7 +34,7 @@ interface AgentManagerProviderProps {
 }
 
 export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) => {
-  const { config, addAgent, loading } = useConfigUnsafe()
+  const { config, addAgent, removeAgent, loading } = useConfigUnsafe()
   const [currentAgentId, setCurrentAgentId] = useState<string>()
 
   const logout = () => {
@@ -47,6 +48,7 @@ export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) =>
         currentAgentId,
         agents: config?.agents || [],
         addAgent,
+        removeAgent,
         loading,
         logout,
       }}

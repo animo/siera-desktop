@@ -1,4 +1,7 @@
-import { Box, Card, Container, createStyles, Flex, Text, Title, UnstyledButton } from '@mantine/core'
+import type { AgentConfigRecord } from '@animo/siera-core'
+
+import { ActionIcon, Box, Card, Container, createStyles, Flex, Menu, Text, Title, UnstyledButton } from '@mantine/core'
+import { IconDots } from '@tabler/icons'
 import React from 'react'
 
 import { Loading } from '../components/Loading'
@@ -6,7 +9,7 @@ import { SmartAvatar } from '../components/SmartAvatar'
 import { PrimaryButton } from '../components/generic'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
-import { openCreateAgentModal } from '../modals'
+import { openConfirmActionModal, openCreateAgentModal } from '../modals'
 
 import { WelcomeScreen } from './agent/WelcomeScreen'
 
@@ -14,6 +17,7 @@ const useStyles = createStyles((theme) => ({
   card: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
     border: `2px solid ${theme.colors.backgroundOne[6]}`,
+    overflow: 'unset',
 
     '&:hover': {
       border: `2px solid ${theme.colors.backgroundOne[5]}`,
@@ -33,11 +37,22 @@ const useStyles = createStyles((theme) => ({
 export const AgentSelectionScreen = () => {
   const { classes } = useStyles()
   const navigation = useNavigation()
-  const { agents, setCurrentAgentId, loading } = useAgentManager()
+  const { agents, setCurrentAgentId, removeAgent, loading } = useAgentManager()
 
   const switchToAgent = (agentId: string) => {
     setCurrentAgentId(agentId)
     navigation.navigate('/agent/connections')
+  }
+
+  const stopPropagation = (event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => event.stopPropagation()
+
+  const onDeleteAgent = (agentConfigRecord: AgentConfigRecord) => {
+    openConfirmActionModal({
+      title: 'Delete agent',
+      description: `Are you sure you want to delete '${agentConfigRecord.name}' ?`,
+      confirmLabel: 'Delete',
+      onConfirm: () => removeAgent(agentConfigRecord.id),
+    })
   }
 
   if (loading) {
@@ -64,8 +79,8 @@ export const AgentSelectionScreen = () => {
       <Flex gap="md" wrap="wrap" mt="xl">
         {agents.map((agent) => (
           <UnstyledButton key={agent.id} onClick={() => switchToAgent(agent.id)}>
-            <Card h={80} w={220} className={classes.card} radius="md">
-              <Flex gap="sm" maw="100%" wrap="nowrap">
+            <Card h={80} w={220} className={classes.card} radius="md" p={0}>
+              <Flex gap="sm" maw="100%" align="center" wrap="nowrap" pl="sm" mih="100%">
                 <SmartAvatar src={agent.agentConfig.connectionImageUrl} size={38} radius="xl">
                   {agent.agentConfig.label}
                 </SmartAvatar>
@@ -77,6 +92,19 @@ export const AgentSelectionScreen = () => {
                     Native (AFJ)
                   </Text>
                 </Box>
+                <Flex style={{ flex: 'auto', alignSelf: 'start' }} justify="end">
+                  <Menu shadow="md" width={200} position="bottom-end" withArrow>
+                    <Menu.Target>
+                      <ActionIcon m={2} onClick={stopPropagation}>
+                        <IconDots size={16} stroke={1.5} />
+                      </ActionIcon>
+                    </Menu.Target>
+
+                    <Menu.Dropdown onClick={stopPropagation}>
+                      <Menu.Item onClick={() => onDeleteAgent(agent)}>Delete</Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                </Flex>
               </Flex>
             </Card>
           </UnstyledButton>

@@ -7,18 +7,19 @@ import React from 'react'
 import { PrimaryButton, SecondaryButton } from '../components/generic'
 
 type InnerProps = {
-  message: string
+  description: string
   onConfirm: () => void
+  confirmLabel?: string
 }
 
 export const ConfirmActionModal = ({
   id,
   context,
-  innerProps: { message, onConfirm },
+  innerProps: { description, onConfirm, confirmLabel },
 }: ContextModalProps<InnerProps>) => {
   return (
     <Stack mt="md">
-      <Text px="xl">{message}</Text>
+      <Text px="xl">{description}</Text>
       <Divider mt="md" mb="xs" />
       <Group position="right" px="xl">
         <SecondaryButton onClick={() => context.closeModal(id)}>Cancel</SecondaryButton>
@@ -28,18 +29,30 @@ export const ConfirmActionModal = ({
             context.closeModal(id)
           }}
         >
-          Confirm
+          {confirmLabel}
         </PrimaryButton>
       </Group>
     </Stack>
   )
 }
 
-export const openConfirmActionModal = (title: string, message: string, onConfirm: () => void) => {
+interface OpenConfirmActionModalProps {
+  title: string
+  description: string
+  onConfirm: () => void
+  confirmLabel?: string
+}
+
+export const openConfirmActionModal = ({
+  title,
+  description,
+  onConfirm,
+  confirmLabel = 'Confirm',
+}: OpenConfirmActionModalProps) => {
   openContextModal({
     modal: ConfirmActionModal.name,
     title,
-    innerProps: { message, onConfirm },
+    innerProps: { description: description, onConfirm, confirmLabel },
     centered: true,
     withCloseButton: false,
   })

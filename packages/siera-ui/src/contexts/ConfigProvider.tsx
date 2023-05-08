@@ -7,6 +7,7 @@ type ConfigContext = {
   config?: SieraUiConfig
   loading: boolean
   addAgent: (agent: AgentConfigRecord) => Promise<void>
+  removeAgent: (agentId: string) => Promise<void>
   setColorScheme: (colorScheme: 'dark' | 'light') => Promise<void>
 }
 
@@ -62,6 +63,14 @@ export const ConfigProvider = ({ children, configRepository }: ConfigProviderPro
     setConfig(updatedConfig)
   }
 
+  const removeAgent = async (agentId: string) => {
+    if (!config) return
+
+    const updatedConfig = { ...config, agents: config.agents.filter((a) => a.id !== agentId) }
+    await saveConfig(updatedConfig)
+    setConfig(updatedConfig)
+  }
+
   const setColorScheme = async (colorScheme: 'dark' | 'light') => {
     if (!config) return
 
@@ -76,6 +85,7 @@ export const ConfigProvider = ({ children, configRepository }: ConfigProviderPro
         config,
         loading,
         addAgent,
+        removeAgent,
         setColorScheme,
       }}
     >

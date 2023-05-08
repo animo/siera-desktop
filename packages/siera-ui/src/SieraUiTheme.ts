@@ -39,6 +39,7 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
           fontWeight: 700,
           fontSize: '1.7rem',
           padding: `0 ${theme.spacing.xl}px`,
+          color: theme.colors.textOne[7],
         },
         modal: {
           border: `1px solid ${theme.colors.backgroundOne[6]}`,
