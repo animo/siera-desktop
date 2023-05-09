@@ -9,12 +9,15 @@ import React from 'react'
 import { PrimaryButton, SecondaryButton } from '../components/generic'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 
+type InnerProps = {
+  onCreate?: (agentId: string) => void
+}
 interface CreateAgentForm {
   agentLabel: string
   mediatorInviteUrl: string
 }
 
-export const CreateAgentModal = ({ context, id }: ContextModalProps) => {
+export const CreateAgentModal = ({ context, id, innerProps: { onCreate } }: ContextModalProps<InnerProps>) => {
   const agentManager = useAgentManager()
   const form = useForm<CreateAgentForm>({
     initialValues: {
@@ -26,8 +29,10 @@ export const CreateAgentModal = ({ context, id }: ContextModalProps) => {
   const { addAgent } = useAgentManager()
 
   const createAgentConfig = async (formData: CreateAgentForm) => {
+    const agentId = uuid()
+
     await addAgent({
-      id: uuid(),
+      id: agentId,
       name: formData.agentLabel,
       agentConfig: {
         label: formData.agentLabel,
@@ -40,6 +45,8 @@ export const CreateAgentModal = ({ context, id }: ContextModalProps) => {
     })
 
     context.closeModal(id)
+
+    onCreate?.(agentId)
   }
 
   const agentLabel = agentManager.agents.length === 0 ? 'First agent' : 'Development'
@@ -66,11 +73,11 @@ export const CreateAgentModal = ({ context, id }: ContextModalProps) => {
   )
 }
 
-export const openCreateAgentModal = () => {
+export const openCreateAgentModal = (innerProps: InnerProps) => {
   openContextModal({
     modal: CreateAgentModal.name,
     title: 'Create a new agent',
-    innerProps: {},
+    innerProps: innerProps,
     centered: true,
     withCloseButton: false,
   })
