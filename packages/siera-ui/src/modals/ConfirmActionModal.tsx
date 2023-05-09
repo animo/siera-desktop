@@ -36,11 +36,8 @@ export const ConfirmActionModal = ({
   )
 }
 
-interface OpenConfirmActionModalProps {
+interface OpenConfirmActionModalProps extends InnerProps {
   title: string
-  description: string
-  onConfirm: () => void
-  confirmLabel?: string
 }
 
 export const openConfirmActionModal = ({

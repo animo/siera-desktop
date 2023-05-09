@@ -71,7 +71,7 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
       <Navbar.Section mx="md" className={classes.layoutAvatar}>
         <Flex gap="xs" justify="space-between">
           <LayoutAvatar agent={agent} />
-          <Menu shadow="md" width={200} position="bottom-end">
+          <Menu shadow="md" position="bottom-end" withArrow>
             <Menu.Target>
               <ActionIcon mt="xs">
                 <IconChevronDown />

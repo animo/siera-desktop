@@ -30,6 +30,10 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
         dropdown: {
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
         },
+        item: {
+          padding: '0.4rem 0.6rem',
+          minWidth: '8rem',
+        },
       }),
     },
 

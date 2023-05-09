@@ -93,7 +93,7 @@ export const AgentSelectionScreen = () => {
                   </Text>
                 </Box>
                 <Flex style={{ flex: 'auto', alignSelf: 'start' }} justify="end">
-                  <Menu shadow="md" width={80} position="bottom-end" withArrow>
+                  <Menu shadow="md" position="bottom-end" withArrow>
                     <Menu.Target>
                       <ActionIcon m={2} onClick={stopPropagation}>
                         <IconDotsVertical size={16} stroke={1.5} />
