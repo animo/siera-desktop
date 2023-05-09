@@ -1,7 +1,7 @@
 import type { AgentConfigRecord } from '@animo/siera-core'
 
 import { ActionIcon, Box, Card, Container, createStyles, Flex, Menu, Text, Title, UnstyledButton } from '@mantine/core'
-import { IconDots } from '@tabler/icons'
+import { IconDotsVertical } from '@tabler/icons'
 import React from 'react'
 
 import { Loading } from '../components/Loading'
@@ -93,10 +93,10 @@ export const AgentSelectionScreen = () => {
                   </Text>
                 </Box>
                 <Flex style={{ flex: 'auto', alignSelf: 'start' }} justify="end">
-                  <Menu shadow="md" width={200} position="bottom-end" withArrow>
+                  <Menu shadow="md" width={80} position="bottom-end" withArrow>
                     <Menu.Target>
                       <ActionIcon m={2} onClick={stopPropagation}>
-                        <IconDots size={16} stroke={1.5} />
+                        <IconDotsVertical size={16} stroke={1.5} />
                       </ActionIcon>
                     </Menu.Target>
 
