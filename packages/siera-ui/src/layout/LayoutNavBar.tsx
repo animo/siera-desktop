@@ -1,7 +1,7 @@
 import type { Agent } from '@aries-framework/core'
 
 import { ActionIcon, createStyles, Flex, Menu, Navbar, useMantineColorScheme } from '@mantine/core'
-import { IconChevronDown } from '@tabler/icons'
+import { IconDotsVertical } from '@tabler/icons'
 import React, { useState } from 'react'
 
 import { useAgentManager } from '../contexts/AgentManagerContext'
@@ -74,7 +74,7 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
           <Menu shadow="md" position="bottom-end" withArrow>
             <Menu.Target>
               <ActionIcon mt="xs">
-                <IconChevronDown />
+                <IconDotsVertical size={20} />
               </ActionIcon>
             </Menu.Target>
 

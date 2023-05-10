@@ -9,7 +9,8 @@ import { SmartAvatar } from '../components/SmartAvatar'
 import { PrimaryButton } from '../components/generic'
 import { useAgentManager } from '../contexts/AgentManagerContext'
 import { useNavigation } from '../hooks/useNavigation'
-import { openConfirmActionModal, openCreateAgentModal } from '../modals'
+import { openConfirmActionModal } from '../modals/ConfirmActionModal'
+import { openCreateAgentModal } from '../modals/CreateAgentModal'
 
 import { WelcomeScreen } from './agent/WelcomeScreen'
 
@@ -51,7 +52,7 @@ export const AgentSelectionScreen = () => {
       title: 'Delete agent',
       description: `Are you sure you want to delete '${agentConfigRecord.name}' ?`,
       confirmLabel: 'Delete',
-      onConfirm: () => removeAgent(agentConfigRecord.id),
+      onConfirm: async () => await removeAgent(agentConfigRecord.id),
     })
   }
 
@@ -95,8 +96,8 @@ export const AgentSelectionScreen = () => {
                 <Flex style={{ flex: 'auto', alignSelf: 'start' }} justify="end">
                   <Menu shadow="md" position="bottom-end" withArrow>
                     <Menu.Target>
-                      <ActionIcon m={2} onClick={stopPropagation}>
-                        <IconDotsVertical size={16} stroke={1.5} />
+                      <ActionIcon mt={2} onClick={stopPropagation} variant="transparent">
+                        <IconDotsVertical size={16} />
                       </ActionIcon>
                     </Menu.Target>
 
