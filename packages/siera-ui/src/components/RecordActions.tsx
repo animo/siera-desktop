@@ -2,7 +2,7 @@ import { ActionIcon, createStyles, Group, Loader } from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
 import React from 'react'
 
-import { openConfirmActionModal } from '../modals'
+import { openConfirmActionModal } from '../modals/ConfirmActionModal'
 
 import { PrimaryButton, SecondaryButton } from './generic'
 
@@ -28,9 +28,14 @@ export const RecordActions = ({ onAccept, onDecline, onDelete, isLoading, propag
     returnFn()
   }
 
-  const dangerAction = (returnFn: () => void) => (event: React.MouseEvent<HTMLButtonElement>) => {
+  const dangerAction = (confirmMethod: () => void) => (event: React.MouseEvent<HTMLButtonElement>) => {
     !propagateEvent && event.stopPropagation()
-    openConfirmActionModal('Delete record', 'Are you sure you want to delete this record?', returnFn)
+    openConfirmActionModal({
+      title: 'Delete record',
+      description: 'Are you sure you want to delete this record?',
+      confirmLabel: 'Delete',
+      onConfirm: confirmMethod,
+    })
   }
 
   const actions = [

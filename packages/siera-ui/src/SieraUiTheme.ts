@@ -30,6 +30,10 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
         dropdown: {
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.backgroundOne[7] : '#ffffff',
         },
+        item: {
+          padding: '0.4rem 0.6rem',
+          minWidth: '8rem',
+        },
       }),
     },
 
@@ -39,6 +43,7 @@ export const sieraUiTheme = (colorScheme: ColorScheme): MantineThemeOverride => 
           fontWeight: 700,
           fontSize: '1.7rem',
           padding: `0 ${theme.spacing.xl}px`,
+          color: theme.colors.textOne[7],
         },
         modal: {
           border: `1px solid ${theme.colors.backgroundOne[6]}`,

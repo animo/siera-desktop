@@ -3,7 +3,7 @@ import React from 'react'
 
 import { PrimaryButton } from '../../components/generic'
 import { SieraLogo } from '../../logos/SieraLogo'
-import { openCreateAgentModal } from '../../modals'
+import { openCreateAgentModal } from '../../modals/CreateAgentModal'
 
 export const WelcomeScreen = () => {
   const { colorScheme } = useMantineColorScheme()
