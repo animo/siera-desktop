@@ -11,7 +11,9 @@ import { sieraUiTheme } from './SieraUiTheme'
 import { GlobalErrorHandler } from './components/GlobalErrorHandler'
 import { UpdateNotifierModal } from './components/UpdateNotifierModal'
 import { useConfigUnsafe } from './contexts/ConfigProvider'
-import { CreateAgentModal, PresentInviteModal, ConfirmActionModal } from './modals'
+import { ConfirmActionModal } from './modals/ConfirmActionModal'
+import { CreateAgentModal } from './modals/CreateAgentModal'
+import { PresentInviteModal } from './modals/PresentInviteModal'
 
 interface SieraUiAppProps {
   router: RouterProviderProps['router']

@@ -10,7 +10,7 @@ import { Loading } from '../../../components/Loading'
 import { ConnectionsTable } from '../../../components/connections/ConnectionsTable'
 import { PrimaryButton, SecondaryButton } from '../../../components/generic'
 import { EmptyState } from '../../../components/generic/table/EmptyState'
-import { openPresentInviteModal } from '../../../modals'
+import { openPresentInviteModal } from '../../../modals/PresentInviteModal'
 
 interface ConnectionInviteValues {
   url: string

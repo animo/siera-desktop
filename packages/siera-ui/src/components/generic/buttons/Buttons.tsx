@@ -2,6 +2,7 @@ import type { ButtonProps } from '@mantine/core'
 import type { ButtonHTMLAttributes } from 'react'
 
 import { Button, createStyles } from '@mantine/core'
+import { useColorScheme } from '@mantine/hooks'
 import { IconArrowLeft, IconPlus } from '@tabler/icons'
 import React from 'react'
 
@@ -43,12 +44,22 @@ type PrimaryButtonProps = StandardButton & {
 }
 
 export const PrimaryButton = (props: PrimaryButtonProps) => {
+  const colorScheme = useColorScheme()
   const { classes, cx } = useStyles()
   const { withPlusIcon } = props
 
   const plusButton = withPlusIcon && <IconPlus size={16} stroke={3} />
 
-  return <Button leftIcon={plusButton} {...props} className={cx(classes.primary, props.className)} />
+  return (
+    <Button
+      leftIcon={plusButton}
+      loaderProps={{
+        stroke: colorScheme === 'dark' ? 'black' : 'white',
+      }}
+      {...props}
+      className={cx(classes.primary, props.className)}
+    />
+  )
 }
 
 export const SecondaryButton = (props: StandardButton) => {

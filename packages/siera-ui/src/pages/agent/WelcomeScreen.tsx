@@ -5,7 +5,7 @@ import { PrimaryButton } from '../../components/generic'
 import { useAgentManager } from '../../contexts/AgentManagerContext'
 import { useNavigation } from '../../hooks/useNavigation'
 import { SieraLogo } from '../../logos/SieraLogo'
-import { openCreateAgentModal } from '../../modals'
+import { openCreateAgentModal } from '../../modals/CreateAgentModal'
 
 export const WelcomeScreen = () => {
   const navigation = useNavigation()
