@@ -70,7 +70,10 @@ export const AgentSelectionScreen = () => {
         <Title size="h1" mb="md">
           Overview
         </Title>
-        <PrimaryButton onClick={openCreateAgentModal} withPlusIcon>
+        <PrimaryButton
+          onClick={() => openCreateAgentModal({ onCreate: (agentId) => switchToAgent(agentId) })}
+          withPlusIcon
+        >
           New agent
         </PrimaryButton>
       </Flex>
