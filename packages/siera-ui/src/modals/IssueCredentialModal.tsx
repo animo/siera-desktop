@@ -80,16 +80,8 @@ export const IssueCredentialModal = ({ context, id }: ContextModalProps) => {
 
   const credentialFormats =
     form.values.protocolVersion === 'v1'
-      ? [
-          { value: 'anoncreds', label: 'AnonCreds' },
-          // JSON-LD not supported in v1 of protocol
-          { value: 'jsonld', label: 'JSON-LD', disabled: true },
-        ]
-      : [
-          { value: 'anoncreds', label: 'AnonCreds' },
-          // JSON-LD not yet implemented for v2 (but is supported)
-          { value: 'jsonld', label: 'JSON-LD', disabled: true },
-        ]
+      ? [{ value: 'anoncreds', label: 'AnonCreds' }]
+      : [{ value: 'anoncreds', label: 'AnonCreds' }]
 
   useEffect(() => {
     const credentialDefinitionId = form.values.anoncreds?.credentialDefinitionId

@@ -21,7 +21,7 @@ export const AnonCredsScreen = () => {
 
   return (
     <>
-      <Header title="AnonCreds" description="Create and manage AnonCreds schemas and credential definitions." />
+      <Header title="Templates" description="Create and manage schemas and credential definitions." />
       {isLoading && <Loading />}
 
       {!isLoading && (

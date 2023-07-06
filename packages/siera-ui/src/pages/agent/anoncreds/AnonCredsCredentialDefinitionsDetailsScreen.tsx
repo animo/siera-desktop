@@ -29,7 +29,7 @@ export const AnonCredsCredentialDefinitionsDetailsScreen = () => {
   return (
     <>
       <Space h="md" />
-      <SmallBackButton>AnonCreds</SmallBackButton>
+      <SmallBackButton>Templates</SmallBackButton>
       <Space h="md" />
       <AnonCredsCredentialDefinitionDetails credentialDefinition={credentialDefinition} />
     </>

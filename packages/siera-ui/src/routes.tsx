@@ -25,9 +25,9 @@ export const routeUrls = [
   '/agent/credentials/{credentialId}',
   '/agent/proofs',
   '/agent/proofs/{proofId}',
-  '/agent/anoncreds',
-  '/agent/anoncreds/schemas/{schemaId}',
-  '/agent/anoncreds/credential-definitions/{credentialDefinitionId}',
+  '/agent/templates',
+  '/agent/templates/schemas/{schemaId}',
+  '/agent/templates/credential-definitions/{credentialDefinitionId}',
   '/agent/dids',
 ] as const
 
@@ -96,7 +96,7 @@ export const routes: RouteObject[] = [
         ),
       },
       {
-        path: 'anoncreds',
+        path: 'templates',
         element: (
           <Layout>
             <AnonCredsScreen />
@@ -104,7 +104,7 @@ export const routes: RouteObject[] = [
         ),
       },
       {
-        path: 'anoncreds/schemas/:schemaId',
+        path: 'templates/schemas/:schemaId',
         element: (
           <Layout>
             <AnonCredsSchemasDetailsScreen />
@@ -112,7 +112,7 @@ export const routes: RouteObject[] = [
         ),
       },
       {
-        path: 'anoncreds/credential-definitions/:credentialDefinitionId',
+        path: 'templates/credential-definitions/:credentialDefinitionId',
         element: (
           <Layout>
             <AnonCredsCredentialDefinitionsDetailsScreen />

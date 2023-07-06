@@ -18,7 +18,7 @@ const navigationItems: NavigationItem[] = [
   { name: 'Credentials', href: '/agent/credentials' },
   { name: 'Proofs', href: '/agent/proofs' },
   { name: 'Dids', href: '/agent/dids' },
-  { name: 'AnonCreds', href: '/agent/anoncreds' },
+  { name: 'Templates', href: '/agent/templates' },
 ]
 
 export const Layout = ({ children }: LayoutProps) => {

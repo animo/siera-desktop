@@ -26,7 +26,7 @@ export const AnonCredsCredentialDefinitionTable = ({ records }: AnonCredsCredent
   const navigation = useNavigation()
 
   const selectRow = (credentialDefinition: AnonCredsCredentialDefinition) => {
-    navigation.navigate(`/agent/anoncreds/credential-definitions/{credentialDefinitionId}`, {
+    navigation.navigate(`/agent/templates/credential-definitions/{credentialDefinitionId}`, {
       credentialDefinitionId: encodeURIComponent(credentialDefinition.id),
     })
   }
@@ -39,6 +39,7 @@ export const AnonCredsCredentialDefinitionTable = ({ records }: AnonCredsCredent
             { label: 'Tag', size: 200 },
             { label: 'Schema ID', size: 100 },
             { label: 'Network', size: 200 },
+            { label: 'Actions', blank: true, size: 100 },
           ]}
         />
         <tbody>

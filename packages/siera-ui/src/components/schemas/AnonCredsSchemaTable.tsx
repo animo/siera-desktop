@@ -26,7 +26,7 @@ export const AnonCredsSchemaTable = ({ records }: AnonCredsSchemaTableProps) => 
   const navigation = useNavigation()
 
   const selectRow = (schema: AnonCredsSchema) => {
-    navigation.navigate(`/agent/anoncreds/schemas/{schemaId}`, {
+    navigation.navigate(`/agent/templates/schemas/{schemaId}`, {
       schemaId: encodeURIComponent(schema.id),
     })
   }
@@ -39,6 +39,7 @@ export const AnonCredsSchemaTable = ({ records }: AnonCredsSchemaTableProps) => 
             { label: 'Name', size: 200 },
             { label: 'Version', size: 100 },
             { label: 'Network', size: 200 },
+            { label: 'Actions', blank: true, size: 100 },
           ]}
         />
         <tbody>
