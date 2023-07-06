@@ -68,7 +68,7 @@ export const App = () => {
     >
       <UpdateInformationProvider checkUpdate={checkForUpdates}>
         <ConfigProvider configRepository={configRepository}>
-          <AgentManagerProvider>
+          <AgentManagerProvider agentDependenciesProvider={agentDependenciesProvider}>
             <AgentContextWrapper>
               <SieraUiApp router={router} />
             </AgentContextWrapper>

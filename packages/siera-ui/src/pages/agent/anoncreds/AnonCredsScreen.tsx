@@ -10,7 +10,8 @@ import { EmptyState } from '../../../components/generic/table/EmptyState'
 import { AnonCredsSchemaTable } from '../../../components/schemas/AnonCredsSchemaTable'
 import { useAnonCredsCredentialDefinitions } from '../../../contexts/AnonCredsCredentialDefinitionProvider'
 import { useAnonCredsSchemas } from '../../../contexts/AnonCredsSchemaProvider'
-import { openCreateCredentialDefinitionModal, openCreateSchemaModal } from '../../../modals'
+import { openCreateCredentialDefinitionModal } from '../../../modals/CreateCredentialDefinitionModal'
+import { openCreateSchemaModal } from '../../../modals/CreateSchemaModal'
 
 export const AnonCredsScreen = () => {
   const { schemas, loading: schemasLoading } = useAnonCredsSchemas()

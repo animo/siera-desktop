@@ -11,7 +11,7 @@ import { Loading } from '../../../components/Loading'
 import { CredentialsTable } from '../../../components/credentials/CredentialsTable'
 import { PrimaryButton } from '../../../components/generic'
 import { EmptyState } from '../../../components/generic/table/EmptyState'
-import { openIssueCredentialModal } from '../../../modals'
+import { openIssueCredentialModal } from '../../../modals/IssueCredentialModal'
 
 export const CredentialsScreen = () => {
   const { loading: credentialsLoading } = useCredentials()

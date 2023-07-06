@@ -1,7 +1,7 @@
 import type { Agent } from '@aries-framework/core'
 
-import { ActionIcon, createStyles, Group, Menu, Navbar, useMantineColorScheme } from '@mantine/core'
-import { IconChevronDown } from '@tabler/icons'
+import { ActionIcon, createStyles, Flex, Menu, Navbar, useMantineColorScheme } from '@mantine/core'
+import { IconDotsVertical } from '@tabler/icons'
 import React, { useState } from 'react'
 
 import { useAgentManager } from '../contexts/AgentManagerContext'
@@ -69,12 +69,12 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
   return (
     <Navbar py="md" width={{ sm: 300 }} className={classes.navbar}>
       <Navbar.Section mx="md" className={classes.layoutAvatar}>
-        <Group position="apart">
+        <Flex gap="xs" justify="space-between">
           <LayoutAvatar agent={agent} />
-          <Menu shadow="md" width={200} position="bottom-end">
+          <Menu shadow="md" position="bottom-end" withArrow>
             <Menu.Target>
-              <ActionIcon>
-                <IconChevronDown />
+              <ActionIcon mt="xs">
+                <IconDotsVertical size={20} />
               </ActionIcon>
             </Menu.Target>
 
@@ -83,7 +83,7 @@ export const LayoutNavBar = ({ navigationItems, agent }: LayoutNavigationProps) 
               <Menu.Item onClick={() => signOut()}>Log out</Menu.Item>
             </Menu.Dropdown>
           </Menu>
-        </Group>
+        </Flex>
       </Navbar.Section>
 
       <Navbar.Section grow>

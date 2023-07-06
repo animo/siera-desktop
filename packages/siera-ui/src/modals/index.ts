@@ -1,6 +1,0 @@
-export * from './CreateAgentModal'
-export * from './PresentInviteModal'
-export * from './ConfirmActionModal'
-export * from './IssueCredentialModal'
-export * from './CreateSchemaModal'
-export * from './CreateCredentialDefinitionModal'

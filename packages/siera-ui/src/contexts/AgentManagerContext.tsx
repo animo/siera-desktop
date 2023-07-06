@@ -1,7 +1,11 @@
-import type { AgentConfigRecord } from '@animo/siera-core'
+import type { AgentConfigRecord, AgentDependenciesProvider } from '@animo/siera-core'
 import type { ReactNode } from 'react'
 
+import { agentInitializer } from '@animo/siera-core/src/agent/AgentInitializer'
+import { showNotification } from '@mantine/notifications'
 import React, { createContext, useContext, useMemo, useState } from 'react'
+
+import { openConfirmActionModal } from '../modals/ConfirmActionModal'
 
 import { useConfigUnsafe } from './ConfigProvider'
 
@@ -10,6 +14,7 @@ export interface IAgentContext {
   currentAgentId?: string
   setCurrentAgentId: (id: string | undefined) => void
   addAgent: (agent: AgentConfigRecord) => Promise<void>
+  removeAgent: (agentId: string) => Promise<void>
   loading: boolean
   logout: () => void
 }
@@ -30,14 +35,43 @@ export const useCurrentAgentRecord = (): AgentConfigRecord | undefined => {
 
 interface AgentManagerProviderProps {
   children?: ReactNode
+  agentDependenciesProvider: AgentDependenciesProvider
 }
 
-export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) => {
-  const { config, addAgent, loading } = useConfigUnsafe()
+export const AgentManagerProvider = ({ children, agentDependenciesProvider }: AgentManagerProviderProps) => {
+  const { config, addAgent, removeAgent: removeAgentFromConfig, loading } = useConfigUnsafe()
   const [currentAgentId, setCurrentAgentId] = useState<string>()
 
   const logout = () => {
     setCurrentAgentId(undefined)
+  }
+
+  const removeAgent = async (agentId: string) => {
+    const agentRecord = config?.agents.find((agent) => agent.id === agentId)
+    if (!agentRecord) {
+      showNotification({
+        title: 'Error',
+        message: `Agent with id ${agentId} not found`,
+      })
+      return
+    }
+
+    try {
+      const loadedAgent = await agentInitializer(agentRecord.agentConfig, agentDependenciesProvider)
+      await loadedAgent.wallet.delete()
+      await loadedAgent.shutdown()
+    } catch (error) {
+      openConfirmActionModal({
+        title: 'Error while removing agent',
+        description: 'Do you want to continue? The agent wallet will not be deleted.',
+        onConfirm: async () => {
+          await removeAgentFromConfig(agentId)
+        },
+      })
+      return
+    }
+
+    await removeAgentFromConfig(agentId)
   }
 
   return (
@@ -47,6 +81,7 @@ export const AgentManagerProvider = ({ children }: AgentManagerProviderProps) =>
         currentAgentId,
         agents: config?.agents || [],
         addAgent,
+        removeAgent,
         loading,
         logout,
       }}

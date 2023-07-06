@@ -11,14 +11,12 @@ import { sieraUiTheme } from './SieraUiTheme'
 import { GlobalErrorHandler } from './components/GlobalErrorHandler'
 import { UpdateNotifierModal } from './components/UpdateNotifierModal'
 import { useConfigUnsafe } from './contexts/ConfigProvider'
-import {
-  CreateAgentModal,
-  PresentInviteModal,
-  ConfirmActionModal,
-  IssueCredentialModal,
-  CreateSchemaModal,
-  CreateCredentialDefinitionModal,
-} from './modals'
+import { ConfirmActionModal } from './modals/ConfirmActionModal'
+import { CreateAgentModal } from './modals/CreateAgentModal'
+import { CreateCredentialDefinitionModal } from './modals/CreateCredentialDefinitionModal'
+import { CreateSchemaModal } from './modals/CreateSchemaModal'
+import { IssueCredentialModal } from './modals/IssueCredentialModal'
+import { PresentInviteModal } from './modals/PresentInviteModal'
 
 interface SieraUiAppProps {
   router: RouterProviderProps['router']
