@@ -5,7 +5,7 @@ import { CredentialState } from '@aries-framework/core'
 export class CredentialsUtil {
   private static loadingStates: CredentialState[] = [CredentialState.RequestSent, CredentialState.OfferSent]
 
-  private static acceptStates: CredentialState[] = [CredentialState.OfferReceived, CredentialState.CredentialReceived]
+  private static acceptStates: CredentialState[] = [CredentialState.OfferReceived]
 
   private static declineStates: CredentialState[] = [CredentialState.OfferReceived]
 

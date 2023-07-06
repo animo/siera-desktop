@@ -6,6 +6,8 @@ import { agentInitializer } from '@animo/siera-core/src/agent/AgentInitializer'
 import AgentProvider from '@aries-framework/react-hooks'
 import React, { useEffect, useState } from 'react'
 
+import AnonCredsCredentialDefinitionProvider from './AnonCredsCredentialDefinitionProvider'
+import AnonCredsSchemaProvider from './AnonCredsSchemaProvider'
 import CredentialFormatDataProvider from './CredentialFormatDataProvider'
 import ProofFormatDataProvider from './ProofsFormatDataProvider'
 
@@ -45,7 +47,11 @@ export const AgentContext: React.FunctionComponent<PropsWithChildren & AgentCont
   return (
     <AgentProvider key={activeAgent?.id} agent={activeAgent?.agent}>
       <ProofFormatDataProvider agent={activeAgent?.agent}>
-        <CredentialFormatDataProvider agent={activeAgent?.agent}>{children}</CredentialFormatDataProvider>
+        <CredentialFormatDataProvider agent={activeAgent?.agent}>
+          <AnonCredsCredentialDefinitionProvider agent={activeAgent?.agent}>
+            <AnonCredsSchemaProvider agent={activeAgent?.agent}>{children}</AnonCredsSchemaProvider>
+          </AnonCredsCredentialDefinitionProvider>
+        </CredentialFormatDataProvider>
       </ProofFormatDataProvider>
     </AgentProvider>
   )

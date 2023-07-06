@@ -8,6 +8,7 @@ import React from 'react'
 
 import { PrimaryButton, SecondaryButton } from '../components/generic'
 import { useAgentManager } from '../contexts/AgentManagerContext'
+import { registerIndyDidOnBcovrinTest } from '../utils'
 
 type InnerProps = {
   onCreate?: (agentId: string) => void
@@ -29,6 +30,7 @@ export const CreateAgentModal = ({ context, id, innerProps: { onCreate } }: Cont
   const { addAgent } = useAgentManager()
 
   const createAgentConfig = async (formData: CreateAgentForm) => {
+    const { seed } = await registerIndyDidOnBcovrinTest()
     const agentId = uuid()
 
     await addAgent({
@@ -40,6 +42,7 @@ export const CreateAgentModal = ({ context, id, innerProps: { onCreate } }: Cont
           id: uuid(),
           key: uuid(),
         },
+        publicDidSeed: seed,
         mediatorConnectionsInvite: formData.mediatorInviteUrl === '' ? undefined : formData.mediatorInviteUrl,
       },
     })
