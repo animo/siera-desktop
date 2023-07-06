@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Card } from '../Card'
 import { Loading } from '../Loading'
+import { Callout } from '../generic'
 import { AttributeValue } from '../generic/information/AttributeValue'
 import { RecordCodeBlock } from '../generic/information/RecordCodeBlock'
 
@@ -31,14 +32,18 @@ export const ProofDetails = ({ formattedProofData }: ProofDetailsProps) => {
   const { classes } = useStyles()
   const { agent } = useAgent()
   const [credentialDetails, setCredentialDetails] = useState<CredentialDetails[] | null>(null)
+  const [noSuitableCredentialsFound, setNoSuitableCredentialsFound] = useState(false)
 
   useEffect(() => {
     void (async () => {
       if (!agent) return
 
-      const requestedCredentials = await agent.proofs.autoSelectCredentialsForProofRequest({
-        proofRecordId: formattedProofData.id,
-      })
+      const requestedCredentials = await agent.proofs
+        .autoSelectCredentialsForProofRequest({
+          proofRecordId: formattedProofData.id,
+        })
+        .catch(() => setNoSuitableCredentialsFound(true))
+      if (!requestedCredentials) return
 
       const requestedAttributes = requestedCredentials.proofFormats.indy?.requestedAttributes ?? {}
 
@@ -70,12 +75,21 @@ export const ProofDetails = ({ formattedProofData }: ProofDetailsProps) => {
     <Card
       title={proofRequestName}
       titleSize="h2"
-      description="The following credentials were used to satisfy the proof request."
+      description={
+        !noSuitableCredentialsFound ? 'The following credentials were used to satisfy the proof request.' : undefined
+      }
       descriptionSize="md"
       withPadding
     >
       <Space h="xl" />
-      {credentialDetails == null ? (
+      {noSuitableCredentialsFound ? (
+        <Callout
+          title="No suitable credentials found"
+          titleSize="h5"
+          description="No credential were found to satisfy the proof request."
+          variant="error"
+        />
+      ) : credentialDetails == null ? (
         <Loading />
       ) : (
         <Stack>
