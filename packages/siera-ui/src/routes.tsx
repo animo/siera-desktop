@@ -116,7 +116,6 @@ export const routes: RouteObject[] = [
         element: (
           <Layout>
             <AnonCredsCredentialDefinitionsDetailsScreen />
-            <DidsScreen />
           </Layout>
         ),
       },
